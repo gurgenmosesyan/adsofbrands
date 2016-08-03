@@ -1,11 +1,11 @@
 <?php
-$head->appendScript('/admin/guest/guest.js');
-$pageTitle = $pageSubTitle = trans('admin.guest.form.title');
-$pageMenu = 'guest';
+$head->appendScript('/admin/industry_type/industry_type.js');
+$pageTitle = $pageSubTitle = trans('admin.industry_type.form.title');
+$pageMenu = 'industry_type';
 ?>
 @extends('core.layout')
 @section('navButtons')
-    <a href="{{route('admin_guest_create')}}" class="btn btn-primary pull-right">{{trans('admin.base.label.add')}}</a>
+    <a href="{{route('admin_industry_type_create')}}" class="btn btn-primary pull-right">{{trans('admin.base.label.add')}}</a>
 @stop
 @section('content')
 <div class="box-body">
@@ -13,7 +13,7 @@ $pageMenu = 'guest';
         <thead>
         <tr>
             <th>{{trans('admin.base.label.id')}}</th>
-            <th>{{trans('admin.base.label.name')}}</th>
+            <th>{{trans('admin.base.label.title')}}</th>
             <th class="th-actions"></th>
         </tr>
         </thead>

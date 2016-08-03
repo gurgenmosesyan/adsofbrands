@@ -2,8 +2,8 @@
 
 return [
 
-	'name' => 'Golden Palace',
-	'short_name' => 'G P',
+	'name' => 'Adsofbrands',
+	'short_name' => 'A B',
 
     /*
     |--------------------------------------------------------------------------

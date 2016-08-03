@@ -15,15 +15,7 @@ class LanguageTableSeed extends Seeder
 			[
 				'name' => 'English',
 				'code' => 'en'
-			],
-            [
-                'name' => 'Armenian',
-                'code' => 'hy'
-            ],
-            [
-                'name' => 'Russian',
-                'code' => 'ru'
-            ]
+			]
 		];
 
 		DB::table('languages')->truncate();

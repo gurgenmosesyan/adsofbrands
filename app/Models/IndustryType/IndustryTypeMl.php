@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Models\Event;
+namespace App\Models\IndustryType;
 
 use App\Core\Model;
 
-class EventMl extends Model
+class IndustryTypeMl extends Model
 {
-    protected $table = 'events_ml';
+    protected $table = 'industry_types_ml';
 
     public $timestamps = false;
 
     protected $fillable = [
         'id',
         'lng_id',
-        'title',
-        'text'
+        'title'
     ];
 }

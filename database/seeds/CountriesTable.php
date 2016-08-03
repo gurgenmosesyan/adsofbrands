@@ -15,16 +15,27 @@ class CountriesTable extends Seeder
         $fileData = json_decode($fileData);
 
         $data = [];
-        $i = 0;
+        $dataMl = [];
+        $i = 1;
         foreach ($fileData as $country) {
-            $data[$i]['name_hy'] = $country->name_hy;
-            $data[$i]['name_en'] = $country->name_en;
-            $data[$i]['name_ru'] = $country->name_ru;
+            $data[] = [
+                'id' => $i,
+                'icon' => $country->img,
+                'created_at' => 'NULL',
+                'updated_at' => 'NULL'
+            ];
+            $dataMl[] = [
+                'id' => $i,
+                'lng_id' => 1,
+                'name' => $country->name_en
+            ];
             $i++;
         }
 
-
         DB::table('countries')->truncate();
         DB::table('countries')->insert($data);
+
+        DB::table('countries_ml')->truncate();
+        DB::table('countries_ml')->insert($dataMl);
     }
 }
