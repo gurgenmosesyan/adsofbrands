@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Models\Brand;
+namespace App\Models\Agency;
 
 use App\Core\Model;
 
-class Brand extends Model
+class Agency extends Model
 {
-    const IMAGES_PATH = 'images/brand';
+    const IMAGES_PATH = 'images/agency';
 
     protected $fillable = [
-        'country_id',
-        'category_id',
         'alias',
         'email',
         'phone',
@@ -23,7 +21,7 @@ class Brand extends Model
         'vimeo'
     ];
 
-    protected $table = 'brands';
+    protected $table = 'agencies';
 
     public function getImage()
     {
@@ -37,7 +35,7 @@ class Brand extends Model
 
     public function ml()
     {
-        return $this->hasMany(BrandMl::class, 'id', 'id');
+        return $this->hasMany(AgencyMl::class, 'id', 'id');
     }
 
     public function getFile($column)

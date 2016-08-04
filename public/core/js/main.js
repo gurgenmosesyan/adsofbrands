@@ -184,6 +184,13 @@ $main.init = function() {
         } else {
             self.initEditPage();
         }
+
+        $.fn.loading = function() {
+            $(this).addClass('loading');
+        };
+        $.fn.removeLoading = function() {
+            $(this).removeClass('loading');
+        };
     });
 };
 

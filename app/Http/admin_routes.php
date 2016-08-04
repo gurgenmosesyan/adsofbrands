@@ -44,4 +44,20 @@ Route::group($params, function () {
     Route::post('/brand/update/{id}', ['uses' => 'BrandController@update', 'as' => 'admin_brand_update']);
     Route::post('/brand/delete/{id}', ['uses' => 'BrandController@delete', 'as' => 'admin_brand_delete']);
 
+    Route::get('/agency', ['uses' => 'AgencyController@table', 'as' => 'admin_agency_table']);
+    Route::get('/agency/create', ['uses' => 'AgencyController@create', 'as' => 'admin_agency_create']);
+    Route::get('/agency/edit/{id}', ['uses' => 'AgencyController@edit', 'as' => 'admin_agency_edit']);
+    Route::post('/agency', ['uses' => 'AgencyController@index', 'as' => 'admin_agency_index']);
+    Route::post('/agency/store', ['uses' => 'AgencyController@store', 'as' => 'admin_agency_store']);
+    Route::post('/agency/update/{id}', ['uses' => 'AgencyController@update', 'as' => 'admin_agency_update']);
+    Route::post('/agency/delete/{id}', ['uses' => 'AgencyController@delete', 'as' => 'admin_agency_delete']);
+
+    Route::get('/branch', ['uses' => 'BranchController@table', 'as' => 'admin_branch_table']);
+    Route::get('/branch/create', ['uses' => 'BranchController@create', 'as' => 'admin_branch_create']);
+    Route::get('/branch/edit/{id}', ['uses' => 'BranchController@edit', 'as' => 'admin_branch_edit']);
+    Route::post('/branch', ['uses' => 'BranchController@index', 'as' => 'admin_branch_index']);
+    Route::post('/branch/store', ['uses' => 'BranchController@store', 'as' => 'admin_branch_store']);
+    Route::post('/branch/update/{id}', ['uses' => 'BranchController@update', 'as' => 'admin_branch_update']);
+    Route::post('/branch/delete/{id}', ['uses' => 'BranchController@delete', 'as' => 'admin_branch_delete']);
+
 });

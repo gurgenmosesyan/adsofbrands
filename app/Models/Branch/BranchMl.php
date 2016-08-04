@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models\Brand;
+namespace App\Models\Branch;
 
 use App\Core\Model;
 
-class BrandMl extends Model
+class BranchMl extends Model
 {
-    protected $table = 'brands_ml';
+    protected $table = 'branches_ml';
 
     public $timestamps = false;
 
@@ -14,8 +14,6 @@ class BrandMl extends Model
         'id',
         'lng_id',
         'title',
-        'sub_title',
-        'about',
         'address'
     ];
 }

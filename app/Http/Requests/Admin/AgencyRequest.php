@@ -4,13 +4,11 @@ namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\Request;
 
-class BrandRequest extends Request
+class AgencyRequest extends Request
 {
     public function rules()
     {
         return [
-            'country_id' => 'integer|exists:countries,id',
-            'category_id' => 'integer|exists:categories,id',
             'alias' => 'required|max:255',
             'image' => 'required|core_image',
             'cover' => 'required|core_image',

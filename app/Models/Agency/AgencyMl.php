@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models\Brand;
+namespace App\Models\Agency;
 
 use App\Core\Model;
 
-class BrandMl extends Model
+class AgencyMl extends Model
 {
-    protected $table = 'brands_ml';
+    protected $table = 'agencies_ml';
 
     public $timestamps = false;
 

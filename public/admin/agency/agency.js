@@ -1,15 +1,15 @@
-var $brand = $.extend(true, {}, $main);
-$brand.listPath = '/admpanel/brand';
+var $agency = $.extend(true, {}, $main);
+$agency.listPath = '/admpanel/agency';
 
-$brand.initSearchPage = function() {
-    $brand.listColumns = [
+$agency.initSearchPage = function() {
+    $agency.listColumns = [
         {data: 'id'},
         {data: 'title'}
     ];
-    $brand.initSearch();
+    $agency.initSearch();
 };
 
-$brand.makeAlias = function(title, aliasObj) {
+$agency.makeAlias = function(title, aliasObj) {
     if ($.trim(aliasObj.val()) != '' || $.trim(title) == '') {
         return;
     }
@@ -34,15 +34,15 @@ $brand.makeAlias = function(title, aliasObj) {
     });
 };
 
-$brand.initEditPage = function() {
+$agency.initEditPage = function() {
 
-    $brand.initForm();
+    $agency.initForm();
 
     $('.title').change(function() {
-        $brand.makeAlias($(this).val(), $('.alias'));
+        $agency.makeAlias($(this).val(), $('.alias'));
     });
 
     //CKEDITOR.config.height = 120;
 };
 
-$brand.init();
+$agency.init();

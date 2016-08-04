@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBrandsMlTable extends Migration
+class CreateAgenciesMlTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateBrandsMlTable extends Migration
      */
     public function up()
     {
-        Schema::create('brands_ml', function (Blueprint $table) {
+        Schema::create('agencies_ml', function (Blueprint $table) {
             $table->integer('id')->unsigned();
             $table->tinyInteger('lng_id')->unsigned();
             $table->string('title');
@@ -30,6 +30,6 @@ class CreateBrandsMlTable extends Migration
      */
     public function down()
     {
-        Schema::drop('brands_ml');
+        Schema::drop('agencies_ml');
     }
 }

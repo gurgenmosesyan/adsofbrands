@@ -3,6 +3,8 @@
     <li{{$pageMenu == 'industry_type' ? ' class=active' : ''}}><a href="{{route('admin_industry_type_table')}}"><i class="fa fa-pencil"></i> <span>{{trans('admin.industry_type.form.title')}}</span></a></li>
     <li{{$pageMenu == 'category' ? ' class=active' : ''}}><a href="{{route('admin_category_table')}}"><i class="fa fa-pencil"></i> <span>{{trans('admin.category.form.title')}}</span></a></li>
     <li{{$pageMenu == 'brand' ? ' class=active' : ''}}><a href="{{route('admin_brand_table')}}"><i class="fa fa-btc"></i> <span>{{trans('admin.brand.form.title')}}</span></a></li>
+    <li{{$pageMenu == 'agency' ? ' class=active' : ''}}><a href="{{route('admin_agency_table')}}"><i class="fa fa-briefcase"></i> <span>{{trans('admin.agency.form.title')}}</span></a></li>
+    <li{{$pageMenu == 'branch' ? ' class=active' : ''}}><a href="{{route('admin_branch_table')}}"><i class="fa fa-sitemap"></i> <span>{{trans('admin.branch.form.title')}}</span></a></li>
     <li class="treeview{{$pageMenu == 'admin' || $pageMenu == 'language' || $pageMenu == 'dictionary' ? ' active' : ''}}">
         <a href="#">
             <i class="fa fa-wrench"></i> <span>{{trans('admin.admin_menu.system')}}</span> <i class="fa fa-angle-left pull-right"></i>

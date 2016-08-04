@@ -4785,3 +4785,6 @@ table.text-center th {
 .separate-sections > div {
     margin-bottom: 10px !important;
 }
+.loading {
+    background: url('../img/loader.gif') no-repeat 98% center !important;
+}
