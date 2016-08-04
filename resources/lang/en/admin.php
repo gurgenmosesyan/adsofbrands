@@ -66,4 +66,12 @@ return array (
   'category.form.title' => 'Categories',
   'category.form.add.sub_title' => 'Add new category',
   'category.form.edit.sub_title' => 'Category № :id',
+  'brand.form.title' => 'Brands',
+  'brand.form.add.sub_title' => 'Add new brand',
+  'brand.form.edit.sub_title' => 'brand № :id',
+  'base.label.country' => 'Country',
+  'base.label.cover' => 'Cover',
+  'base.label.global' => 'Global',
+  'base.label.phone' => 'Phone',
+  'base.label.address' => 'Address',
 );

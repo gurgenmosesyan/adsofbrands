@@ -24,7 +24,7 @@ class MediaTypeManager
         SaveImage::save($data['icon'], $mediaType, 'icon');
 
         DB::transaction(function() use($data, $mediaType) {
-            $mediaType->update($data);
+            $mediaType->save();
             $this->updateMl($data['ml'], $mediaType);
         });
     }

@@ -13,8 +13,12 @@ class CreateBrandsMlTable extends Migration
     public function up()
     {
         Schema::create('brands_ml', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+            $table->integer('id')->unsigned();
+            $table->tinyInteger('lng_id')->unsigned();
+            $table->string('title');
+            $table->text('description');
+            $table->string('address');
+            $table->primary(['id', 'lng_id']);
         });
     }
 

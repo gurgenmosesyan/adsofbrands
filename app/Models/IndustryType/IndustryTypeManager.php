@@ -21,7 +21,7 @@ class IndustryTypeManager
         $industryType = IndustryType::where('id', $id)->firstOrFail();
 
         DB::transaction(function() use($data, $industryType) {
-            $industryType->update($data);
+            $industryType->save();
             $this->updateMl($data['ml'], $industryType);
         });
     }

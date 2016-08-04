@@ -40,6 +40,8 @@ Route::group($params, function() {
 		Route::get('/image/show', ['uses' => 'ImageUploaderController@show', 'as' => 'core_image_show']);
 		Route::post('/image/upload', ['uses' => 'ImageUploaderController@upload', 'as' => 'core_image_upload']);
 
+        Route::post('/makeAlias', ['uses' => 'ApiController@makeAlias', 'as' => 'core_make_alias']);
+
 	});
 
 });

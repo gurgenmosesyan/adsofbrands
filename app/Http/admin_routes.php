@@ -36,4 +36,12 @@ Route::group($params, function () {
     Route::post('/category/update/{id}', ['uses' => 'CategoryController@update', 'as' => 'admin_category_update']);
     Route::post('/category/delete/{id}', ['uses' => 'CategoryController@delete', 'as' => 'admin_category_delete']);
 
+    Route::get('/brand', ['uses' => 'BrandController@table', 'as' => 'admin_brand_table']);
+    Route::get('/brand/create', ['uses' => 'BrandController@create', 'as' => 'admin_brand_create']);
+    Route::get('/brand/edit/{id}', ['uses' => 'BrandController@edit', 'as' => 'admin_brand_edit']);
+    Route::post('/brand', ['uses' => 'BrandController@index', 'as' => 'admin_brand_index']);
+    Route::post('/brand/store', ['uses' => 'BrandController@store', 'as' => 'admin_brand_store']);
+    Route::post('/brand/update/{id}', ['uses' => 'BrandController@update', 'as' => 'admin_brand_update']);
+    Route::post('/brand/delete/{id}', ['uses' => 'BrandController@delete', 'as' => 'admin_brand_delete']);
+
 });

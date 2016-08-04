@@ -21,7 +21,7 @@ class CategoryManager
         $category = Category::where('id', $id)->firstOrFail();
 
         DB::transaction(function() use($data, $category) {
-            $category->update($data);
+            $category->save();
             $this->updateMl($data['ml'], $category);
         });
     }
