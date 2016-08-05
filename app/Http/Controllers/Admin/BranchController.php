@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Core\BaseController;
+use App\Models\Agency\AgencyMl;
 use App\Models\Branch\Branch;
 use App\Models\Branch\BranchManager;
 use App\Models\Branch\BranchSearch;
 use App\Http\Requests\Admin\BranchRequest;
 use App\Core\Language\Language;
+use App\Models\Brand\BrandMl;
 
 class BranchController extends BaseController
 {
@@ -37,6 +39,7 @@ class BranchController extends BaseController
         return view('admin.branch.edit')->with([
             'branch' => $branch,
             'languages' => $languages,
+            'typeName' => '',
             'saveMode' => 'add'
         ]);
     }
@@ -52,9 +55,17 @@ class BranchController extends BaseController
         $branch = Branch::where('id', $id)->firstOrFail();
         $languages = Language::all();
 
+        if ($branch->isBrand()) {
+            $type = BrandMl::current()->where('id', $branch->type_id)->first();
+        } else {
+            $type = AgencyMl::current()->where('id', $branch->type_id)->first();
+        }
+        $typeName = $type == null ? '' : $type->title;
+
         return view('admin.branch.edit')->with([
             'branch' => $branch,
             'languages' => $languages,
+            'typeName' => $typeName,
             'saveMode' => 'edit'
         ]);
     }

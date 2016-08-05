@@ -23,6 +23,11 @@ class Model extends EloquentModel
         return $query->where($this->getTable().'.show_status', self::STATUS_ACTIVE);
     }
 
+    public function scopeCurrent($query)
+    {
+        return $query->where($this->getTable().'.lng_id', cLng('id'));
+    }
+
     public function scopeOrdered($query)
     {
         $table = $this->getTable();

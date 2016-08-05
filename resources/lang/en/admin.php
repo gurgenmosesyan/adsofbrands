@@ -92,4 +92,5 @@ return array (
   'base.label.agency' => 'Agency',
   'branch.form.add.sub_title' => 'Add new branch',
   'base.label.type' => 'Type',
+  'base.label.location' => 'Location',
 );

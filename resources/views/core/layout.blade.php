@@ -26,17 +26,20 @@ $jsTrans->addTrans([
     $head->appendMainStyle('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css');
     $head->appendMainStyle('/assets/bootstrap/css/bootstrap.min.css');
     $head->appendMainStyle('/assets/plugins/datatables/dataTables.bootstrap.css');
+    $head->appendMainStyle('/assets/plugins/jQueryUI/jquery-ui.min.css');
     $head->appendMainStyle('/assets/dist/css/main.css');
     $head->appendMainStyle('/assets/dist/css/skins/skin-blue.min.css');
     $head->appendMainStyle('/assets/plugins/iCheck/minimal/blue.css');
 
     $head->appendMainScript('/assets/plugins/jQuery/jQuery-2.1.4.min.js');
-    $head->appendMainScript('https://code.jquery.com/ui/1.11.4/jquery-ui.min.js');
+    $head->appendMainScript('/assets/plugins/jQueryUI/jquery-ui.min.js');
+    //$head->appendMainScript('https://code.jquery.com/ui/1.11.4/jquery-ui.min.js');
     $head->appendMainScript('/assets/bootstrap/js/bootstrap.min.js');
     $head->appendMainScript('/assets/plugins/datatables/jquery.dataTables.min.js');
     $head->appendMainScript('/assets/plugins/datatables/dataTables.bootstrap.min.js');
     $head->appendMainScript('/assets/plugins/iCheck/icheck.min.js');
     $head->appendMainScript('/assets/dist/js/app.js');
+    $head->appendMainScript('/core/js/searchSelectBox.js');
     $head->appendMainScript('/core/js/main.js');
 
     $head->renderStyles();

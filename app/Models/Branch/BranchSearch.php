@@ -33,7 +33,7 @@ class BranchSearch extends DataTable
     protected function constructQuery()
     {
         $cLngId = cLng('id');
-        $query = Branch::select('branches.id', 'ml.title', 'ml.address', 'brand.title as brand_title', 'agency.title as agency_title')
+        $query = Branch::select('branches.id', 'branches.type', 'ml.title', 'ml.address', 'brand.title as brand_title', 'agency.title as agency_title')
             ->joinMl()
             ->leftJoin('brands_ml as brand', function($query) use($cLngId) {
                 $query->on('brand.id', '=', 'branches.type_id')->where('brand.lng_id', '=', $cLngId);
