@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Models\Branch;
+namespace App\Models\Award;
 
 use App\Core\DataTable;
 
-class BranchSearch extends DataTable
+class AwardSearch extends DataTable
 {
     public function totalCount()
     {
-        return Branch::count();
+        return Award::count();
     }
 
     public function filteredCount()
@@ -24,7 +24,13 @@ class BranchSearch extends DataTable
         $this->constructLimit($query);
         $data = $query->get();
         foreach ($data as $value) {
-            $value->brand_agency = $value->isBrand() ? $value->brand_title : $value->agency_title;
+            if ($value->isBrand()) {
+                $value->brand_agency_creative =  $value->brand_title;
+            } else if ($value->isAgency()) {
+                $value->brand_agency_creative =  $value->agency_title;
+            } else {
+                $value->brand_agency_creative =  $value->creative_name;
+            }
             $value->type = trans('admin.base.label.'.$value->type);
         }
         return $data;
@@ -33,20 +39,21 @@ class BranchSearch extends DataTable
     protected function constructQuery()
     {
         $cLngId = cLng('id');
-        $query = Branch::select('branches.id', 'branches.type', 'ml.title', 'ml.address', 'brand.title as brand_title', 'agency.title as agency_title')
+        $query = Award::select('awards.id', 'awards.type', 'awards.year', 'ml.title', 'brand.title as brand_title', 'agency.title as agency_title', 'creative.name as creative_name')
             ->joinMl()
             ->leftJoin('brands_ml as brand', function($query) use($cLngId) {
-                $query->on('brand.id', '=', 'branches.type_id')->where('brand.lng_id', '=', $cLngId);
+                $query->on('brand.id', '=', 'awards.type_id')->where('brand.lng_id', '=', $cLngId);
             })
             ->leftJoin('agencies_ml as agency', function($query) use($cLngId) {
-                $query->on('agency.id', '=', 'branches.type_id')->where('agency.lng_id', '=', $cLngId);
+                $query->on('agency.id', '=', 'awards.type_id')->where('agency.lng_id', '=', $cLngId);
+            })
+            ->leftJoin('creatives_ml as creative', function($query) use($cLngId) {
+                $query->on('creative.id', '=', 'awards.type_id')->where('creative.lng_id', '=', $cLngId);
             });
 
         if ($this->search != null) {
             $query->where('ml.title', 'LIKE', '%'.$this->search.'%')
-                ->orWhere('ml.address', 'LIKE', '%'.$this->search.'%')
-                ->orWhere('branches.phone', 'LIKE', '%'.$this->search.'%')
-                ->orWhere('branches.email', 'LIKE', '%'.$this->search.'%');
+                ->orWhere('ml.category', 'LIKE', '%'.$this->search.'%');
         }
         return $query;
     }
@@ -55,16 +62,16 @@ class BranchSearch extends DataTable
     {
         switch ($this->orderCol) {
             case 'type':
-                $orderCol = 'branches.type';
+                $orderCol = 'awards.type';
+                break;
+            case 'year':
+                $orderCol = 'awards.year';
                 break;
             case 'title':
                 $orderCol = 'ml.title';
                 break;
-            case 'address':
-                $orderCol = 'ml.address';
-                break;
             default:
-                $orderCol = 'branches.id';
+                $orderCol = 'awards.id';
         }
         $orderType = 'desc';
         if ($this->orderType == 'asc') {

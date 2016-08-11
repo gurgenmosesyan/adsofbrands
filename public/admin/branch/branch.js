@@ -22,6 +22,7 @@ $branch.initType = function() {
     $('#type').change(function() {
         if ($branch.resetType) {
             typeId.find('input').val('');
+            typeId.find('.icon-remove').hide();
         }
         $branch.resetType = true;
         if ($(this).val() == 'brand') {
@@ -55,8 +56,8 @@ $branch.initSelectBox = function() {
                 success	 : function (json) {
                     typeSearch.removeLoading();
                     if (json.recordsTotal > 0) {
-                        response($.map(json.data , function(item) { //alert('a');
-                            item.label = item.title; console.log(item);
+                        response($.map(json.data , function(item) {
+                            item.label = item.title;
                             return item;
                         }));
                     }

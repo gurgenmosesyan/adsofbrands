@@ -1,50 +1,50 @@
-var $vacancy = $.extend(true, {}, $main);
-$vacancy.listPath = '/admpanel/vacancy';
-$vacancy.type = null;
-$vacancy.resetType = true;
+var $creative = $.extend(true, {}, $main);
+$creative.listPath = '/admpanel/creative';
+$creative.type = null;
+$creative.resetType = true;
 
-$vacancy.initSearchPage = function() {
-    $vacancy.listColumns = [
+$creative.initSearchPage = function() {
+    $creative.listColumns = [
         {data: 'id'},
         {data: 'type'},
         {data: 'brand_agency', sortable: false},
-        {data: 'title'}
+        {data: 'name'}
     ];
-    $vacancy.initSearch();
+    $creative.initSearch();
 };
 
-$vacancy.initType = function() {
+$creative.initType = function() {
     var typeId = $('#type-id');
-    if ($vacancy.saveMode == 'edit') {
-        $vacancy.resetType = false;
+    if ($creative.saveMode == 'edit') {
+        $creative.resetType = false;
     }
     $('#type').change(function() {
-        if ($vacancy.resetType) {
+        if ($creative.resetType) {
             typeId.find('input').val('');
             typeId.find('.icon-remove').hide();
         }
-        $vacancy.resetType = true;
+        $creative.resetType = true;
         if ($(this).val() == 'brand') {
-            $vacancy.type = 'brand';
+            $creative.type = 'brand';
             typeId.removeClass('dn').find('label').text($trans.get('admin.base.label.brand'));
         } else if ($(this).val() == 'agency') {
-            $vacancy.type = 'agency';
+            $creative.type = 'agency';
             typeId.removeClass('dn').find('label').text($trans.get('admin.base.label.agency'));
         } else {
-            $vacancy.type = null;
+            $creative.type = null;
             typeId.addClass('dn');
         }
     }).change();
 };
 
-$vacancy.initSelectBox = function() {
+$creative.initSelectBox = function() {
     var typeSearch = $('#type-search');
     typeSearch.searchSelectBox({
         source : function (request, response) {
             typeSearch.loading();
             $.ajax({
                 type :'post',
-                url	 : '/admpanel/'+$vacancy.type,
+                url	 : '/admpanel/'+$creative.type,
                 data : {
                     search : {
                         value : request.term
@@ -66,13 +66,13 @@ $vacancy.initSelectBox = function() {
     });
 };
 
-$vacancy.initEditPage = function() {
+$creative.initEditPage = function() {
 
-    $vacancy.initForm();
+    $creative.initForm();
 
-    $vacancy.initType();
+    $creative.initType();
 
-    $vacancy.initSelectBox();
+    $creative.initSelectBox();
 };
 
-$vacancy.init();
+$creative.init();

@@ -1,50 +1,54 @@
-var $vacancy = $.extend(true, {}, $main);
-$vacancy.listPath = '/admpanel/vacancy';
-$vacancy.type = null;
-$vacancy.resetType = true;
+var $award = $.extend(true, {}, $main);
+$award.listPath = '/admpanel/award';
+$award.type = null;
+$award.resetType = true;
 
-$vacancy.initSearchPage = function() {
-    $vacancy.listColumns = [
+$award.initSearchPage = function() {
+    $award.listColumns = [
         {data: 'id'},
         {data: 'type'},
-        {data: 'brand_agency', sortable: false},
+        {data: 'brand_agency_creative', sortable: false},
+        {data: 'year'},
         {data: 'title'}
     ];
-    $vacancy.initSearch();
+    $award.initSearch();
 };
 
-$vacancy.initType = function() {
+$award.initType = function() {
     var typeId = $('#type-id');
-    if ($vacancy.saveMode == 'edit') {
-        $vacancy.resetType = false;
+    if ($award.saveMode == 'edit') {
+        $award.resetType = false;
     }
     $('#type').change(function() {
-        if ($vacancy.resetType) {
+        if ($award.resetType) {
             typeId.find('input').val('');
             typeId.find('.icon-remove').hide();
         }
-        $vacancy.resetType = true;
+        $award.resetType = true;
         if ($(this).val() == 'brand') {
-            $vacancy.type = 'brand';
+            $award.type = 'brand';
             typeId.removeClass('dn').find('label').text($trans.get('admin.base.label.brand'));
         } else if ($(this).val() == 'agency') {
-            $vacancy.type = 'agency';
+            $award.type = 'agency';
             typeId.removeClass('dn').find('label').text($trans.get('admin.base.label.agency'));
+        } else if ($(this).val() == 'creative') {
+            $award.type = 'creative';
+            typeId.removeClass('dn').find('label').text($trans.get('admin.base.label.creative'));
         } else {
-            $vacancy.type = null;
+            $award.type = null;
             typeId.addClass('dn');
         }
     }).change();
 };
 
-$vacancy.initSelectBox = function() {
+$award.initSelectBox = function() {
     var typeSearch = $('#type-search');
     typeSearch.searchSelectBox({
         source : function (request, response) {
             typeSearch.loading();
             $.ajax({
                 type :'post',
-                url	 : '/admpanel/'+$vacancy.type,
+                url	 : '/admpanel/'+$award.type,
                 data : {
                     search : {
                         value : request.term
@@ -56,7 +60,7 @@ $vacancy.initSelectBox = function() {
                     typeSearch.removeLoading();
                     if (json.recordsTotal > 0) {
                         response($.map(json.data , function(item) {
-                            item.label = item.title;
+                            item.label = item.title ? item.title : item.name;
                             return item;
                         }));
                     }
@@ -66,13 +70,13 @@ $vacancy.initSelectBox = function() {
     });
 };
 
-$vacancy.initEditPage = function() {
+$award.initEditPage = function() {
 
-    $vacancy.initForm();
+    $award.initForm();
 
-    $vacancy.initType();
+    $award.initType();
 
-    $vacancy.initSelectBox();
+    $award.initSelectBox();
 };
 
-$vacancy.init();
+$award.init();

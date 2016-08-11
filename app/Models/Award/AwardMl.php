@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models\Vacancy;
+namespace App\Models\Award;
 
 use App\Core\Model;
 
-class VacancyMl extends Model
+class AwardMl extends Model
 {
-    protected $table = 'vacancies_ml';
+    protected $table = 'awards_ml';
 
     public $timestamps = false;
 
@@ -14,7 +14,6 @@ class VacancyMl extends Model
         'id',
         'lng_id',
         'title',
-        'description',
-        'text'
+        'category'
     ];
 }

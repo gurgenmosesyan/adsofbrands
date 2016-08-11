@@ -60,4 +60,28 @@ Route::group($params, function () {
     Route::post('/branch/update/{id}', ['uses' => 'BranchController@update', 'as' => 'admin_branch_update']);
     Route::post('/branch/delete/{id}', ['uses' => 'BranchController@delete', 'as' => 'admin_branch_delete']);
 
+    Route::get('/vacancy', ['uses' => 'VacancyController@table', 'as' => 'admin_vacancy_table']);
+    Route::get('/vacancy/create', ['uses' => 'VacancyController@create', 'as' => 'admin_vacancy_create']);
+    Route::get('/vacancy/edit/{id}', ['uses' => 'VacancyController@edit', 'as' => 'admin_vacancy_edit']);
+    Route::post('/vacancy', ['uses' => 'VacancyController@index', 'as' => 'admin_vacancy_index']);
+    Route::post('/vacancy/store', ['uses' => 'VacancyController@store', 'as' => 'admin_vacancy_store']);
+    Route::post('/vacancy/update/{id}', ['uses' => 'VacancyController@update', 'as' => 'admin_vacancy_update']);
+    Route::post('/vacancy/delete/{id}', ['uses' => 'VacancyController@delete', 'as' => 'admin_vacancy_delete']);
+
+    Route::get('/creative', ['uses' => 'CreativeController@table', 'as' => 'admin_creative_table']);
+    Route::get('/creative/create', ['uses' => 'CreativeController@create', 'as' => 'admin_creative_create']);
+    Route::get('/creative/edit/{id}', ['uses' => 'CreativeController@edit', 'as' => 'admin_creative_edit']);
+    Route::post('/creative', ['uses' => 'CreativeController@index', 'as' => 'admin_creative_index']);
+    Route::post('/creative/store', ['uses' => 'CreativeController@store', 'as' => 'admin_creative_store']);
+    Route::post('/creative/update/{id}', ['uses' => 'CreativeController@update', 'as' => 'admin_creative_update']);
+    Route::post('/creative/delete/{id}', ['uses' => 'CreativeController@delete', 'as' => 'admin_creative_delete']);
+
+    Route::get('/award', ['uses' => 'AwardController@table', 'as' => 'admin_award_table']);
+    Route::get('/award/create', ['uses' => 'AwardController@create', 'as' => 'admin_award_create']);
+    Route::get('/award/edit/{id}', ['uses' => 'AwardController@edit', 'as' => 'admin_award_edit']);
+    Route::post('/award', ['uses' => 'AwardController@index', 'as' => 'admin_award_index']);
+    Route::post('/award/store', ['uses' => 'AwardController@store', 'as' => 'admin_award_store']);
+    Route::post('/award/update/{id}', ['uses' => 'AwardController@update', 'as' => 'admin_award_update']);
+    Route::post('/award/delete/{id}', ['uses' => 'AwardController@delete', 'as' => 'admin_award_delete']);
+
 });

@@ -4,28 +4,28 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Core\BaseController;
 use App\Models\Agency\AgencyMl;
-use App\Models\Vacancy\Vacancy;
-use App\Models\Vacancy\VacancyManager;
-use App\Models\Vacancy\VacancySearch;
-use App\Http\Requests\Admin\VacancyRequest;
+use App\Models\Creative\Creative;
+use App\Models\Creative\CreativeManager;
+use App\Models\Creative\CreativeSearch;
+use App\Http\Requests\Admin\CreativeRequest;
 use App\Core\Language\Language;
 use App\Models\Brand\BrandMl;
 
-class VacancyController extends BaseController
+class CreativeController extends BaseController
 {
     protected $manager = null;
 
-    public function __construct(VacancyManager $manager)
+    public function __construct(CreativeManager $manager)
     {
         $this->manager = $manager;
     }
 
     public function table()
     {
-        return view('admin.vacancy.index');
+        return view('admin.creative.index');
     }
 
-    public function index(VacancySearch $search)
+    public function index(CreativeSearch $search)
     {
         $result = $this->processDataTable($search);
         return $this->toDataTable($result);
@@ -33,18 +33,18 @@ class VacancyController extends BaseController
 
     public function create()
     {
-        $vacancy = new Vacancy();
+        $creative = new Creative();
         $languages = Language::all();
 
-        return view('admin.vacancy.edit')->with([
-            'vacancy' => $vacancy,
+        return view('admin.creative.edit')->with([
+            'creative' => $creative,
             'languages' => $languages,
             'typeName' => '',
             'saveMode' => 'add'
         ]);
     }
 
-    public function store(VacancyRequest $request)
+    public function store(CreativeRequest $request)
     {
         $this->manager->store($request->all());
         return $this->api('OK');
@@ -52,25 +52,25 @@ class VacancyController extends BaseController
 
     public function edit($id)
     {
-        $vacancy = Vacancy::where('id', $id)->firstOrFail();
+        $creative = Creative::where('id', $id)->firstOrFail();
         $languages = Language::all();
 
-        if ($vacancy->isBrand()) {
-            $type = BrandMl::current()->where('id', $vacancy->type_id)->first();
-        } else {
-            $type = AgencyMl::current()->where('id', $vacancy->type_id)->first();
+        if ($creative->isBrand()) {
+            $type = BrandMl::current()->where('id', $creative->type_id)->first();
+        } else if ($creative->isAgency()) {
+            $type = AgencyMl::current()->where('id', $creative->type_id)->first();
         }
         $typeName = $type == null ? '' : $type->title;
 
-        return view('admin.vacancy.edit')->with([
-            'vacancy' => $vacancy,
+        return view('admin.creative.edit')->with([
+            'creative' => $creative,
             'languages' => $languages,
             'typeName' => $typeName,
             'saveMode' => 'edit'
         ]);
     }
 
-    public function update(VacancyRequest $request, $id)
+    public function update(CreativeRequest $request, $id)
     {
         $this->manager->update($id, $request->all());
         return $this->api('OK');

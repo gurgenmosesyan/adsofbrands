@@ -3,25 +3,23 @@
 namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\Request;
-use App\Models\Vacancy\Vacancy;
+use App\Models\Creative\Creative;
 
-class VacancyRequest extends Request
+class CreativeRequest extends Request
 {
     public function rules()
     {
         $rules = [
-            'type' => 'required|in:'.Vacancy::TYPE_BRAND.','.Vacancy::TYPE_AGENCY,
+            'type' => 'required|in:'.Creative::TYPE_PERSONAL.','.Creative::TYPE_BRAND.','.Creative::TYPE_AGENCY,
             'ml' => 'ml',
-            'ml.*.title' => 'required|max:255',
-            'ml.*.description' => 'required|max:1000',
-            'ml.*.text' => 'required|max:65000'
+            'ml.*.name' => 'required|max:255'
         ];
 
         $type = $this->get('type');
         if (!empty($type)) {
-            if ($type == Vacancy::TYPE_BRAND) {
+            if ($type == Creative::TYPE_BRAND) {
                 $rules['type_id'] = 'required|exists:brands,id';
-            } else if ($type == Vacancy::TYPE_AGENCY) {
+            } else if ($type == Creative::TYPE_AGENCY) {
                 $rules['type_id'] = 'required|exists:agencies,id';
             }
         }

@@ -54,7 +54,7 @@ $jsTrans->addTrans([
             <div class="form-group">
                 <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.title').' ('.$lng->code.')'}}</label>
                 <div class="col-sm-9">
-                    <input type="text" name="ml[{{$lng->id}}][title]" class="title form-control" value="{{isset($mls[$lng->id]) ? $mls[$lng->id]->title : ''}}">
+                    <input type="text" name="ml[{{$lng->id}}][title]" class="form-control" value="{{isset($mls[$lng->id]) ? $mls[$lng->id]->title : ''}}">
                     <div id="form-error-ml_{{$lng->id}}_title" class="form-error"></div>
                 </div>
             </div>
