@@ -8,7 +8,7 @@ $creative.initSearchPage = function() {
         {data: 'id'},
         {data: 'type'},
         {data: 'brand_agency', sortable: false},
-        {data: 'name'}
+        {data: 'title'}
     ];
     $creative.initSearch();
 };

@@ -108,4 +108,12 @@ return array (
   'award.form.add.sub_title' => 'Add new award',
   'award.form.edit.sub_title' => 'Award № :id',
   'base.label.creative' => 'Creative',
+  'news.form.title' => 'News',
+  'news.form.add.sub_title' => 'Add news news',
+  'news.form.editsub_title' => 'News № :id',
+  'base.label.top' => 'Top',
+  'base.label.brands' => 'Brands',
+  'base.label.agencies' => 'Agencies',
+  'base.label.creatives' => 'Creatives',
+  'news.form.edit.sub_title' => 'News № :id',
 );

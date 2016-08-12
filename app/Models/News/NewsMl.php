@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models\Creative;
+namespace App\Models\News;
 
 use App\Core\Model;
 
-class CreativeMl extends Model
+class NewsMl extends Model
 {
-    protected $table = 'creatives_ml';
+    protected $table = 'news_ml';
 
     public $timestamps = false;
 
@@ -14,5 +14,7 @@ class CreativeMl extends Model
         'id',
         'lng_id',
         'title',
+        'sub_title',
+        'text',
     ];
 }

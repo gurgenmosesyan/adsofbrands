@@ -57,10 +57,13 @@ class CreativeController extends BaseController
 
         if ($creative->isBrand()) {
             $type = BrandMl::current()->where('id', $creative->type_id)->first();
+            $typeName = $type == null ? '' : $type->title;
         } else if ($creative->isAgency()) {
             $type = AgencyMl::current()->where('id', $creative->type_id)->first();
+            $typeName = $type == null ? '' : $type->title;
+        } else {
+            $typeName = '';
         }
-        $typeName = $type == null ? '' : $type->title;
 
         return view('admin.creative.edit')->with([
             'creative' => $creative,

@@ -39,7 +39,7 @@ class CreativeSearch extends DataTable
     protected function constructQuery()
     {
         $cLngId = cLng('id');
-        $query = Creative::select('creatives.id', 'creatives.type', 'ml.name', 'brand.title as brand_title', 'agency.title as agency_title')
+        $query = Creative::select('creatives.id', 'creatives.type', 'ml.title', 'brand.title as brand_title', 'agency.title as agency_title')
             ->joinMl()
             ->leftJoin('brands_ml as brand', function($query) use($cLngId) {
                 $query->on('brand.id', '=', 'creatives.type_id')->where('brand.lng_id', '=', $cLngId);
@@ -49,7 +49,7 @@ class CreativeSearch extends DataTable
             });
 
         if ($this->search != null) {
-            $query->where('ml.name', 'LIKE', '%'.$this->search.'%');
+            $query->where('ml.title', 'LIKE', '%'.$this->search.'%');
         }
         return $query;
     }
@@ -61,7 +61,7 @@ class CreativeSearch extends DataTable
                 $orderCol = 'creatives.type';
                 break;
             case 'name':
-                $orderCol = 'ml.name';
+                $orderCol = 'ml.title';
                 break;
             default:
                 $orderCol = 'creatives.id';

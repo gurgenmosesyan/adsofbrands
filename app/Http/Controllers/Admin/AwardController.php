@@ -58,14 +58,12 @@ class AwardController extends BaseController
 
         if ($award->isBrand()) {
             $type = BrandMl::current()->where('id', $award->type_id)->first();
-            $typeName = $type == null ? '' : $type->title;
         } else if ($award->isAgency()) {
             $type = AgencyMl::current()->where('id', $award->type_id)->first();
-            $typeName = $type == null ? '' : $type->title;
         } else {
             $type = CreativeMl::current()->where('id', $award->type_id)->first();
-            $typeName = $type == null ? '' : $type->name;
         }
+        $typeName = $type == null ? '' : $type->title;
 
         return view('admin.award.edit')->with([
             'award' => $award,

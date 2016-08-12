@@ -84,4 +84,12 @@ Route::group($params, function () {
     Route::post('/award/update/{id}', ['uses' => 'AwardController@update', 'as' => 'admin_award_update']);
     Route::post('/award/delete/{id}', ['uses' => 'AwardController@delete', 'as' => 'admin_award_delete']);
 
+    Route::get('/news', ['uses' => 'NewsController@table', 'as' => 'admin_news_table']);
+    Route::get('/news/create', ['uses' => 'NewsController@create', 'as' => 'admin_news_create']);
+    Route::get('/news/edit/{id}', ['uses' => 'NewsController@edit', 'as' => 'admin_news_edit']);
+    Route::post('/news', ['uses' => 'NewsController@index', 'as' => 'admin_news_index']);
+    Route::post('/news/store', ['uses' => 'NewsController@store', 'as' => 'admin_news_store']);
+    Route::post('/news/update/{id}', ['uses' => 'NewsController@update', 'as' => 'admin_news_update']);
+    Route::post('/news/delete/{id}', ['uses' => 'NewsController@delete', 'as' => 'admin_news_delete']);
+
 });

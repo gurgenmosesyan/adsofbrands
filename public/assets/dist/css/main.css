@@ -4805,3 +4805,6 @@ table.text-center th {
 .ui-menu .ui-menu-item {
     padding: 4px 8px;
 }
+.icheckbox_minimal-blue {
+    margin-top: 7px !important;
+}

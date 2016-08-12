@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCreativesMlTable extends Migration
+class CreateNewsMlTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,12 @@ class CreateCreativesMlTable extends Migration
      */
     public function up()
     {
-        Schema::create('creatives_ml', function (Blueprint $table) {
+        Schema::create('news_ml', function (Blueprint $table) {
             $table->integer('id')->unsigned();
             $table->tinyInteger('lng_id')->unsigned();
             $table->string('title');
+            $table->string('sub_title');
+            $table->text('text');
             $table->primary(['id', 'lng_id']);
         });
     }
@@ -27,6 +29,6 @@ class CreateCreativesMlTable extends Migration
      */
     public function down()
     {
-        Schema::drop('creatives_ml');
+        Schema::drop('news_ml');
     }
 }

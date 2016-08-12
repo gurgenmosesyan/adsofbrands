@@ -1,0 +1,108 @@
+<?php
+use App\Models\News\News;
+use App\Core\Helpers\ImgUploader;
+
+$head->appendScript('/assets/plugins/ckeditor/ckeditor.js');
+$head->appendScript('/admin/news/news.js');
+
+$pageTitle = trans('admin.news.form.title');
+$pageMenu = 'news';
+if ($saveMode == 'add') {
+    $pageSubTitle = trans('admin.news.form.add.sub_title');
+    $url = route('admin_news_store');
+} else {
+    $pageSubTitle = trans('admin.news.form.edit.sub_title', ['id' => $news->id]);
+    $url = route('admin_news_update', $news->id);
+}
+$mls = $news->ml->keyBy('lng_id');
+?>
+@extends('core.layout')
+@section('content')
+    <form id="edit-form" class="form-horizontal" method="post" action="{{$url}}">
+        <div class="box-body">
+
+            @foreach($languages as $lng)
+                <div class="form-group">
+                    <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.title').' ('.$lng->code.')'}}</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="ml[{{$lng->id}}][title]" class="title form-control" value="{{isset($mls[$lng->id]) ? $mls[$lng->id]->title : ''}}">
+                        <div id="form-error-ml_{{$lng->id}}_title" class="form-error"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.sub_title').' ('.$lng->code.')'}}</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="ml[{{$lng->id}}][sub_title]" class="title form-control" value="{{isset($mls[$lng->id]) ? $mls[$lng->id]->sub_title : ''}}">
+                        <div id="form-error-ml_{{$lng->id}}_sub_title" class="form-error"></div>
+                    </div>
+                </div>
+            @endforeach
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.alias')}}</label>
+                <div class="col-sm-9">
+                    <input type="text" name="alias" class="alias form-control" value="{{$news->alias or ''}}">
+                    <div id="form-error-alias" class="form-error"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.image')}}</label>
+                <div class="col-sm-9">
+                    <?php ImgUploader::uploader('news', 'image', 'image', $news->image); ?>
+                </div>
+            </div>
+
+            @foreach($languages as $lng)
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">{{trans('admin.base.label.text').' ('.$lng->code.')'}}</label>
+                    <div class="col-sm-9">
+                        <textarea name="ml[{{$lng->id}}][text]" class="ckeditor">{{isset($mls[$lng->id]) ? $mls[$lng->id]->text : ''}}</textarea>
+                        <div id="form-error-ml_{{$lng->id}}_text" class="form-error"></div>
+                    </div>
+                </div>
+            @endforeach
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.top')}}</label>
+                <div class="col-sm-9">
+                    <input type="checkbox" name="top" class="minimal-checkbox" value="{{News::TOP}}"{{$news->top == News::TOP ? ' selected="selected"' : ''}}>
+                    <div id="form-error-top" class="form-error"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.brands')}}</label>
+                <div class="col-sm-9">
+                    <input type="text" id="brand-input" class="form-control" value="">
+                    <div id="brand-block" style="margin-top: 10px;"></div>
+                    <div id="form-error-brands" class="form-error"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.agencies')}}</label>
+                <div class="col-sm-9">
+                    <input type="text" id="agency-input" class="form-control" value="">
+                    <div id="agency-block" style="margin-top: 10px;"></div>
+                    <div id="form-error-agencies" class="form-error"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.creatives')}}</label>
+                <div class="col-sm-9">
+                    <input type="text" id="creative-input" class="form-control" value="">
+                    <div id="creative-block" style="margin-top: 10px;"></div>
+                    <div id="form-error-creatives" class="form-error"></div>
+                </div>
+            </div>
+
+            {{csrf_field()}}
+        </div>
+        <div class="box-footer">
+            <input type="submit" class="nav-btn nav-btn-save btn btn-primary" value="{{trans('admin.base.label.save')}}">
+            <a href="{{route('admin_news_table')}}" class="nav-btn nav-btn-cancel btn btn-default">{{trans('admin.base.label.cancel')}}</a>
+        </div>
+    </form>
+@stop

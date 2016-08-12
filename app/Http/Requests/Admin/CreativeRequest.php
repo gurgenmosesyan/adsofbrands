@@ -12,7 +12,7 @@ class CreativeRequest extends Request
         $rules = [
             'type' => 'required|in:'.Creative::TYPE_PERSONAL.','.Creative::TYPE_BRAND.','.Creative::TYPE_AGENCY,
             'ml' => 'ml',
-            'ml.*.name' => 'required|max:255'
+            'ml.*.title' => 'required|max:255'
         ];
 
         $type = $this->get('type');

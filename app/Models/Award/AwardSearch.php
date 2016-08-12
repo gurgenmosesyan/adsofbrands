@@ -29,7 +29,7 @@ class AwardSearch extends DataTable
             } else if ($value->isAgency()) {
                 $value->brand_agency_creative =  $value->agency_title;
             } else {
-                $value->brand_agency_creative =  $value->creative_name;
+                $value->brand_agency_creative =  $value->creative_title;
             }
             $value->type = trans('admin.base.label.'.$value->type);
         }
@@ -39,7 +39,7 @@ class AwardSearch extends DataTable
     protected function constructQuery()
     {
         $cLngId = cLng('id');
-        $query = Award::select('awards.id', 'awards.type', 'awards.year', 'ml.title', 'brand.title as brand_title', 'agency.title as agency_title', 'creative.name as creative_name')
+        $query = Award::select('awards.id', 'awards.type', 'awards.year', 'ml.title', 'brand.title as brand_title', 'agency.title as agency_title', 'creative.title as creative_title')
             ->joinMl()
             ->leftJoin('brands_ml as brand', function($query) use($cLngId) {
                 $query->on('brand.id', '=', 'awards.type_id')->where('brand.lng_id', '=', $cLngId);

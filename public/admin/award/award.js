@@ -60,7 +60,7 @@ $award.initSelectBox = function() {
                     typeSearch.removeLoading();
                     if (json.recordsTotal > 0) {
                         response($.map(json.data , function(item) {
-                            item.label = item.title ? item.title : item.name;
+                            item.label = item.title;
                             return item;
                         }));
                     }
