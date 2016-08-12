@@ -37,6 +37,9 @@ class NewsController extends BaseController
         return view('admin.news.edit')->with([
             'news' => $news,
             'languages' => $languages,
+            'brands' => [],
+            'agencies' => [],
+            'creatives' => [],
             'saveMode' => 'add'
         ]);
     }
@@ -51,10 +54,16 @@ class NewsController extends BaseController
     {
         $news = News::where('id', $id)->firstOrFail();
         $languages = Language::all();
+        $brands = $news->brands()->select('brands.id', 'ml.title')->joinMl()->get();
+        $agencies = $news->agencies()->select('agencies.id', 'ml.title')->joinMl()->get();
+        $creatives = $news->creatives()->select('creatives.id', 'ml.title')->joinMl()->get();
 
         return view('admin.news.edit')->with([
             'news' => $news,
             'languages' => $languages,
+            'brands' => $brands,
+            'agencies' => $agencies,
+            'creatives' => $creatives,
             'saveMode' => 'edit'
         ]);
     }

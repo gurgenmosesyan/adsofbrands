@@ -9,6 +9,7 @@ class NewsManager
 {
     public function store($data)
     {
+        $data = $this->processSave($data);
         $news = new News($data);
         SaveImage::save($data['image'], $news);
 
@@ -24,6 +25,7 @@ class NewsManager
     public function update($id, $data)
     {
         $news = News::where('id', $id)->firstOrFail();
+        $data = $this->processSave($data);
         SaveImage::save($data['image'], $news);
 
         DB::transaction(function() use($data, $news) {
@@ -33,6 +35,20 @@ class NewsManager
             $this->updateAgencies($data['agencies'], $news, true);
             $this->updateCreatives($data['creatives'], $news, true);
         });
+    }
+
+    protected function processSave($data)
+    {
+        if (!isset($data['brands'])) {
+            $data['brands'] = [];
+        }
+        if (!isset($data['agencies'])) {
+            $data['agencies'] = [];
+        }
+        if (!isset($data['creatives'])) {
+            $data['creatives'] = [];
+        }
+        return $data;
     }
 
     protected function storeMl($data, News $news)
@@ -82,6 +98,7 @@ class NewsManager
             NewsMl::where('id', $id)->delete();
             DB::table('news_brands')->where('news_id', $id)->delete();
             DB::table('news_agencies')->where('news_id', $id)->delete();
+            DB::table('news_creatives')->where('news_id', $id)->delete();
         });
     }
 }

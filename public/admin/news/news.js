@@ -77,7 +77,8 @@ $news.initTypeAutoComplete = function(type) {
                 dataType: 'json',
                 data: {
                     search : {
-                        value : request.term
+                        title : request.term,
+                        skip_ids: skipIds
                     },
                     _token : $main.token
                 },
@@ -95,10 +96,10 @@ $news.initTypeAutoComplete = function(type) {
     });
 };
 
-$news.generateTypes = function() {
-    if (!$.isEmptyObject($news.types)) {
-        for (var i in $news.relatedNews) {
-            $news.generateRelatedNewsHtml($news.relatedNews[i].current.title, $news.relatedNews[i].id);
+$news.generateTypes = function(data, type) {
+    if (!$.isEmptyObject(data)) {
+        for (var i in data) {
+            $news.generateTypeHtml(data[i].title, data[i].id, type);
         }
     }
 };
@@ -112,11 +113,13 @@ $news.initEditPage = function() {
     });
 
     $news.initTypeAutoComplete('brand');
-    //$news.generateTypes();
+    $news.generateTypes($news.brands, 'brand');
 
     $news.initTypeAutoComplete('agency');
+    $news.generateTypes($news.agencies, 'agency');
 
     $news.initTypeAutoComplete('creative');
+    $news.generateTypes($news.creatives, 'creative');
 
     //CKEDITOR.config.height = 120;
 };

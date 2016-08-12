@@ -92,4 +92,12 @@ Route::group($params, function () {
     Route::post('/news/update/{id}', ['uses' => 'NewsController@update', 'as' => 'admin_news_update']);
     Route::post('/news/delete/{id}', ['uses' => 'NewsController@delete', 'as' => 'admin_news_delete']);
 
+    Route::get('/commercial', ['uses' => 'CommercialController@table', 'as' => 'admin_commercial_table']);
+    Route::get('/commercial/create', ['uses' => 'CommercialController@create', 'as' => 'admin_commercial_create']);
+    Route::get('/commercial/edit/{id}', ['uses' => 'CommercialController@edit', 'as' => 'admin_commercial_edit']);
+    Route::post('/commercial', ['uses' => 'CommercialController@index', 'as' => 'admin_commercial_index']);
+    Route::post('/commercial/store', ['uses' => 'CommercialController@store', 'as' => 'admin_commercial_store']);
+    Route::post('/commercial/update/{id}', ['uses' => 'CommercialController@update', 'as' => 'admin_commercial_update']);
+    Route::post('/commercial/delete/{id}', ['uses' => 'CommercialController@delete', 'as' => 'admin_commercial_delete']);
+
 });

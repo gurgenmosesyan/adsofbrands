@@ -9,6 +9,7 @@
     <li{{$pageMenu == 'creative' ? ' class=active' : ''}}><a href="{{route('admin_creative_table')}}"><i class="fa fa-user"></i> <span>{{trans('admin.creative.form.title')}}</span></a></li>
     <li{{$pageMenu == 'award' ? ' class=active' : ''}}><a href="{{route('admin_award_table')}}"><i class="fa fa-gift"></i> <span>{{trans('admin.award.form.title')}}</span></a></li>
     <li{{$pageMenu == 'news' ? ' class=active' : ''}}><a href="{{route('admin_news_table')}}"><i class="fa fa-rss"></i> <span>{{trans('admin.news.form.title')}}</span></a></li>
+    <li{{$pageMenu == 'commercial' ? ' class=active' : ''}}><a href="{{route('admin_commercial_table')}}"><i class="fa fa-bullhorn"></i> <span>{{trans('admin.commercial.form.title')}}</span></a></li>
     <li class="treeview{{$pageMenu == 'admin' || $pageMenu == 'language' || $pageMenu == 'dictionary' ? ' active' : ''}}">
         <a href="#">
             <i class="fa fa-wrench"></i> <span>{{trans('admin.admin_menu.system')}}</span> <i class="fa fa-angle-left pull-right"></i>

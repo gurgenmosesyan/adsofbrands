@@ -116,4 +116,5 @@ return array (
   'base.label.agencies' => 'Agencies',
   'base.label.creatives' => 'Creatives',
   'news.form.edit.sub_title' => 'News № :id',
+  'commercial.form.title' => 'Commercials',
 );

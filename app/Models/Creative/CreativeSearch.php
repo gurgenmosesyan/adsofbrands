@@ -51,6 +51,12 @@ class CreativeSearch extends DataTable
         if ($this->search != null) {
             $query->where('ml.title', 'LIKE', '%'.$this->search.'%');
         }
+        if (isset($this->searchData['title'])) {
+            $query->where('ml.title', 'LIKE', '%'.$this->searchData['title'].'%');
+        }
+        if (isset($this->searchData['skip_ids'])) {
+            $query->whereNotIn('creatives.id', $this->searchData['skip_ids']);
+        }
         return $query;
     }
 

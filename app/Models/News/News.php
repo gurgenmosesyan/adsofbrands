@@ -21,6 +21,11 @@ class News extends Model
 
     protected $table = 'news';
 
+    public function isTop()
+    {
+        return $this->top == self::TOP;
+    }
+
     public function getImage()
     {
         return url('/'.self::IMAGES_PATH.'/'.$this->image);
