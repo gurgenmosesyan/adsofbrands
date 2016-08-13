@@ -13,8 +13,11 @@ class CreateCommercialsMlTable extends Migration
     public function up()
     {
         Schema::create('commercials_ml', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+            $table->integer('id')->unsigned();
+            $table->tinyInteger('lng_id')->unsigned();
+            $table->string('title');
+            $table->text('description');
+            $table->primary(['id', 'lng_id']);
         });
     }
 

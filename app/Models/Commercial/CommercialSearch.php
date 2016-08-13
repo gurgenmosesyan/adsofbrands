@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Models\Brand;
+namespace App\Models\Commercial;
 
 use App\Core\DataTable;
 
-class BrandSearch extends DataTable
+class CommercialSearch extends DataTable
 {
     public function totalCount()
     {
-        return Brand::count();
+        return Commercial::count();
     }
 
     public function filteredCount()
@@ -27,7 +27,7 @@ class BrandSearch extends DataTable
 
     protected function constructQuery()
     {
-        $query = Brand::joinMl();
+        $query = Commercial::joinMl();
 
         if ($this->search != null) {
             $query->where('ml.title', 'LIKE', '%'.$this->search.'%');
@@ -36,7 +36,7 @@ class BrandSearch extends DataTable
             $query->where('ml.title', 'LIKE', '%'.$this->searchData['title'].'%');
         }
         if (isset($this->searchData['skip_ids'])) {
-            $query->whereNotIn('brands.id', $this->searchData['skip_ids']);
+            $query->whereNotIn('commercials.id', $this->searchData['skip_ids']);
         }
         return $query;
     }
@@ -48,7 +48,7 @@ class BrandSearch extends DataTable
                 $orderCol = 'ml.title';
                 break;
             default:
-                $orderCol = 'brands.id';
+                $orderCol = 'commercials.id';
         }
         $orderType = 'desc';
         if ($this->orderType == 'asc') {

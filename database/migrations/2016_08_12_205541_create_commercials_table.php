@@ -18,12 +18,18 @@ class CreateCommercialsTable extends Migration
             $table->integer('media_type_id')->unsigned();
             $table->integer('industry_type_id')->unsigned();
             $table->integer('country_id')->unsigned();
+            $table->integer('category_id')->unsigned();
+            $table->string('alias');
+            $table->enum('type', [Commercial::TYPE_VIDEO, Commercial::TYPE_PRINT]);
+            $table->text('embed_code');
+            $table->string('image_print');
             $table->enum('featured', [Commercial::NOT_FEATURED, Commercial::FEATURED]);
             $table->enum('top', [Commercial::NOT_TOP, Commercial::TOP]);
             $table->date('published_date');
             $table->string('image');
-            $table->string('image_big');
             $table->integer('views_count')->unsigned();
+            $table->float('rating')->unsigned();
+            $table->integer('qt')->unsigned();
             $table->timestamps();
         });
     }
