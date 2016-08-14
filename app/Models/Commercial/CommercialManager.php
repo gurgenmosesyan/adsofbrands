@@ -18,6 +18,7 @@ class CommercialManager
             $commercial->save();
             $this->storeMl($data['ml'], $commercial);
             $this->updateTags($data['tags'], $commercial);
+            $this->updateCredits($data['credits'], $commercial);
         });
     }
 
@@ -32,6 +33,7 @@ class CommercialManager
             $commercial->update($data);
             $this->updateMl($data['ml'], $commercial);
             $this->updateTags($data['tags'], $commercial, true);
+            $this->updateCredits($data['credits'], $commercial, true);
         });
     }
 
@@ -45,6 +47,9 @@ class CommercialManager
         }
         if (!isset($data['tags'])) {
             $data['tags'] = [];
+        }
+        if (!isset($data['credits'])) {
+            $data['credits'] = [];
         }
         return $data;
     }
@@ -76,6 +81,36 @@ class CommercialManager
         }
         if (!empty($tags)) {
             $commercial->tags()->saveMany($tags);
+        }
+    }
+
+    protected function updateCredits($data, Commercial $commercial, $editMode = false)
+    {
+        if ($editMode) {
+            $creditIds = CommercialCredit::where('commercial_id')->lists('id')->toArray();
+            CommercialCredit::where('commercial_id')->delete();
+            CommercialCreditPerson::whereIn('credit_id', $creditIds)->delete();
+        }
+        $credits = [];
+        if (!empty($data)) {
+            $maxId = CommercialCredit::select(DB::raw('MAX(id) as id'))->where('commercial_id', $commercial->id)->first();
+            if ($maxId == null) {
+                $maxId = 1;
+            } else {
+                $maxId = $maxId->id + 1;
+            }
+            $i = $maxId;
+            foreach ($data as $key => $value) {
+                $credits[] = new CommercialCredit([
+                    'id' => $i,
+                    'commercial_id' => $commercial->id,
+                    'position' => $value['position'],
+                    'sort_order' => $value['sort_order']
+                ]);
+                foreach ($value['persons'] as $person) {
+
+                }
+            }
         }
     }
 

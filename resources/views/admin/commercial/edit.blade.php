@@ -23,7 +23,7 @@ $jsTrans->addTrans([
     'admin.base.label.creative',
     'admin.base.label.brand',
     'admin.base.label.agency',
-    'admin.base.label.sort',
+    'admin.base.label.sort'
 ]);
 ?>
 @extends('core.layout')

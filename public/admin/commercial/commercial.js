@@ -89,31 +89,91 @@ $commercial.initTags = function() {
     }
 };
 
+$commercial.creditAutoComplete = function(html) {
+    //var input = $('#'+type+'-input');
+    var input = html.find('.name'),
+        hiddenInput = html.find('.name-hidden');
+    var onSelect = function (e,ui) {
+        if (ui.item) {
+            input.val(ui.item.label);
+            hiddenInput.val(ui.item.id);
+        } else {
+            input.val('');
+            hiddenInput.val('');
+        }
+        //return false;
+    };
+    input.autocomplete({
+        minLength : 1,
+        source : function(request, response) {
+            var searchVal = request.term;
+            if (searchVal.substr(0, 1) != '@' || searchVal.length < 3) {
+                return;
+            }
+            searchVal = searchVal.substr(1);
+            var url = html.find('.type').val();
+            var skipIds = [];
+            /*$('.'+type+'-input').each(function() {
+                skipIds.push($(this).val());
+            });*/
+            input.loading();
+            $.ajax({
+                type: 'post',
+                url: '/admpanel/'+url,
+                dataType: 'json',
+                data: {
+                    search : {
+                        title : searchVal,
+                        skip_ids: skipIds
+                    },
+                    _token : $main.token
+                },
+                success: function(result) {
+                    response($.map(result.data, function(item) {
+                        item.label = '@'+item.title;
+                        return item;
+                    }));
+                    input.removeLoading();
+                }
+            });
+        },
+        select : onSelect,
+        change : onSelect
+    });
+};
+
 $commercial.addCreditPerson = function(personsBox, index) {
     var personIndex = $commercial.personIndex,
         html;
-    html =  '<div class="col-sm-3 no-padding">'+
-                '<select name="credits['+index+'][type]" class="form-control">'+
-                     '<option value="creative">'+$trans.get('admin.base.label.creative')+'</option>'+
-                     '<option value="brand">'+$trans.get('admin.base.label.brand')+'</option>'+
-                     '<option value="agency">'+$trans.get('admin.base.label.agency')+'</option>'+
-                 '</select>'+
-             '</div>'+
-             '<div class="col-sm-5 no-padding">' +
-                 '<input type="text" name="credits['+index+'][persons]['+personIndex+'][name]" class="form-control" value="" placeholder="'+$trans.get('admin.base.label.name')+'">'+
-                 '<input type="hidden" name="credits['+index+'][persons]['+personIndex+'][name]">'+
-             '</div>'+
-             '<div class="col-sm-1 no-padding separator">'+
-                 '<input type="text" name="credits['+index+'][persons]['+personIndex+'][separator]" class="form-control" value=",">'+
-             '</div>'+
-                 '<div class="col-sm-1 no-padding">'+
-                 '<a href="#" class="btn btn-default remove"><i class="fa fa-remove"></i></a>'+
-             '</div>';
+    html =  '<div class="clearfix">'+
+                 '<div class="col-sm-3 no-padding">'+
+                    '<select name="credits['+index+'][persons]['+personIndex+'][type]" class="type form-control">'+
+                         '<option value="creative">'+$trans.get('admin.base.label.creative')+'</option>'+
+                         '<option value="brand">'+$trans.get('admin.base.label.brand')+'</option>'+
+                         '<option value="agency">'+$trans.get('admin.base.label.agency')+'</option>'+
+                    '</select>'+
+                    '<div id="form-error-credits_'+index+'_persons_'+personIndex+'_type" class="form-error"></div>'+
+                 '</div>'+
+                 '<div class="col-sm-5 no-padding">' +
+                     '<input type="text" name="credits['+index+'][persons]['+personIndex+'][name]" class="name form-control" value="" placeholder="'+$trans.get('admin.base.label.name')+'">'+
+                     '<input type="hidden" name="credits['+index+'][persons]['+personIndex+'][type_id]" class="name-hidden">'+
+                     '<div id="form-error-credits_'+index+'_persons_'+personIndex+'_name" class="form-error"></div>'+
+                     '<div id="form-error-credits_'+index+'_persons_'+personIndex+'_type_id" class="form-error"></div>'+
+                 '</div>'+
+                 '<div class="col-sm-1 no-padding separator">'+
+                     '<input type="text" name="credits['+index+'][persons]['+personIndex+'][separator]" class="form-control" value=",">'+
+                     '<div id="form-error-credits_'+index+'_persons_'+personIndex+'_separator" class="form-error"></div>'+
+                 '</div>'+
+                     '<div class="col-sm-1 no-padding">'+
+                     '<a href="#" class="btn btn-default remove"><i class="fa fa-remove"></i></a>'+
+                 '</div>'+
+            '</div>';
     html = $(html);
     $('.remove', html).on('click', function() {
         html.remove();
         return false;
     });
+    $commercial.creditAutoComplete(html);
     personsBox.append(html);
     $commercial.personIndex++;
 };
@@ -125,27 +185,35 @@ $commercial.addCredit = function() {
     html =  '<div class="clearfix">'+
                 '<div class="col-sm-3 no-padding">'+
                     '<input type="text" name="credits['+index+'][position]" class="form-control" value="" placeholder="'+$trans.get('admin.base.label.position')+'">'+
+                    '<div id="form-error-credits_'+index+'_position" class="form-error"></div>'+
                 '</div>'+
                 '<div class="col-sm-1 no-padding sort-order">'+
                     '<input type="text" name="credits['+index+'][sort_order]" class="form-control" value="" placeholder="'+$trans.get('admin.base.label.sort')+'">'+
+                    '<div id="form-error-credits_'+index+'_sort_order" class="form-error"></div>'+
                 '</div>'+
                 '<div class="col-sm-7 no-padding persons">'+
-                    '<div class="col-sm-3 no-padding">'+
-                        '<select name="credits['+index+'][type]" class="form-control">'+
-                            '<option value="creative">'+$trans.get('admin.base.label.creative')+'</option>'+
-                            '<option value="brand">'+$trans.get('admin.base.label.brand')+'</option>'+
-                            '<option value="agency">'+$trans.get('admin.base.label.agency')+'</option>'+
-                        '</select>'+
-                    '</div>'+
-                    '<div class="col-sm-5 no-padding">' +
-                        '<input type="text" name="credits['+index+'][persons]['+personIndex+'][name]" class="form-control" value="" placeholder="'+$trans.get('admin.base.label.name')+'">'+
-                        '<input type="hidden" name="credits['+index+'][persons]['+personIndex+'][name]">'+
-                    '</div>'+
-                    '<div class="col-sm-1 no-padding separator">'+
-                        '<input type="text" name="credits['+index+'][persons]['+personIndex+'][separator]" class="form-control" value=",">'+
-                    '</div>'+
-                    '<div class="col-sm-1 no-padding">'+
-                        '<a href="#" class="btn btn-default add-person"><i class="fa fa-plus"></i></a>'+
+                    '<div class="clearfix">'+
+                        '<div class="col-sm-3 no-padding">'+
+                            '<select name="credits['+index+'][persons]['+personIndex+'][type]" class="type form-control">'+
+                                '<option value="creative">'+$trans.get('admin.base.label.creative')+'</option>'+
+                                '<option value="brand">'+$trans.get('admin.base.label.brand')+'</option>'+
+                                '<option value="agency">'+$trans.get('admin.base.label.agency')+'</option>'+
+                            '</select>'+
+                            '<div id="form-error-credits_'+index+'_persons_'+personIndex+'_type" class="form-error"></div>'+
+                        '</div>'+
+                        '<div class="col-sm-5 no-padding">' +
+                            '<input type="text" name="credits['+index+'][persons]['+personIndex+'][name]" class="name form-control" value="" placeholder="'+$trans.get('admin.base.label.name')+'">'+
+                            '<input type="hidden" name="credits['+index+'][persons]['+personIndex+'][type_id]" class="name-hidden">'+
+                            '<div id="form-error-credits_'+index+'_persons_'+personIndex+'_name" class="form-error"></div>'+
+                            '<div id="form-error-credits_'+index+'_persons_'+personIndex+'_type_id" class="form-error"></div>'+
+                        '</div>'+
+                        '<div class="col-sm-1 no-padding separator">'+
+                            '<input type="text" name="credits['+index+'][persons]['+personIndex+'][separator]" class="form-control" value=",">'+
+                            '<div id="form-error-credits_'+index+'_persons_'+personIndex+'_separator" class="form-error"></div>'+
+                        '</div>'+
+                        '<div class="col-sm-1 no-padding">'+
+                            '<a href="#" class="btn btn-default add-person"><i class="fa fa-plus"></i></a>'+
+                        '</div>'+
                     '</div>'+
                 '</div>'+
                 '<div class="col-sm-1 no-padding last">'+
@@ -157,6 +225,7 @@ $commercial.addCredit = function() {
         html.remove();
         return false;
     });
+    $commercial.creditAutoComplete(html);
     $('.add-person', html).on('click', function() {
         $commercial.addCreditPerson($('.persons', html), index);
         return false;
