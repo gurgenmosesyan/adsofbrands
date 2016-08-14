@@ -3,6 +3,7 @@ use App\Models\Commercial\Commercial;
 use App\Core\Helpers\ImgUploader;
 use App\Core\Helpers\Calendar;
 
+$head->appendStyle('/admin/commercial/commercial.css');
 $head->appendScript('/admin/commercial/commercial.js');
 
 $pageTitle = trans('admin.commercial.form.title');
@@ -18,9 +19,11 @@ $mls = $commercial->ml->keyBy('lng_id');
 
 $jsTrans->addTrans([
     'admin.base.label.position',
+    'admin.base.label.name',
     'admin.base.label.creative',
     'admin.base.label.brand',
     'admin.base.label.agency',
+    'admin.base.label.sort',
 ]);
 ?>
 @extends('core.layout')
@@ -146,7 +149,7 @@ $jsTrans->addTrans([
             <label class="col-sm-3 control-label">{{trans('admin.base.label.credits')}}</label>
             <div class="col-sm-9">
                 <div id="credits"></div>
-                <a href="#" class="btn btn-default"><i class="fa fa-plus"></i></a>
+                <a href="#" id="add-credit" class="btn btn-default"><i class="fa fa-plus"></i></a>
                 <div id="form-error-credits" class="form-error"></div>
             </div>
         </div>

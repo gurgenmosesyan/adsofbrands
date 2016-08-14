@@ -134,4 +134,5 @@ return array (
   'base.label.tags' => 'Tags',
   'base.label.credits' => 'Credits',
   'base.label.position' => 'Position',
+  'base.label.sort' => 'Sort',
 );

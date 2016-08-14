@@ -54,6 +54,9 @@ $commercial.initType = function() {
 };
 
 $commercial.addTag = function(tag) {
+    if (!tag) {
+        return;
+    }
     var html =  '<div class="tag">'+
                     '#' + tag+
                     ' <a href="#" class="remove"><i class="fa fa-remove"></i></a>'+
@@ -71,8 +74,12 @@ $commercial.addTag = function(tag) {
 $commercial.initTags = function() {
     var tag = $('#tag');
     tag.change(function() {
-        if (tag.val()) {
+        $commercial.addTag(tag.val());
+    });
+    tag.keydown(function(e) {
+        if (e.keyCode == 13 || e.keyCode == 9 ) {
             $commercial.addTag(tag.val());
+            return false;
         }
     });
     if (!$.isEmptyObject($commercial.tags)) {
@@ -82,30 +89,81 @@ $commercial.initTags = function() {
     }
 };
 
+$commercial.addCreditPerson = function(personsBox, index) {
+    var personIndex = $commercial.personIndex,
+        html;
+    html =  '<div class="col-sm-3 no-padding">'+
+                '<select name="credits['+index+'][type]" class="form-control">'+
+                     '<option value="creative">'+$trans.get('admin.base.label.creative')+'</option>'+
+                     '<option value="brand">'+$trans.get('admin.base.label.brand')+'</option>'+
+                     '<option value="agency">'+$trans.get('admin.base.label.agency')+'</option>'+
+                 '</select>'+
+             '</div>'+
+             '<div class="col-sm-5 no-padding">' +
+                 '<input type="text" name="credits['+index+'][persons]['+personIndex+'][name]" class="form-control" value="" placeholder="'+$trans.get('admin.base.label.name')+'">'+
+                 '<input type="hidden" name="credits['+index+'][persons]['+personIndex+'][name]">'+
+             '</div>'+
+             '<div class="col-sm-1 no-padding separator">'+
+                 '<input type="text" name="credits['+index+'][persons]['+personIndex+'][separator]" class="form-control" value=",">'+
+             '</div>'+
+                 '<div class="col-sm-1 no-padding">'+
+                 '<a href="#" class="btn btn-default remove"><i class="fa fa-remove"></i></a>'+
+             '</div>';
+    html = $(html);
+    $('.remove', html).on('click', function() {
+        html.remove();
+        return false;
+    });
+    personsBox.append(html);
+    $commercial.personIndex++;
+};
+
 $commercial.addCredit = function() {
     var index = $commercial.creditIndex,
         personIndex = $commercial.personIndex,
         html;
-    html =  '<div class="row">'+
-                '<div class="col-sm-4">'+
+    html =  '<div class="clearfix">'+
+                '<div class="col-sm-3 no-padding">'+
                     '<input type="text" name="credits['+index+'][position]" class="form-control" value="" placeholder="'+$trans.get('admin.base.label.position')+'">'+
                 '</div>'+
-                '<div class="col-sm-2">'+
-                    '<input type="text" name="credits['+index+'][sort_order]" class="form-control" value="">'+
+                '<div class="col-sm-1 no-padding sort-order">'+
+                    '<input type="text" name="credits['+index+'][sort_order]" class="form-control" value="" placeholder="'+$trans.get('admin.base.label.sort')+'">'+
                 '</div>'+
-                '<div class="col-sm-3">'+
-                    '<select name="credits['+index+'][type]" class="form-control">'+
-                        '<option value="creative">'+$trans.get('admin.base.label.creative')+'</option>'+
-                        '<option value="brand">'+$trans.get('admin.base.label.brand')+'</option>'+
-                        '<option value="agency">'+$trans.get('admin.base.label.agency')+'</option>'+
-                    '</select>'+
+                '<div class="col-sm-7 no-padding persons">'+
+                    '<div class="col-sm-3 no-padding">'+
+                        '<select name="credits['+index+'][type]" class="form-control">'+
+                            '<option value="creative">'+$trans.get('admin.base.label.creative')+'</option>'+
+                            '<option value="brand">'+$trans.get('admin.base.label.brand')+'</option>'+
+                            '<option value="agency">'+$trans.get('admin.base.label.agency')+'</option>'+
+                        '</select>'+
+                    '</div>'+
+                    '<div class="col-sm-5 no-padding">' +
+                        '<input type="text" name="credits['+index+'][persons]['+personIndex+'][name]" class="form-control" value="" placeholder="'+$trans.get('admin.base.label.name')+'">'+
+                        '<input type="hidden" name="credits['+index+'][persons]['+personIndex+'][name]">'+
+                    '</div>'+
+                    '<div class="col-sm-1 no-padding separator">'+
+                        '<input type="text" name="credits['+index+'][persons]['+personIndex+'][separator]" class="form-control" value=",">'+
+                    '</div>'+
+                    '<div class="col-sm-1 no-padding">'+
+                        '<a href="#" class="btn btn-default add-person"><i class="fa fa-plus"></i></a>'+
+                    '</div>'+
                 '</div>'+
-                '<div class="col-sm-4">' +
-                    '<input type="text" name="credits['+index+'][persons]['+personIndex+'][name]">'+
-                    '<input type="hidden" name="credits['+index+'][persons]['+personIndex+'][name]">'+
+                '<div class="col-sm-1 no-padding last">'+
+                    '<a href="#" class="btn btn-default remove"><i class="fa fa-remove"></i></a>'+
                 '</div>'+
             '</div>';
     html = $(html);
+    $('.remove', html).on('click', function() {
+        html.remove();
+        return false;
+    });
+    $('.add-person', html).on('click', function() {
+        $commercial.addCreditPerson($('.persons', html), index);
+        return false;
+    });
+    $('#credits').append(html);
+    $commercial.creditIndex++;
+    $commercial.personIndex++;
 };
 
 $commercial.initCredits = function() {
