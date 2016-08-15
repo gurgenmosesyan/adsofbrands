@@ -18,7 +18,7 @@ class CommercialManager
             $commercial->save();
             $this->storeMl($data['ml'], $commercial);
             $this->updateTags($data['tags'], $commercial);
-            $this->updateCredits($data['credits'], $commercial);
+            $this->storeCredits($data['credits'], $commercial);
         });
     }
 
@@ -84,41 +84,146 @@ class CommercialManager
         }
     }
 
-    protected function updateCredits($data, Commercial $commercial, $editMode = false)
+    protected function updateCreatives($commercialId, $creatives, $oldCreatives)
     {
-        if ($editMode) {
-            $creditIds = CommercialCredit::where('commercial_id')->lists('id')->toArray();
-            CommercialCredit::where('commercial_id')->delete();
-            CommercialCreditPerson::whereIn('credit_id', $creditIds)->delete();
-        }
-        $credits = [];
-        if (!empty($data)) {
-            $maxId = CommercialCredit::select(DB::raw('MAX(id) as id'))->where('commercial_id', $commercial->id)->first();
-            if ($maxId == null) {
-                $maxId = 1;
-            } else {
-                $maxId = $maxId->id + 1;
+        $commercialId = intval($commercialId);
+        if (empty($creatives)) {
+            $sql = "SELECT `id` FROM `commercial_creative` WHERE `commercial_id` = {$commercialId} ";
+            $com_cr_ids = Yii::app()->db->createCommand($sql)->queryColumn();
+            if (!empty($com_cr_ids)) {
+                $idsStr = "";
+                foreach ($com_cr_ids AS $com_cr_id) {
+                    $idsStr .= intval($com_cr_id) . ",";
+                }
+                $idsStr = rtrim($idsStr, ",");
+                $sql = "DELETE FROM `commercial_creative_rel` WHERE `com_cr_id` IN ( {$idsStr} ) ";
+                Yii::app()->db->createCommand($sql)->execute();
             }
-            $i = $maxId;
-            foreach ($data as $key => $value) {
-                $credits[] = new CommercialCredit([
-                    'id' => $i,
-                    'commercial_id' => $commercial->id,
-                    'position' => $value['position'],
-                    'sort_order' => $value['sort_order']
-                ]);
-                foreach ($value['persons'] as $person) {
+            $sql = "DELETE FROM `commercial_creative` WHERE `commercial_id` = {$commercialId} ";
+            Yii::app()->db->createCommand($sql)->execute();
+
+            return;
+        }
+
+        foreach ($creatives AS $key => $creative) {
+            $i = 1;
+            if (isset($creative['id'])) {
+                $creative['id'] = intval($creative['id']);
+                if (in_array($creative['id'], $oldCreatives)) {
+
+                    unset($oldCreatives[array_search($creative['id'], $oldCreatives)]);
+
+                    $creative['position'] = addslashes($creative['position']);
+                    $sql = "UPDATE `commercial_creative` SET `position` = '{$creative['position']}' WHERE `id` = {$creative['id']} ";
+                    Yii::app()->db->createCommand($sql)->execute();
+
+                    $sql = "DELETE FROM `commercial_creative_rel` WHERE `com_cr_id` = {$creative['id']} ";
+                    Yii::app()->db->createCommand($sql)->execute();
+                    $insertStr = '';
+                    foreach ($creative['creatives'] AS $creativeRel) {
+                        $creativeRel['creative_id'] = intval($creativeRel['creative_id']);
+                        $creativeRel['creative_name'] = addslashes($creativeRel['creative_name']);
+                        $creativeRel['creative_separator'] = empty($creativeRel['creative_separator']) ? ',' : addslashes($creativeRel['creative_separator']);
+                        $insertStr .= "( {$creative['id']}, {$creativeRel['creative_id']}, '{$creativeRel['creative_name']}', '{$creativeRel['creative_separator']}', {$i} ),";
+                        $i++;
+                    }
+                    $insertStr = rtrim($insertStr, ",");
+
+                    $sql = "INSERT INTO `commercial_creative_rel` (`com_cr_id`, `creative_id`, `creative_name`, `creative_separator`, `sort_order`) VALUES {$insertStr} ";
+                    Yii::app()->db->createCommand($sql)->execute();
+
+                    unset($creatives[$key]);
 
                 }
             }
         }
+
+        if (!empty($oldCreatives)) {
+            $skipIdsStr = '';
+            foreach ($oldCreatives AS $oldCreativeId) {
+                $skipIdsStr .= intval($oldCreativeId) . ",";
+            }
+            $skipIdsStr = rtrim($skipIdsStr, ",");
+            $sql = "DELETE FROM `commercial_creative` WHERE `id` IN ( {$skipIdsStr} ) ";
+            Yii::app()->db->createCommand($sql)->execute();
+            $sql = "DELETE FROM `commercial_creative_rel` WHERE `com_cr_id` IN ( {$skipIdsStr} ) ";
+            Yii::app()->db->createCommand($sql)->execute();
+        }
+
+        if (!empty($creatives)) {
+            $this->addCreatives($commercialId, $creatives);
+        }
     }
+
+    protected function storeCredits($credits, Commercial $commercial)
+    {
+        foreach ($credits as $value) {
+            $value['commercial_id'] = $commercial->id;
+            $credit = new CommercialCredit($value);
+            $credit->save();
+            /*$credit['position'] = addslashes($credit['position']);
+            $sql = "INSERT INTO `commercial_creative` (`commercial_id`, `position`) VALUES ( {$commercialId}, '{$credit['position']}' ) ";
+            Yii::app()->db->createCommand($sql)->execute();
+            $com_cr_id = Yii::app()->db->getLastInsertID();
+            $com_cr_id = intval($com_cr_id);*/
+
+            $persons = [];
+            foreach ($value['persons'] as $person) {
+
+                if (mb_substr($person['name'], 0, 1) == '@') {
+                    $person['name'] = '';
+                } else {
+                    $person['type_id'] = 0;
+                }
+                $persons[] = new CommercialCreditPerson($person);
+
+                /*$person['creative_id'] = intval($person['creative_id']);
+                $person['creative_name'] = addslashes($person['creative_name']);
+                $person['creative_separator'] = empty($person['creative_separator']) ? ',' : addslashes($person['creative_separator']);
+                $sql = "REPLACE INTO `commercial_creative_rel` (`com_cr_id`, `creative_id`, `creative_name`, `creative_separator`, `sort_order`) VALUES ( {$com_cr_id}, {$person['creative_id']}, '{$person['creative_name']}', '{$person['creative_separator']}', {$i} ) ";
+                Yii::app()->db->createCommand($sql)->execute();*/
+            }
+            $credit->persons()->saveMany($persons);
+        }
+    }
+
+    /*protected function updateCredits($data, Commercial $commercial, $editMode = false)
+    {
+        if ($editMode) {
+            $creditIds = CommercialCredit::where('commercial_id', $commercial->id)->lists('id')->toArray();
+            CommercialCreditPerson::whereIn('credit_id', $creditIds)->delete();
+            if (empty($data)) {
+                CommercialCredit::where('commercial_id', $commercial->id)->delete();
+            }
+        }
+        $credits = [];
+        if (empty($data)) {
+
+        }
+        //$maxId = CommercialCredit::select(DB::raw('MAX(id) as id'))->where('commercial_id', $commercial->id)->first();
+        foreach ($data as $key => $value) {
+            if (!empty($value['id'])) {
+
+            }
+            $credits[] = new CommercialCredit([
+                'commercial_id' => $commercial->id,
+                'position' => $value['position'],
+                'sort_order' => $value['sort_order']
+            ]);
+            foreach ($value['persons'] as $person) {
+
+            }
+        }
+    }*/
 
     public function delete($id)
     {
         DB::transaction(function() use($id) {
             Commercial::where('id', $id)->delete();
             CommercialMl::where('id', $id)->delete();
+            $creditIds = CommercialCredit::where('commercial_id', $id)->lists('id')->toArray();
+            CommercialCredit::where('commercial_id', $id)->delete();
+            CommercialCreditPerson::whereIn('credit_id', $creditIds)->delete();
         });
     }
 }

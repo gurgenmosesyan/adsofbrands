@@ -22,7 +22,7 @@ class CommercialRequest extends Request
             'featured' => 'in:'.Commercial::NOT_FEATURED.','.Commercial::FEATURED,
             'top' => 'in:'.Commercial::NOT_TOP.','.Commercial::TOP,
             'published_date' => 'date',
-            'image' => 'required|core_image',
+            //'image' => 'required|core_image',
             'views_count' => 'integer',
             'rating' => 'numeric',
             'qt' => 'integer',

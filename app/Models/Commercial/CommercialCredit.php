@@ -11,9 +11,13 @@ class CommercialCredit extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'id',
         'commercial_id',
         'position',
         'sort_order'
     ];
+
+    public function persons()
+    {
+        return $this->hasMany(CommercialCreditPerson::class, 'credit_id', 'id');
+    }
 }

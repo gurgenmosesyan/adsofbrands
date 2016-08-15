@@ -23,7 +23,6 @@ class CreateCommercialCreditPersons extends Migration
             $table->integer('type_id')->unsigned();
             $table->string('name');
             $table->string('separator', 5);
-            $table->timestamps();
         });
     }
 

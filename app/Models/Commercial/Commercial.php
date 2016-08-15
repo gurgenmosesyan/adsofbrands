@@ -67,6 +67,11 @@ class Commercial extends Model
         return $this->hasMany(CommercialMl::class, 'id', 'id');
     }
 
+    public function credits()
+    {
+        return $this->hasMany(CommercialCredit::class, 'commercial_id', 'id');
+    }
+
     public function tags()
     {
         return $this->hasMany(CommercialTag::class, 'commercial_id', 'id');

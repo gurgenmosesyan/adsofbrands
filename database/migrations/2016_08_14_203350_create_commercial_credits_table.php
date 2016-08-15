@@ -13,11 +13,11 @@ class CreateCommercialCreditsTable extends Migration
     public function up()
     {
         Schema::create('commercial_credits', function (Blueprint $table) {
-            $table->integer('id')->unsigned();
+            $table->increments('id');
             $table->integer('commercial_id')->unsigned();
             $table->string('position');
             $table->integer('sort_order')->unsigned();
-            $table->timestamps();
+            $table->index('commercial_id', 'commercial_id');
         });
     }
 

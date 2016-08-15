@@ -15,7 +15,6 @@ class CommercialCreditPerson extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'credit_id',
         'type',
         'type_id',
         'name',

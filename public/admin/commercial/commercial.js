@@ -95,11 +95,13 @@ $commercial.creditAutoComplete = function(html) {
         hiddenInput = html.find('.name-hidden');
     var onSelect = function (e,ui) {
         if (ui.item) {
-            input.val(ui.item.label);
+            //input.val(ui.item.label);
             hiddenInput.val(ui.item.id);
         } else {
-            input.val('');
             hiddenInput.val('');
+            if (input.val().substr(0, 1) == '@') {
+                input.val('');
+            }
         }
         //return false;
     };
