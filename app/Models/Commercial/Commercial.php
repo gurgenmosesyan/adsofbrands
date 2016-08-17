@@ -3,6 +3,8 @@
 namespace App\Models\Commercial;
 
 use App\Core\Model;
+use App\Models\Agency\Agency;
+use App\Models\Brand\Brand;
 
 class Commercial extends Model
 {
@@ -24,6 +26,7 @@ class Commercial extends Model
         'embed_code',
         'featured',
         'top',
+        'advertising',
         'published_date',
         'views_count',
         'rating',
@@ -65,6 +68,21 @@ class Commercial extends Model
     public function ml()
     {
         return $this->hasMany(CommercialMl::class, 'id', 'id');
+    }
+
+    public function brands()
+    {
+        return $this->belongsToMany(Brand::class, 'commercial_brands', 'commercial_id', 'brand_id');
+    }
+
+    public function agencies()
+    {
+        return $this->belongsToMany(Agency::class, 'commercial_agencies', 'commercial_id', 'agency_id');
+    }
+
+    public function advertisings()
+    {
+        return $this->hasMany(CommercialAdvertising::class, 'commercial_id', 'id');
     }
 
     public function credits()

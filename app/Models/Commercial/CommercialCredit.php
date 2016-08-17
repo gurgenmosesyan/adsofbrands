@@ -16,6 +16,11 @@ class CommercialCredit extends Model
         'sort_order'
     ];
 
+    public function scopeOrdered($query)
+    {
+        return $query->orderBy('commercial_credits.sort_order', 'asc');
+    }
+
     public function persons()
     {
         return $this->hasMany(CommercialCreditPerson::class, 'credit_id', 'id');

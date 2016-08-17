@@ -135,4 +135,5 @@ return array (
   'base.label.credits' => 'Credits',
   'base.label.position' => 'Position',
   'base.label.sort' => 'Sort',
+  'base.label.advertising_info' => 'Advertising info',
 );

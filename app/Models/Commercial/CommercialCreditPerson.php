@@ -20,4 +20,19 @@ class CommercialCreditPerson extends Model
         'name',
         'separator'
     ];
+
+    public function isCreative()
+    {
+        return $this->type == self::TYPE_CREATIVE;
+    }
+
+    public function isBrand()
+    {
+        return $this->type == self::TYPE_BRAND;
+    }
+
+    public function isAgency()
+    {
+        return $this->type == self::TYPE_AGENCY;
+    }
 }

@@ -2,6 +2,7 @@ var $commercial = $.extend(true, {}, $main);
 $commercial.listPath = '/admpanel/commercial';
 $commercial.creditIndex = 0;
 $commercial.personIndex = 0;
+$commercial.advertisingIndex = 0;
 
 $commercial.initSearchPage = function() {
     $commercial.listColumns = [
@@ -90,12 +91,10 @@ $commercial.initTags = function() {
 };
 
 $commercial.creditAutoComplete = function(html) {
-    //var input = $('#'+type+'-input');
     var input = html.find('.name'),
         hiddenInput = html.find('.name-hidden');
     var onSelect = function (e,ui) {
         if (ui.item) {
-            //input.val(ui.item.label);
             hiddenInput.val(ui.item.id);
         } else {
             hiddenInput.val('');
@@ -103,7 +102,6 @@ $commercial.creditAutoComplete = function(html) {
                 input.val('');
             }
         }
-        //return false;
     };
     input.autocomplete({
         minLength : 1,
@@ -115,9 +113,12 @@ $commercial.creditAutoComplete = function(html) {
             searchVal = searchVal.substr(1);
             var url = html.find('.type').val();
             var skipIds = [];
-            /*$('.'+type+'-input').each(function() {
-                skipIds.push($(this).val());
-            });*/
+            html.closest('.persons').find('.clearfix').each(function() {
+                var self = $(this);
+                if ($('.type', self).val() == html.find('.type').val() && $('.name', self).val().substr(0, 1) == '@') {
+                    skipIds.push($('.name-hidden', self).val());
+                }
+            });
             input.loading();
             $.ajax({
                 type: 'post',
@@ -144,34 +145,50 @@ $commercial.creditAutoComplete = function(html) {
     });
 };
 
-$commercial.addCreditPerson = function(personsBox, index) {
+$commercial.addCreditPerson = function(personsBox, index, addBtn, obj) {
     var personIndex = $commercial.personIndex,
-        html;
+        html,
+        btnHtml,
+        type = '',
+        name = '',
+        typeId = '',
+        separator = ',';
+    if (obj) {
+        type = obj.type;
+        name = obj.name;
+        typeId= obj.type_id;
+        separator = obj.separator;
+    }
+    if (addBtn) {
+        btnHtml = '<a href="#" class="btn btn-default add-person"><i class="fa fa-plus"></i></a>';
+    } else {
+        btnHtml = '<a href="#" class="btn btn-default remove-person"><i class="fa fa-remove"></i></a>';
+    }
     html =  '<div class="clearfix">'+
-                 '<div class="col-sm-3 no-padding">'+
+                '<div class="col-sm-3 no-padding">'+
                     '<select name="credits['+index+'][persons]['+personIndex+'][type]" class="type form-control">'+
-                         '<option value="creative">'+$trans.get('admin.base.label.creative')+'</option>'+
-                         '<option value="brand">'+$trans.get('admin.base.label.brand')+'</option>'+
-                         '<option value="agency">'+$trans.get('admin.base.label.agency')+'</option>'+
+                        '<option value="creative"'+ (type == 'creative' ? ' selected="selected"' : '') +'>'+$trans.get('admin.base.label.creative')+'</option>'+
+                        '<option value="brand"'+ (type == 'brand' ? ' selected="selected"' : '') +'>'+$trans.get('admin.base.label.brand')+'</option>'+
+                        '<option value="agency"'+ (type == 'agency' ? ' selected="selected"' : '') +'>'+$trans.get('admin.base.label.agency')+'</option>'+
                     '</select>'+
                     '<div id="form-error-credits_'+index+'_persons_'+personIndex+'_type" class="form-error"></div>'+
-                 '</div>'+
-                 '<div class="col-sm-5 no-padding">' +
-                     '<input type="text" name="credits['+index+'][persons]['+personIndex+'][name]" class="name form-control" value="" placeholder="'+$trans.get('admin.base.label.name')+'">'+
-                     '<input type="hidden" name="credits['+index+'][persons]['+personIndex+'][type_id]" class="name-hidden">'+
-                     '<div id="form-error-credits_'+index+'_persons_'+personIndex+'_name" class="form-error"></div>'+
-                     '<div id="form-error-credits_'+index+'_persons_'+personIndex+'_type_id" class="form-error"></div>'+
-                 '</div>'+
-                 '<div class="col-sm-1 no-padding separator">'+
-                     '<input type="text" name="credits['+index+'][persons]['+personIndex+'][separator]" class="form-control" value=",">'+
-                     '<div id="form-error-credits_'+index+'_persons_'+personIndex+'_separator" class="form-error"></div>'+
-                 '</div>'+
-                     '<div class="col-sm-1 no-padding">'+
-                     '<a href="#" class="btn btn-default remove"><i class="fa fa-remove"></i></a>'+
-                 '</div>'+
+                '</div>'+
+                '<div class="col-sm-5 no-padding">' +
+                    '<input type="text" name="credits['+index+'][persons]['+personIndex+'][name]" class="name form-control" value="'+name+'" placeholder="'+$trans.get('admin.base.label.name')+'">'+
+                    '<input type="hidden" name="credits['+index+'][persons]['+personIndex+'][type_id]" class="name-hidden" value="'+typeId+'">'+
+                    '<div id="form-error-credits_'+index+'_persons_'+personIndex+'_name" class="form-error"></div>'+
+                    '<div id="form-error-credits_'+index+'_persons_'+personIndex+'_type_id" class="form-error"></div>'+
+                '</div>'+
+                '<div class="col-sm-1 no-padding separator">'+
+                    '<input type="text" name="credits['+index+'][persons]['+personIndex+'][separator]" class="form-control" value="'+separator+'">'+
+                    '<div id="form-error-credits_'+index+'_persons_'+personIndex+'_separator" class="form-error"></div>'+
+                '</div>'+
+                    '<div class="col-sm-1 no-padding">'+
+                    btnHtml+
+                '</div>'+
             '</div>';
     html = $(html);
-    $('.remove', html).on('click', function() {
+    $('.remove-person', html).on('click', function() {
         html.remove();
         return false;
     });
@@ -180,61 +197,54 @@ $commercial.addCreditPerson = function(personsBox, index) {
     $commercial.personIndex++;
 };
 
-$commercial.addCredit = function() {
+$commercial.addCredit = function(obj) {
     var index = $commercial.creditIndex,
-        personIndex = $commercial.personIndex,
-        html;
+        html,
+        position = '',
+        sortOrder = '',
+        type = '';
+    if (obj) {
+        position = obj.position;
+        sortOrder = obj.sort_order;
+        type = obj.type;
+    }
     html =  '<div class="clearfix">'+
                 '<div class="col-sm-3 no-padding">'+
-                    '<input type="text" name="credits['+index+'][position]" class="form-control" value="" placeholder="'+$trans.get('admin.base.label.position')+'">'+
+                    '<input type="text" name="credits['+index+'][position]" class="form-control" value="'+position+'" placeholder="'+$trans.get('admin.base.label.position')+'">'+
                     '<div id="form-error-credits_'+index+'_position" class="form-error"></div>'+
                 '</div>'+
                 '<div class="col-sm-1 no-padding sort-order">'+
-                    '<input type="text" name="credits['+index+'][sort_order]" class="form-control" value="" placeholder="'+$trans.get('admin.base.label.sort')+'">'+
+                    '<input type="text" name="credits['+index+'][sort_order]" class="form-control" value="'+sortOrder+'" placeholder="'+$trans.get('admin.base.label.sort')+'">'+
                     '<div id="form-error-credits_'+index+'_sort_order" class="form-error"></div>'+
                 '</div>'+
                 '<div class="col-sm-7 no-padding persons">'+
-                    '<div class="clearfix">'+
-                        '<div class="col-sm-3 no-padding">'+
-                            '<select name="credits['+index+'][persons]['+personIndex+'][type]" class="type form-control">'+
-                                '<option value="creative">'+$trans.get('admin.base.label.creative')+'</option>'+
-                                '<option value="brand">'+$trans.get('admin.base.label.brand')+'</option>'+
-                                '<option value="agency">'+$trans.get('admin.base.label.agency')+'</option>'+
-                            '</select>'+
-                            '<div id="form-error-credits_'+index+'_persons_'+personIndex+'_type" class="form-error"></div>'+
-                        '</div>'+
-                        '<div class="col-sm-5 no-padding">' +
-                            '<input type="text" name="credits['+index+'][persons]['+personIndex+'][name]" class="name form-control" value="" placeholder="'+$trans.get('admin.base.label.name')+'">'+
-                            '<input type="hidden" name="credits['+index+'][persons]['+personIndex+'][type_id]" class="name-hidden">'+
-                            '<div id="form-error-credits_'+index+'_persons_'+personIndex+'_name" class="form-error"></div>'+
-                            '<div id="form-error-credits_'+index+'_persons_'+personIndex+'_type_id" class="form-error"></div>'+
-                        '</div>'+
-                        '<div class="col-sm-1 no-padding separator">'+
-                            '<input type="text" name="credits['+index+'][persons]['+personIndex+'][separator]" class="form-control" value=",">'+
-                            '<div id="form-error-credits_'+index+'_persons_'+personIndex+'_separator" class="form-error"></div>'+
-                        '</div>'+
-                        '<div class="col-sm-1 no-padding">'+
-                            '<a href="#" class="btn btn-default add-person"><i class="fa fa-plus"></i></a>'+
-                        '</div>'+
-                    '</div>'+
                 '</div>'+
                 '<div class="col-sm-1 no-padding last">'+
-                    '<a href="#" class="btn btn-default remove"><i class="fa fa-remove"></i></a>'+
+                    '<a href="#" class="btn btn-default remove-credit"><i class="fa fa-remove"></i></a>'+
                 '</div>'+
             '</div>';
     html = $(html);
-    $('.remove', html).on('click', function() {
+    if (obj) {
+        var j = 0,
+            addBtn;
+        for (var i in obj.persons) {
+            addBtn = j == 0 ? true : false;
+            $commercial.addCreditPerson($('.persons', html), index, addBtn, obj.persons[i]);
+            j++;
+        }
+    } else {
+        $commercial.addCreditPerson($('.persons', html), index, true);
+    }
+    $('.remove-credit', html).on('click', function() {
         html.remove();
         return false;
     });
-    $commercial.creditAutoComplete(html);
     $('.add-person', html).on('click', function() {
         $commercial.addCreditPerson($('.persons', html), index);
         return false;
     });
     $('#credits').append(html);
     $commercial.creditIndex++;
-    $commercial.personIndex++;
 };
 
 $commercial.initCredits = function() {
@@ -242,6 +252,124 @@ $commercial.initCredits = function() {
         $commercial.addCredit();
         return false;
     });
+    for (var i in $commercial.credits) {
+        $commercial.addCredit($commercial.credits[i]);
+    }
+};
+
+$commercial.addAdvertising = function(obj) {
+    var index = $commercial.advertisingIndex,
+        advBox = $('#adv-info'),
+        html,
+        name = '',
+        link = '';
+    if (obj) {
+        name = obj.name;
+        link = obj.link;
+    }
+    html =  '<div class="row" style="margin-bottom: 10px;">'+
+                '<div class="col-sm-4">'+
+                    '<input type="text" name="advertisings['+index+'][name]" class="form-control" value="'+name+'" placeholder="'+$trans.get('admin.base.label.name')+'">'+
+                    '<div id="form-error-advertisings_'+index+'_name" class="form-error"></div>'+
+                '</div>'+
+                '<div class="col-sm-4">'+
+                    '<input type="text" name="advertisings['+index+'][link]" class="form-control" value="'+link+'" placeholder="'+$trans.get('admin.base.label.link')+'">'+
+                    '<div id="form-error-advertisings_'+index+'_link" class="form-error"></div>'+
+                '</div>'+
+                '<div class="col-sm-1">'+
+                    '<a href="#" class="btn btn-default remove"><i class="fa fa-remove"></i></a>'+
+                '</div>'+
+            '</div>';
+    html = $(html);
+    $('.remove', html).on('click', function() {
+        html.remove();
+        if (advBox.find('.row').length == 0) {
+            $('#advertisings').addClass('dn');
+        }
+        return false;
+    });
+    advBox.append(html);
+    $commercial.advertisingIndex++;
+    $('#advertisings').removeClass('dn');
+};
+
+$commercial.initAdvertising = function() {
+    $('#add-advertising').on('click', function() {
+        $commercial.addAdvertising();
+        return false;
+    });
+    for (var i in $commercial.advertisings) {
+        $commercial.addAdvertising($commercial.advertisings[i]);
+    }
+};
+
+$commercial.generateTypeHtml = function(title, id, type) {
+    var dataName = type == 'agency' ? 'agencies' : type+'s';
+    var html =  '<div class="clearfix" style="margin-bottom: 2px;">'+
+                    '<div class="col-sm-5" style="padding: 4px 7px;background: #eceaea;">'+
+                        title+
+                        '<input type="hidden" class="'+type+'-input" name="'+dataName+'[]['+type+'_id]" value="'+ id +'" />'+
+                    '</div>'+
+                        '<div class="col-sm-1 text-right" style="padding: 4px 7px;background: #eceaea;">'+
+                        '<a href="#" class="remove"><i class="fa fa-remove"></i></a>'+
+                    '</div>'+
+                '</div>';
+    html = $(html);
+    $('.remove', html).click(function() {
+        html.remove();
+        return false;
+    });
+    $('#'+type+'-block').append(html);
+};
+
+$commercial.initTypeAutoComplete = function(type) {
+    var input = $('#'+type+'-input');
+    var onSelect = function (e,ui) {
+        if (ui.item) {
+            $commercial.generateTypeHtml(ui.item.label, ui.item.id, type);
+        }
+        input.val('');
+        return false;
+    };
+    input.autocomplete({
+        minLength : 1,
+        source : function(request, response) {
+            var skipIds = [];
+            $('.'+type+'-input').each(function() {
+                skipIds.push($(this).val());
+            });
+            input.loading();
+            $.ajax({
+                type: 'post',
+                url: '/admpanel/'+type,
+                dataType: 'json',
+                data: {
+                    search : {
+                        title : request.term,
+                        skip_ids: skipIds
+                    },
+                    _token : $main.token
+                },
+                success: function(result) {
+                    response($.map(result.data, function(item) {
+                        item.label = item.title;
+                        return item;
+                    }));
+                    input.removeLoading();
+                }
+            });
+        },
+        select : onSelect,
+        change : onSelect
+    });
+};
+
+$commercial.generateTypes = function(data, type) {
+    if (!$.isEmptyObject(data)) {
+        for (var i in data) {
+            $commercial.generateTypeHtml(data[i].title, data[i].id, type);
+        }
+    }
 };
 
 $commercial.initEditPage = function() {
@@ -254,7 +382,15 @@ $commercial.initEditPage = function() {
 
     $commercial.initType();
 
+    $commercial.initTypeAutoComplete('brand');
+    $commercial.generateTypes($commercial.brands, 'brand');
+
+    $commercial.initTypeAutoComplete('agency');
+    $commercial.generateTypes($commercial.agencies, 'agency');
+
     $commercial.initTags();
+
+    $commercial.initAdvertising();
 
     $commercial.initCredits();
 };

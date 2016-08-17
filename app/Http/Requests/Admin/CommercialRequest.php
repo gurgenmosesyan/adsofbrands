@@ -22,21 +22,35 @@ class CommercialRequest extends Request
             'featured' => 'in:'.Commercial::NOT_FEATURED.','.Commercial::FEATURED,
             'top' => 'in:'.Commercial::NOT_TOP.','.Commercial::TOP,
             'published_date' => 'date',
-            //'image' => 'required|core_image',
+            'image' => 'required|core_image',
             'views_count' => 'integer',
             'rating' => 'numeric',
             'qt' => 'integer',
             'ml' => 'ml',
             'ml.*.title' => 'required|max:255',
             'ml.*.description' => 'required|max:2000',
+            'brands' => 'required|array',
+            'brands.*.brand_id' => 'required|integer|exists:brands,id',
+            'agencies' => 'required|array',
+            'agencies.*.agency_id' => 'required|integer|exists:agencies,id',
             'tags' => 'array',
             'tags.*.tag' => 'required|max:255',
             'credits' => 'array',
         ];
 
+        $advertisings = $this->get('advertisings');
+        if (is_array($advertisings) && !empty($advertisings)) {
+            $rules['advertising'] = 'required|max:255';
+            foreach ($advertisings as $key => $value) {
+                $rules['advertisings.'.$key.'.name'] = 'required|max:255';
+                $rules['advertisings.'.$key.'.link'] = 'required|max:255';
+            }
+        }
+
         $credits = $this->get('credits');
         if (is_array($credits)) {
             foreach ($credits as $key => $credit) {
+                $rules['credits.'.$key.'.id'] = 'integer|exists:commercial_credits,id';
                 $rules['credits.'.$key.'.position'] = 'required|max:255';
                 $rules['credits.'.$key.'.sort_order'] = 'integer';
                 $rules['credits.'.$key.'.persons'] = 'required|array';

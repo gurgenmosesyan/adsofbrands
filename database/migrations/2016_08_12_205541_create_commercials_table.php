@@ -27,6 +27,7 @@ class CreateCommercialsTable extends Migration
             $table->enum('top', [Commercial::NOT_TOP, Commercial::TOP]);
             $table->date('published_date');
             $table->string('image');
+            $table->string('advertising');
             $table->integer('views_count')->unsigned();
             $table->float('rating')->unsigned();
             $table->integer('qt')->unsigned();

@@ -23,13 +23,18 @@ $jsTrans->addTrans([
     'admin.base.label.creative',
     'admin.base.label.brand',
     'admin.base.label.agency',
-    'admin.base.label.sort'
+    'admin.base.label.sort',
+    'admin.base.label.link',
 ]);
 ?>
 @extends('core.layout')
 @section('content')
 <script type="text/javascript">
+    $commercial.brands = <?php echo json_encode($brands); ?>;
+    $commercial.agencies = <?php echo json_encode($agencies); ?>;
     $commercial.tags = <?php echo json_encode($commercial->tags); ?>;
+    $commercial.advertisings = <?php echo json_encode($advertisings); ?>;
+    $commercial.credits = <?php echo json_encode($credits); ?>;
 </script>
 <form id="edit-form" class="form-horizontal" method="post" action="{{$url}}">
     <div class="box-body">
@@ -82,6 +87,24 @@ $jsTrans->addTrans([
                     @endforeach
                 </select>
                 <div id="form-error-industry_type_id" class="form-error"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.brands')}}</label>
+            <div class="col-sm-9">
+                <input type="text" id="brand-input" class="form-control" value="">
+                <div id="brand-block" style="margin-top: 10px;"></div>
+                <div id="form-error-brands" class="form-error"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.agencies')}}</label>
+            <div class="col-sm-9">
+                <input type="text" id="agency-input" class="form-control" value="">
+                <div id="agency-block" style="margin-top: 10px;"></div>
+                <div id="form-error-agencies" class="form-error"></div>
             </div>
         </div>
 
@@ -142,6 +165,23 @@ $jsTrans->addTrans([
             <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.print_image')}}</label>
             <div class="col-sm-9">
                 <?php ImgUploader::uploader('commercial', 'image_print', 'image_print', $commercial->image_print); ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{trans('admin.base.label.advertising_info')}}</label>
+            <div class="col-sm-9">
+                <div id="advertisings" class="dn">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <input type="text" name="advertising" class="form-control" value="{{$commercial->advertising or ''}}" placeholder="{{trans('admin.base.label.title')}}">
+                            <div id="form-error-advertising" class="form-error"></div>
+                        </div>
+                        <div id="adv-info" class="col-sm-9"></div>
+                    </div>
+                </div>
+                <a href="#" id="add-advertising" class="btn btn-default"><i class="fa fa-plus"></i></a>
+                <div id="form-error-advertisings" class="form-error"></div>
             </div>
         </div>
 

@@ -20,7 +20,9 @@ class NewsRequest extends Request
             'ml.*.text' => 'required|max:65000',
             'brands' => 'array',
             'brands.*.brand_id' => 'required|integer|exists:brands,id',
+            'agencies' => 'array',
             'agencies.*.agency_id' => 'required|integer|exists:agencies,id',
+            'creatives' => 'array',
             'creatives.*.creative_id' => 'required|integer|exists:creatives,id'
         ];
     }
