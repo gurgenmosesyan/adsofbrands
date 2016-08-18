@@ -100,4 +100,12 @@ Route::group($params, function () {
     Route::post('/commercial/update/{id}', ['uses' => 'CommercialController@update', 'as' => 'admin_commercial_update']);
     Route::post('/commercial/delete/{id}', ['uses' => 'CommercialController@delete', 'as' => 'admin_commercial_delete']);
 
+    Route::get('/team', ['uses' => 'TeamController@table', 'as' => 'admin_team_table']);
+    Route::get('/team/create', ['uses' => 'TeamController@create', 'as' => 'admin_team_create']);
+    Route::get('/team/edit/{id}', ['uses' => 'TeamController@edit', 'as' => 'admin_team_edit']);
+    Route::post('/team', ['uses' => 'TeamController@index', 'as' => 'admin_team_index']);
+    Route::post('/team/store', ['uses' => 'TeamController@store', 'as' => 'admin_team_store']);
+    Route::post('/team/update/{id}', ['uses' => 'TeamController@update', 'as' => 'admin_team_update']);
+    Route::post('/team/delete/{id}', ['uses' => 'TeamController@delete', 'as' => 'admin_team_delete']);
+
 });

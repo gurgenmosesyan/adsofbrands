@@ -136,4 +136,10 @@ return array (
   'base.label.position' => 'Position',
   'base.label.sort' => 'Sort',
   'base.label.advertising_info' => 'Advertising info',
+  'team.form.title' => 'Team',
+  'base.label.first_name' => 'First name',
+  'base.label.last_name' => 'Last name',
+  'team.form.add.sub_title' => 'Add new person',
+  'team.form.edit.sub_title' => 'Person № :id',
+  'base.label.sort_order' => 'Sort order',
 );
