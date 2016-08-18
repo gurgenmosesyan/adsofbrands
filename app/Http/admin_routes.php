@@ -108,4 +108,12 @@ Route::group($params, function () {
     Route::post('/team/update/{id}', ['uses' => 'TeamController@update', 'as' => 'admin_team_update']);
     Route::post('/team/delete/{id}', ['uses' => 'TeamController@delete', 'as' => 'admin_team_delete']);
 
+    Route::get('/footerMenu', ['uses' => 'FooterMenuController@table', 'as' => 'admin_footer_menu_table']);
+    Route::get('/footerMenu/create', ['uses' => 'FooterMenuController@create', 'as' => 'admin_footer_menu_create']);
+    Route::get('/footerMenu/edit/{id}', ['uses' => 'FooterMenuController@edit', 'as' => 'admin_footer_menu_edit']);
+    Route::post('/footerMenu', ['uses' => 'FooterMenuController@index', 'as' => 'admin_footer_menu_index']);
+    Route::post('/footerMenu/store', ['uses' => 'FooterMenuController@store', 'as' => 'admin_footer_menu_store']);
+    Route::post('/footerMenu/update/{id}', ['uses' => 'FooterMenuController@update', 'as' => 'admin_footer_menu_update']);
+    Route::post('/footerMenu/delete/{id}', ['uses' => 'FooterMenuController@delete', 'as' => 'admin_footer_menu_delete']);
+
 });

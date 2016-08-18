@@ -9,6 +9,7 @@ class Team extends Model
     const IMAGES_PATH = 'images/team';
 
     protected $fillable = [
+        'link',
         'sort_order'
     ];
 

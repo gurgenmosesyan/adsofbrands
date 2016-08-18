@@ -142,4 +142,7 @@ return array (
   'team.form.add.sub_title' => 'Add new person',
   'team.form.edit.sub_title' => 'Person № :id',
   'base.label.sort_order' => 'Sort order',
+  'footer_menu.form.title' => 'Footer menu',
+  'footer_menu.form.add.sub_title' => 'Add new menu',
+  'footer_menu.form.edit.sub_title' => 'Menu № :id',
 );

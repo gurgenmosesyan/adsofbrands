@@ -11,6 +11,7 @@
     <li{{$pageMenu == 'news' ? ' class=active' : ''}}><a href="{{route('admin_news_table')}}"><i class="fa fa-rss"></i> <span>{{trans('admin.news.form.title')}}</span></a></li>
     <li{{$pageMenu == 'commercial' ? ' class=active' : ''}}><a href="{{route('admin_commercial_table')}}"><i class="fa fa-bullhorn"></i> <span>{{trans('admin.commercial.form.title')}}</span></a></li>
     <li{{$pageMenu == 'team' ? ' class=active' : ''}}><a href="{{route('admin_team_table')}}"><i class="fa fa-group"></i> <span>{{trans('admin.team.form.title')}}</span></a></li>
+    <li{{$pageMenu == 'footer_menu' ? ' class=active' : ''}}><a href="{{route('admin_footer_menu_table')}}"><i class="fa fa-reorder"></i> <span>{{trans('admin.footer_menu.form.title')}}</span></a></li>
     <li class="treeview{{$pageMenu == 'admin' || $pageMenu == 'language' || $pageMenu == 'dictionary' ? ' active' : ''}}">
         <a href="#">
             <i class="fa fa-wrench"></i> <span>{{trans('admin.admin_menu.system')}}</span> <i class="fa fa-angle-left pull-right"></i>

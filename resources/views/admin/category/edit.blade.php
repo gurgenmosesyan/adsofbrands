@@ -17,18 +17,15 @@ $mls = $category->ml->keyBy('lng_id');
     <form id="edit-form" class="form-horizontal" method="post" action="{{$url}}">
         <div class="box-body">
 
-            <div class="form-group">
-                <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.title')}}</label>
-                <div class="col-sm-9 separate-sections">
-                    @foreach($languages as $lng)
-                        <div class="form-group form-group-inner">
-                            <input type="text" name="ml[{{$lng->id}}][title]" class="form-control" value="{{isset($mls[$lng->id]) ? $mls[$lng->id]->title : ''}}" placeholder="{{$lng->name}}">
-                            <div id="form-error-ml_{{$lng->id}}_title" class="form-error"></div>
-                        </div>
-                    @endforeach
-                    <div id="form-error-ml" class="form-error"></div>
+            @foreach($languages as $lng)
+                <div class="form-group">
+                    <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.title').' ('.$lng->code.')'}}</label>
+                    <div class="col-sm-9 separate-sections">
+                        <input type="text" name="ml[{{$lng->id}}][title]" class="form-control" value="{{isset($mls[$lng->id]) ? $mls[$lng->id]->title : ''}}">
+                        <div id="form-error-ml_{{$lng->id}}_title" class="form-error"></div>
+                    </div>
                 </div>
-            </div>
+            @endforeach
 
             {{csrf_field()}}
         </div>

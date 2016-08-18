@@ -52,6 +52,14 @@ $mls = $team->ml->keyBy('lng_id');
             </div>
 
             <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.link')}}</label>
+                <div class="col-sm-9">
+                    <input type="text" name="link" class="form-control" value="{{$team->link or ''}}">
+                    <div id="form-error-link" class="form-error"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label class="col-sm-3 control-label">{{trans('admin.base.label.sort_order')}}</label>
                 <div class="col-sm-3">
                     <input type="text" name="sort_order" class="form-control" value="{{$team->sort_order or ''}}">

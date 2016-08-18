@@ -10,6 +10,7 @@ class TeamRequest extends Request
     {
         return [
             'image' => 'required|core_image',
+            'link' => 'url|max:255',
             'sort_order' => 'integer',
             'ml' => 'ml',
             'ml.*.first_name' => 'required|max:255',

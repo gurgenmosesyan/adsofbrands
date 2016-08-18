@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTeamTable extends Migration
+class CreateFooterMenuTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,8 @@ class CreateTeamTable extends Migration
      */
     public function up()
     {
-        Schema::create('team', function (Blueprint $table) {
+        Schema::create('footer_menu', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('image');
-            $table->string('link');
-            $table->integer('sort_order')->unsigned();
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ class CreateTeamTable extends Migration
      */
     public function down()
     {
-        Schema::drop('team');
+        Schema::drop('footer_menu');
     }
 }
