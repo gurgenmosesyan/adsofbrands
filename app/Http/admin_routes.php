@@ -36,6 +36,14 @@ Route::group($params, function () {
     Route::post('/category/update/{id}', ['uses' => 'CategoryController@update', 'as' => 'admin_category_update']);
     Route::post('/category/delete/{id}', ['uses' => 'CategoryController@delete', 'as' => 'admin_category_delete']);
 
+    Route::get('/agencyCategory', ['uses' => 'AgencyCategoryController@table', 'as' => 'admin_agency_category_table']);
+    Route::get('/agencyCategory/create', ['uses' => 'AgencyCategoryController@create', 'as' => 'admin_agency_category_create']);
+    Route::get('/agencyCategory/edit/{id}', ['uses' => 'AgencyCategoryController@edit', 'as' => 'admin_agency_category_edit']);
+    Route::post('/agencyCategory', ['uses' => 'AgencyCategoryController@index', 'as' => 'admin_agency_category_index']);
+    Route::post('/agencyCategory/store', ['uses' => 'AgencyCategoryController@store', 'as' => 'admin_agency_category_store']);
+    Route::post('/agencyCategory/update/{id}', ['uses' => 'AgencyCategoryController@update', 'as' => 'admin_agency_category_update']);
+    Route::post('/agencyCategory/delete/{id}', ['uses' => 'AgencyCategoryController@delete', 'as' => 'admin_agency_category_delete']);
+
     Route::get('/brand', ['uses' => 'BrandController@table', 'as' => 'admin_brand_table']);
     Route::get('/brand/create', ['uses' => 'BrandController@create', 'as' => 'admin_brand_create']);
     Route::get('/brand/edit/{id}', ['uses' => 'BrandController@edit', 'as' => 'admin_brand_edit']);

@@ -14,6 +14,7 @@ class CreateAgenciesTable extends Migration
     {
         Schema::create('agencies', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('category_id')->unsigned();
             $table->string('alias');
             $table->string('image');
             $table->string('cover');

@@ -21,7 +21,8 @@ class CreateCommercialsTable extends Migration
             $table->integer('category_id')->unsigned();
             $table->string('alias');
             $table->enum('type', [Commercial::TYPE_VIDEO, Commercial::TYPE_PRINT]);
-            $table->text('embed_code');
+            $table->enum('video_type', ['', Commercial::VIDEO_TYPE_YOUTUBE, Commercial::VIDEO_TYPE_VIMEO, Commercial::VIDEO_TYPE_FB, Commercial::VIDEO_TYPE_EMBED]);
+            $table->text('video_data');
             $table->string('image_print');
             $table->enum('featured', [Commercial::NOT_FEATURED, Commercial::FEATURED]);
             $table->enum('top', [Commercial::NOT_TOP, Commercial::TOP]);

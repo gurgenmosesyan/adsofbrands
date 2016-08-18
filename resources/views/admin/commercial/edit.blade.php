@@ -8,12 +8,28 @@ $head->appendScript('/admin/commercial/commercial.js');
 
 $pageTitle = trans('admin.commercial.form.title');
 $pageMenu = 'commercial';
+$youtubeId = $youtubeUrl = $vimeoId = $vimeoUrl = $fbVideoId = $embedCode = '';
 if ($saveMode == 'add') {
     $pageSubTitle = trans('admin.commercial.form.add.sub_title');
     $url = route('admin_commercial_store');
 } else {
     $pageSubTitle = trans('admin.commercial.form.edit.sub_title', ['id' => $commercial->id]);
     $url = route('admin_commercial_update', $commercial->id);
+    if ($commercial->isVideo()) {
+        if ($commercial->isYoutube()) {
+            $commercial->video_data = json_decode($commercial->video_data);
+            $youtubeId = $commercial->video_data->id;
+            $youtubeUrl = $commercial->video_data->url;
+        } else if ($commercial->isVimeo()) {
+            $commercial->video_data = json_decode($commercial->video_data);
+            $vimeoIdId = $commercial->video_data->id;
+            $vimeoUrl = $commercial->video_data->url;
+        } else if ($commercial->isFb()) {
+            $fbVideoId = $commercial->video_data;
+        } else {
+            $embedCode = $commercial->video_data;
+        }
+    }
 }
 $mls = $commercial->ml->keyBy('lng_id');
 
@@ -25,6 +41,7 @@ $jsTrans->addTrans([
     'admin.base.label.agency',
     'admin.base.label.sort',
     'admin.base.label.link',
+    'admin.base.field.not_valid'
 ]);
 ?>
 @extends('core.layout')
@@ -153,11 +170,58 @@ $jsTrans->addTrans([
             </div>
         </div>
 
-        <div id="video-block" class="form-group dn">
-            <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.embed_code')}}</label>
-            <div class="col-sm-9">
-                <textarea name="embed_code" class="form-control">{{$commercial->embed_code or ''}}</textarea>
-                <div id="form-error-embed_code" class="form-error"></div>
+        <div id="video-box" class="dn">
+
+            <div id="video-type" class="form-group">
+                <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.video_type')}}</label>
+                <div class="col-sm-9">
+                    <select id="video-type-select" name="video_type" class="form-control">
+                        <option value="">{{trans('admin.base.label.select')}}</option>
+                        <option value="{{Commercial::VIDEO_TYPE_YOUTUBE}}"{{$commercial->isYoutube() ? ' selected="selected"' : ''}}>{{trans('admin.base.label.youtube')}}</option>
+                        <option value="{{Commercial::VIDEO_TYPE_VIMEO}}"{{$commercial->isVimeo() ? ' selected="selected"' : ''}}>{{trans('admin.base.label.vimeo')}}</option>
+                        <option value="{{Commercial::VIDEO_TYPE_FB}}"{{$commercial->isFb() ? ' selected="selected"' : ''}}>{{trans('admin.base.label.fb')}}</option>
+                        <option value="{{Commercial::VIDEO_TYPE_EMBED}}"{{$commercial->isEmbed() ? ' selected="selected"' : ''}}>{{trans('admin.base.label.embed_code')}}</option>
+                    </select>
+                    <div id="form-error-video_type" class="form-error"></div>
+                </div>
+            </div>
+
+            <div id="video-youtube" class="form-group dn">
+                <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.youtube_url')}}</label>
+                <div class="col-sm-9">
+                    <input type="text" id="youtube-url" name="youtube_url" class="form-control" value="{{$youtubeUrl}}">
+                    <input type="hidden" id="youtube-id" name="youtube_id" value="{{$youtubeId}}">
+                    <div id="youtube-img" class="dn" style="margin-top: 10px;"></div>
+                    <div id="form-error-youtube_url" class="form-error"></div>
+                    <div id="form-error-youtube_id" class="form-error"></div>
+                </div>
+            </div>
+
+            <div id="video-vimeo" class="form-group dn">
+                <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.vimeo_url')}}</label>
+                <div class="col-sm-9">
+                    <input type="text" id="vimeo-url" name="vimeo_url" class="form-control" value="{{$vimeoUrl}}">
+                    <input type="hidden" id="vimeo-id" name="vimeo_id" value="{{$vimeoId}}">
+                    <div id="vimeo-img" class="dn-" style="margin-top: 10px;"></div>
+                    <div id="form-error-vimeo_url" class="form-error"></div>
+                    <div id="form-error-vimeo_id" class="form-error"></div>
+                </div>
+            </div>
+
+            <div id="video-fb" class="form-group dn">
+                <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.fb_video_id')}}</label>
+                <div class="col-sm-9">
+                    <input type="text" name="fb_video_id" class="form-control" value="{{$fbVideoId}}">
+                    <div id="form-error-fb_video_id" class="form-error"></div>
+                </div>
+            </div>
+
+            <div id="video-embed" class="form-group dn">
+                <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.embed_code')}}</label>
+                <div class="col-sm-9">
+                    <textarea name="embed_code" class="form-control">{{$embedCode}}</textarea>
+                    <div id="form-error-embed_code" class="form-error"></div>
+                </div>
             </div>
         </div>
 

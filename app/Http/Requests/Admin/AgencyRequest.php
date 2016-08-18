@@ -10,6 +10,7 @@ class AgencyRequest extends Request
     {
         return [
             'alias' => 'required|max:255',
+            'category_id' => 'integer|exists:agency_categories,id',
             'image' => 'required|core_image',
             'cover' => 'required|core_image',
             'email' => 'email|max:255',

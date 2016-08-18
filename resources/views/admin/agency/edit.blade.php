@@ -46,6 +46,19 @@ $mls = $agency->ml->keyBy('lng_id');
             </div>
 
             <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.category')}}</label>
+                <div class="col-sm-9">
+                    <select name="category_id" class="form-control">
+                        <option value="">{{trans('admin.base.label.select')}}</option>
+                        @foreach($categories as $category)
+                            <option value="{{$category->id}}"{{$category->id == $agency->category_id ? ' selected="selected"' : ''}}>{{$category->title}}</option>
+                        @endforeach
+                    </select>
+                    <div id="form-error-category_id" class="form-error"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.image')}}</label>
                 <div class="col-sm-9">
                     <?php ImgUploader::uploader('agency', 'image', 'image', $agency->image); ?>

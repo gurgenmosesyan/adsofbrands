@@ -9,6 +9,7 @@ class Agency extends Model
     const IMAGES_PATH = 'images/agency';
 
     protected $fillable = [
+        'category_id',
         'alias',
         'email',
         'phone',

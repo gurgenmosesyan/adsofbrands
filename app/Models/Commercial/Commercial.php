@@ -11,6 +11,10 @@ class Commercial extends Model
     const IMAGES_PATH = 'images/commercial';
     const TYPE_VIDEO = 'video';
     const TYPE_PRINT = 'print';
+    const VIDEO_TYPE_YOUTUBE = 'youtube';
+    const VIDEO_TYPE_VIMEO = 'vimeo';
+    const VIDEO_TYPE_FB = 'fb';
+    const VIDEO_TYPE_EMBED = 'embed';
     const FEATURED = '1';
     const NOT_FEATURED = '0';
     const TOP = '1';
@@ -23,7 +27,8 @@ class Commercial extends Model
         'category_id',
         'alias',
         'type',
-        'embed_code',
+        'video_type',
+        'video_data',
         'featured',
         'top',
         'advertising',
@@ -43,6 +48,26 @@ class Commercial extends Model
     public function isPrint()
     {
         return $this->type == self::TYPE_PRINT;
+    }
+
+    public function isYoutube()
+    {
+        return $this->video_type == self::VIDEO_TYPE_YOUTUBE;
+    }
+
+    public function isVimeo()
+    {
+        return $this->video_type == self::VIDEO_TYPE_VIMEO;
+    }
+
+    public function isFb()
+    {
+        return $this->video_type == self::VIDEO_TYPE_FB;
+    }
+
+    public function isEmbed()
+    {
+        return $this->video_type == self::VIDEO_TYPE_EMBED;
     }
 
     public function isFeatured()

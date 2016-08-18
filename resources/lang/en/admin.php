@@ -145,4 +145,11 @@ return array (
   'footer_menu.form.title' => 'Footer menu',
   'footer_menu.form.add.sub_title' => 'Add new menu',
   'footer_menu.form.edit.sub_title' => 'Menu № :id',
+  'agency_category.form.title' => 'Agency categories',
+  'base.label.youtube_url' => 'Youtube url',
+  'base.label.video_type' => 'Video type',
+  'base.label.vimeo_url' => 'Vimeo url',
+  'base.label.fb_url' => 'Facebook url',
+  'base.field.not_valid' => 'Field not valid',
+  'base.label.fb_video_id' => 'Facebook video ID',
 );

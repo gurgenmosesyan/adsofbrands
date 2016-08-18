@@ -45,6 +45,22 @@ class CommercialManager
 
     protected function processSave($data)
     {
+        if ($data['type'] == Commercial::TYPE_VIDEO) {
+            if ($data['video_type'] == Commercial::VIDEO_TYPE_YOUTUBE) {
+                $data['video_data'] = json_encode(['id' => $data['youtube_id'], 'url' => $data['youtube_url']]);
+            } else if ($data['video_type'] == Commercial::VIDEO_TYPE_VIMEO) {
+                $data['video_data'] = json_encode(['id' => $data['vimeo_id'], 'url' => $data['vimeo_url']]);
+            } else if ($data['video_type'] == Commercial::VIDEO_TYPE_FB) {
+                $data['video_data'] = $data['fb_video_id'];
+            } else {
+                $data['video_data'] = $data['embed_code'];
+            }
+            $data['image_print'] = '';
+        } else {
+            $data['video_type'] = '';
+            $data['video_data'] = '';
+        }
+
         if (!isset($data['featured'])) {
             $data['featured'] = Commercial::NOT_FEATURED;
         }

@@ -17,8 +17,6 @@ class CommercialRequest extends Request
             'category_id' => 'integer|exists:categories,id',
             'alias' => 'required|max:255',
             'type' => 'required|in:'.Commercial::TYPE_VIDEO.','.Commercial::TYPE_PRINT,
-            'embed_code' => 'string|max:65000',
-            'image_print' => 'core_image',
             'featured' => 'in:'.Commercial::NOT_FEATURED.','.Commercial::FEATURED,
             'top' => 'in:'.Commercial::NOT_TOP.','.Commercial::TOP,
             'published_date' => 'date',
@@ -37,6 +35,25 @@ class CommercialRequest extends Request
             'tags.*.tag' => 'required|max:255',
             'credits' => 'array',
         ];
+
+        $type = $this->get('type');
+        if ($type == Commercial::TYPE_VIDEO) {
+            $rules['video_type'] = 'required|in:'.Commercial::VIDEO_TYPE_YOUTUBE.','.Commercial::VIDEO_TYPE_VIMEO.','.Commercial::VIDEO_TYPE_FB.','.Commercial::VIDEO_TYPE_EMBED;
+            $videoType = $this->get('video_type');
+            if ($videoType == Commercial::VIDEO_TYPE_YOUTUBE) {
+                $rules['youtube_url'] = 'required|max:255';
+                $rules['youtube_id'] = 'required|min:11|max:11';
+            } else if ($videoType == Commercial::VIDEO_TYPE_VIMEO) {
+                $rules['vimeo_url'] = 'required|max:255';
+                $rules['vimeo_id'] = 'required|min:6|max:11';
+            } else if ($videoType == Commercial::VIDEO_TYPE_FB) {
+                $rules['fb_video_id'] = 'required|max:100';
+            } else if ($videoType == Commercial::VIDEO_TYPE_EMBED) {
+                $rules['embed_code'] = 'required|max:65000';
+            }
+        } else if ($type == Commercial::TYPE_PRINT) {
+            $rules['image_print'] = 'required|core_image';
+        }
 
         $advertisings = $this->get('advertisings');
         if (is_array($advertisings) && !empty($advertisings)) {

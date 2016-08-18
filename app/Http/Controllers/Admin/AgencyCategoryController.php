@@ -3,28 +3,27 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Core\BaseController;
-use App\Models\Agency\Agency;
-use App\Models\Agency\AgencyManager;
-use App\Models\Agency\AgencySearch;
-use App\Http\Requests\Admin\AgencyRequest;
 use App\Models\AgencyCategory\Category;
+use App\Models\AgencyCategory\CategoryManager;
+use App\Models\AgencyCategory\CategorySearch;
+use App\Http\Requests\Admin\CategoryRequest;
 use App\Core\Language\Language;
 
-class AgencyController extends BaseController
+class AgencyCategoryController extends BaseController
 {
     protected $manager = null;
 
-    public function __construct(AgencyManager $manager)
+    public function __construct(CategoryManager $manager)
     {
         $this->manager = $manager;
     }
 
     public function table()
     {
-        return view('admin.agency.index');
+        return view('admin.agency_category.index');
     }
 
-    public function index(AgencySearch $search)
+    public function index(CategorySearch $search)
     {
         $result = $this->processDataTable($search);
         return $this->toDataTable($result);
@@ -32,19 +31,17 @@ class AgencyController extends BaseController
 
     public function create()
     {
-        $agency = new Agency();
-        $categories = Category::joinMl()->get();
+        $category = new Category();
         $languages = Language::all();
 
-        return view('admin.agency.edit')->with([
-            'agency' => $agency,
-            'categories' => $categories,
+        return view('admin.agency_category.edit')->with([
+            'category' => $category,
             'languages' => $languages,
             'saveMode' => 'add'
         ]);
     }
 
-    public function store(AgencyRequest $request)
+    public function store(CategoryRequest $request)
     {
         $this->manager->store($request->all());
         return $this->api('OK');
@@ -52,19 +49,17 @@ class AgencyController extends BaseController
 
     public function edit($id)
     {
-        $agency = Agency::where('id', $id)->firstOrFail();
-        $categories = Category::joinMl()->get();
+        $category = Category::where('id', $id)->firstOrFail();
         $languages = Language::all();
 
-        return view('admin.agency.edit')->with([
-            'agency' => $agency,
-            'categories' => $categories,
+        return view('admin.agency_category.edit')->with([
+            'category' => $category,
             'languages' => $languages,
             'saveMode' => 'edit'
         ]);
     }
 
-    public function update(AgencyRequest $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
         $this->manager->update($id, $request->all());
         return $this->api('OK');
