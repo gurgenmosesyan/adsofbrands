@@ -30,7 +30,8 @@ class BrandSearch extends DataTable
         $query = Brand::joinMl();
 
         if ($this->search != null) {
-            $query->where('ml.title', 'LIKE', '%'.$this->search.'%');
+            $query->where('ml.title', 'LIKE', '%'.$this->search.'%')
+                ->orWhere('ml.about', 'LIKE', '%'.$this->search.'%');
         }
         if (isset($this->searchData['title'])) {
             $query->where('ml.title', 'LIKE', '%'.$this->searchData['title'].'%');

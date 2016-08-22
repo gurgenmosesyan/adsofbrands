@@ -3,12 +3,24 @@
 namespace App\Models\Award;
 
 use App\Core\DataTable;
+use Auth;
 
 class AwardSearch extends DataTable
 {
     public function totalCount()
     {
-        return Award::count();
+        if (Auth::guard('admin')->check()) {
+            return Award::count();
+        } else if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            return Award::where('type', Award::TYPE_BRAND)->where('type_id', $brand->id)->count();
+        } else if (Auth::guard('agency')->check()) {
+            $agency = Auth::guard('agency')->user();
+            return Award::where('type', Award::TYPE_AGENCY)->where('type_id', $agency->id)->count();
+        } else {
+            $creative = Auth::guard('creative')->user();
+            return Award::where('type', Award::TYPE_CREATIVE)->where('type_id', $creative->id)->count();
+        }
     }
 
     public function filteredCount()
@@ -39,9 +51,11 @@ class AwardSearch extends DataTable
     protected function constructQuery()
     {
         $cLngId = cLng('id');
-        $query = Award::select('awards.id', 'awards.type', 'awards.year', 'ml.title', 'brand.title as brand_title', 'agency.title as agency_title', 'creative.title as creative_title')
-            ->joinMl()
-            ->leftJoin('brands_ml as brand', function($query) use($cLngId) {
+
+        $query = Award::joinMl();
+        if (Auth::guard('admin')->check()) {
+            $query->select('awards.id', 'awards.type', 'awards.year', 'ml.title', 'brand.title as brand_title', 'agency.title as agency_title', 'creative.title as creative_title');
+            $query->leftJoin('brands_ml as brand', function($query) use($cLngId) {
                 $query->on('brand.id', '=', 'awards.type_id')->where('brand.lng_id', '=', $cLngId);
             })
             ->leftJoin('agencies_ml as agency', function($query) use($cLngId) {
@@ -49,11 +63,23 @@ class AwardSearch extends DataTable
             })
             ->leftJoin('creatives_ml as creative', function($query) use($cLngId) {
                 $query->on('creative.id', '=', 'awards.type_id')->where('creative.lng_id', '=', $cLngId);
-            });
+            });;
+        } else if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            $query->select('awards.id', 'awards.year', 'ml.title')->where('type', Award::TYPE_BRAND)->where('type_id', $brand->id);
+        } else if (Auth::guard('agency')->check()) {
+            $agency = Auth::guard('agency')->user();
+            $query->select('awards.id', 'awards.year', 'ml.title')->where('type', Award::TYPE_AGENCY)->where('type_id', $agency->id);
+        } else {
+            $creative = Auth::guard('creative')->user();
+            $query->select('awards.id', 'awards.year', 'ml.title')->where('type', Award::TYPE_CREATIVE)->where('type_id', $creative->id);
+        }
 
         if ($this->search != null) {
-            $query->where('ml.title', 'LIKE', '%'.$this->search.'%')
-                ->orWhere('ml.category', 'LIKE', '%'.$this->search.'%');
+            $query->where(function($query) {
+                $query->where('ml.title', 'LIKE', '%'.$this->search.'%')
+                    ->orWhere('ml.category', 'LIKE', '%'.$this->search.'%');
+            });
         }
         return $query;
     }

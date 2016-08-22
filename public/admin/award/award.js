@@ -5,12 +5,17 @@ $award.resetType = true;
 
 $award.initSearchPage = function() {
     $award.listColumns = [
-        {data: 'id'},
-        {data: 'type'},
-        {data: 'brand_agency_creative', sortable: false},
+        {data: 'id'}
+    ];
+    if ($award.isAdmin) {
+        $award.listColumns.push({data: 'type'});
+        $award.listColumns.push({data: 'brand_agency_creative', sortable: false});
+    }
+    $award.listColumns = $award.listColumns.concat([
         {data: 'year'},
         {data: 'title'}
-    ];
+    ]);
+
     $award.initSearch();
 };
 

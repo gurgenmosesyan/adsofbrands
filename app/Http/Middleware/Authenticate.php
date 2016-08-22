@@ -18,15 +18,30 @@ class Authenticate
 	 */
 	public function handle($request, Closure $next, $guard = null)
 	{
-		if (Auth::guard($guard)->guest()) {
-            $route = $guard == 'admin' ? route('core_admin_login') : route('user_login', cLng('code'));
-			if ($request->ajax()) {
-				//return response('Unauthorized.', 401);
-				return new JsonResponse(['path' => $route], 401);
-			} else {
-				return redirect($route);
-			}
-		}
+        $notAuth = false;
+        if ($guard == 'all') {
+            if (Auth::guard('admin')->guest() && Auth::guard('brand')->guest() && Auth::guard('agency')->guest() && Auth::guard('creative')->guest()) {
+                $notAuth = true;
+            }
+        } else if ($guard == 'brand_agency') {
+            if (Auth::guard('admin')->guest() && Auth::guard('brand')->guest() && Auth::guard('agency')->guest()) {
+                $notAuth = true;
+            }
+        } else {
+            if (Auth::guard($guard)->guest()) {
+                $notAuth = true;
+            }
+        }
+
+        if ($notAuth) {
+            $route = route('core_admin_login');
+            if ($request->ajax()) {
+                //return response('Unauthorized.', 401);
+                return new JsonResponse(['path' => $route], 401);
+            } else {
+                return redirect($route);
+            }
+        }
 
 		return $next($request);
 	}

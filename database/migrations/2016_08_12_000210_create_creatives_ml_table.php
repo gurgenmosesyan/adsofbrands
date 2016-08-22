@@ -16,6 +16,7 @@ class CreateCreativesMlTable extends Migration
             $table->integer('id')->unsigned();
             $table->tinyInteger('lng_id')->unsigned();
             $table->string('title');
+            $table->text('about');
             $table->primary(['id', 'lng_id']);
         });
     }

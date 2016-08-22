@@ -3,10 +3,18 @@
 namespace App\Models\Agency;
 
 use App\Core\Model;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
-class Agency extends Model
+class Agency extends Model implements AuthenticatableContract
 {
+    use Authenticatable;
+
     const IMAGES_PATH = 'images/agency';
+    const REG_TYPE_ADMIN = 'admin';
+    const REG_TYPE_REGISTERED = 'registered';
+    const STATUS_PENDING = 'pending';
+    const STATUS_CONFIRMED = 'confirmed';
 
     protected $fillable = [
         'category_id',

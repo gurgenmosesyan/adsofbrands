@@ -67,7 +67,7 @@ class Uploader
      * @return \App\Core\File\UploadedFile
      * @throws \App\Core\File\Exceptions\FileNotFoundException
      */
-    public static function getTempFile($id, $findOrFail = true, $checkUser = true)
+    public static function getTempFile($id, $findOrFail = true, $checkUser = false)
     {
         if (isset(self::$filesList[$id])) {
             return self::$filesList[$id];
@@ -87,13 +87,13 @@ class Uploader
 
         /** @var \App\Core\File\UploadedFile $file */
         $file = self::$filesList[$id] = $tempFile;
-        if ($checkUser && $file->getUserId() !== Auth::guard('admin')->user()->id) {
+        /*if ($checkUser && $file->getUserId() !== Auth::guard('admin')->user()->id) {
             if ($findOrFail) {
                 throw new FileNotFoundException();
             }
 
             return;
-        }
+        }*/
 
         return $file;
     }
@@ -179,7 +179,8 @@ class Uploader
         // @throws Media_ImgUploader_Exception_InvalidExtension, @throws Media_ImgUploader_Exception_InvalidImage
         $extension = $this->getFileExtension($uploadedFile, $module);
 
-        $userId = Auth::guard('admin')->user()->id;
+        //$userId = Auth::guard('admin')->user()->id;
+        $userId = 0;
         $id = DB::table('uploaded_files')->insertGetId([
             'file_data' => '',
             'created_at' => new Carbon(),

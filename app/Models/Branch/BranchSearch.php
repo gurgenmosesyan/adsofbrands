@@ -3,12 +3,21 @@
 namespace App\Models\Branch;
 
 use App\Core\DataTable;
+use Auth;
 
 class BranchSearch extends DataTable
 {
     public function totalCount()
     {
-        return Branch::count();
+        if (Auth::guard('admin')->check()) {
+            return Branch::count();
+        } else if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            return Branch::where('type', Branch::TYPE_BRAND)->where('type_id', $brand->id)->count();
+        } else {
+            $agency = Auth::guard('agency')->user();
+            return Branch::where('type', Branch::TYPE_AGENCY)->where('type_id', $agency->id)->count();
+        }
     }
 
     public function filteredCount()
@@ -33,20 +42,30 @@ class BranchSearch extends DataTable
     protected function constructQuery()
     {
         $cLngId = cLng('id');
-        $query = Branch::select('branches.id', 'branches.type', 'ml.title', 'ml.address', 'brand.title as brand_title', 'agency.title as agency_title')
-            ->joinMl()
-            ->leftJoin('brands_ml as brand', function($query) use($cLngId) {
+        $query = Branch::joinMl();
+        if (Auth::guard('admin')->check()) {
+            $query->select('branches.id', 'branches.type', 'ml.title', 'ml.address', 'brand.title as brand_title', 'agency.title as agency_title');
+            $query->leftJoin('brands_ml as brand', function($query) use($cLngId) {
                 $query->on('brand.id', '=', 'branches.type_id')->where('brand.lng_id', '=', $cLngId);
             })
             ->leftJoin('agencies_ml as agency', function($query) use($cLngId) {
                 $query->on('agency.id', '=', 'branches.type_id')->where('agency.lng_id', '=', $cLngId);
             });
+        } else if(Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            $query->select('branches.id', 'ml.title', 'ml.address')->where('type', Branch::TYPE_BRAND)->where('type_id', $brand->id);
+        } else {
+            $agency = Auth::guard('agency')->user();
+            $query->select('branches.id', 'ml.title', 'ml.address')->where('type', Branch::TYPE_AGENCY)->where('type_id', $agency->id);
+        }
 
         if ($this->search != null) {
-            $query->where('ml.title', 'LIKE', '%'.$this->search.'%')
-                ->orWhere('ml.address', 'LIKE', '%'.$this->search.'%')
-                ->orWhere('branches.phone', 'LIKE', '%'.$this->search.'%')
-                ->orWhere('branches.email', 'LIKE', '%'.$this->search.'%');
+            $query->where(function($query) {
+                $query->where('ml.title', 'LIKE', '%'.$this->search.'%')
+                    ->orWhere('ml.address', 'LIKE', '%'.$this->search.'%')
+                    ->orWhere('branches.phone', 'LIKE', '%'.$this->search.'%')
+                    ->orWhere('branches.email', 'LIKE', '%'.$this->search.'%');
+            });
         }
         return $query;
     }

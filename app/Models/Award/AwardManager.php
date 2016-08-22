@@ -2,6 +2,7 @@
 
 namespace App\Models\Award;
 
+use Auth;
 use DB;
 
 class AwardManager
@@ -9,6 +10,19 @@ class AwardManager
     public function store($data)
     {
         $award = new Award($data);
+        if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            $award->type = Award::TYPE_BRAND;
+            $award->type_id = $brand->id;
+        } else if (Auth::guard('agency')->check()) {
+            $agency = Auth::guard('agency')->user();
+            $award->type = Award::TYPE_AGENCY;
+            $award->type_id = $agency->id;
+        } else if (Auth::guard('creative')->check()) {
+            $creative = Auth::guard('creative')->user();
+            $award->type = Award::TYPE_CREATIVE;
+            $award->type_id = $creative->id;
+        }
 
         DB::transaction(function() use($data, $award) {
             $award->save();
@@ -18,7 +32,24 @@ class AwardManager
 
     public function update($id, $data)
     {
-        $award = Award::where('id', $id)->firstOrFail();
+        $query = Award::where('id', $id);
+        if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            $query->where('type', Award::TYPE_BRAND)->where('type_id', $brand->id);
+            $data['type'] = Award::TYPE_BRAND;
+            $data['type_id'] = $brand->id;
+        } else if (Auth::guard('agency')->check()) {
+            $agency = Auth::guard('agency')->user();
+            $query->where('type', Award::TYPE_AGENCY)->where('type_id', $agency->id);
+            $data['type'] = Award::TYPE_AGENCY;
+            $data['type_id'] = $agency->id;
+        } else if (Auth::guard('creative')->check()) {
+            $creative = Auth::guard('creative')->user();
+            $query->where('type', Award::TYPE_CREATIVE)->where('type_id', $creative->id);
+            $data['type'] = Award::TYPE_CREATIVE;
+            $data['type_id'] = $creative->id;
+        }
+        $award = $query->firstOrFail();
 
         DB::transaction(function() use($data, $award) {
             $award->update($data);
@@ -44,9 +75,22 @@ class AwardManager
 
     public function delete($id)
     {
-        DB::transaction(function() use($id) {
-            Award::where('id', $id)->delete();
-            AwardMl::where('id', $id)->delete();
+        $query = Award::where('id', $id);
+        if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            $query->where('type', Award::TYPE_BRAND)->where('type_id', $brand->id);
+        } else if (Auth::guard('agency')->check()) {
+            $agency = Auth::guard('agency')->user();
+            $query->where('type', Award::TYPE_AGENCY)->where('type_id', $agency->id);
+        } else if (Auth::guard('creative')->check()) {
+            $creative = Auth::guard('creative')->user();
+            $query->where('type', Award::TYPE_CREATIVE)->where('type_id', $creative->id);
+        }
+        $award = $query->firstOrFail();
+
+        DB::transaction(function() use($award) {
+            $award->delete();
+            AwardMl::where('id', $award->id)->delete();
         });
     }
 }

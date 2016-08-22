@@ -66,6 +66,31 @@ $creative.initSelectBox = function() {
     });
 };
 
+$creative.makeAlias = function(title, aliasObj) {
+    if ($.trim(aliasObj.val()) != '' || $.trim(title) == '') {
+        return;
+    }
+    aliasObj.loading();
+    $.ajax ({
+        type : 'post',
+        url	: '/admpanel/core/makeAlias',
+        data : {
+            title  : title,
+            _token : $main.token
+        },
+        dataType : 'json',
+        success	 : function (result) {
+            aliasObj.removeLoading();
+            if ($.trim(aliasObj.val()) != '') {
+                return;
+            }
+            if (result.status == 'OK') {
+                aliasObj.val(result.data);
+            }
+        }
+    });
+};
+
 $creative.initEditPage = function() {
 
     $creative.initForm();
@@ -73,6 +98,10 @@ $creative.initEditPage = function() {
     $creative.initType();
 
     $creative.initSelectBox();
+
+    $('.title').change(function() {
+        $creative.makeAlias($(this).val(), $('.alias'));
+    });
 };
 
 $creative.init();

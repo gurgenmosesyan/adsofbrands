@@ -17,11 +17,25 @@ class RedirectIfAuthenticated
 	 */
 	public function handle($request, Closure $next, $guard = null)
 	{
-		if (Auth::guard($guard)->check()) {
-            $route = $guard == 'admin' ? route('admin_homepage') : route('user_profile', cLng('code'));
-			return redirect($route);
-		}
+        if ($guard == 'all') {
+            if (Auth::guard('admin')->check()) {
+                return redirect()->route('admin_media_type_table');
+            } else if (Auth::guard('brand')->check()) {
+                $user = Auth::guard('brand')->user();
+                return redirect()->route('admin_brand_edit', $user->id);
+            } else if (Auth::guard('agency')->check()) {
+                $user = Auth::guard('agency')->user();
+                return redirect()->route('admin_agency_edit', $user->id);
+            } else if (Auth::guard('creative')->check()) {
+                $user = Auth::guard('creative')->user();
+                return redirect()->route('admin_creative_edit', $user->id);
+            }
+        } else {
+            if (Auth::guard($guard)->check()) {
+                return redirect()->route('admin_media_type_table');
+            }
+        }
 
-		return $next($request);
+        return $next($request);
 	}
 }

@@ -2,6 +2,8 @@
 
 namespace App\Models\Branch;
 
+use App\Models\Brand\BrandMl;
+use Auth;
 use DB;
 
 class BranchManager
@@ -9,6 +11,15 @@ class BranchManager
     public function store($data)
     {
         $branch = new Branch($data);
+        if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            $branch->type = Branch::TYPE_BRAND;
+            $branch->type_id = $brand->id;
+        } else if (Auth::guard('agency')->check()) {
+            $agency = Auth::guard('agency')->user();
+            $branch->type = Branch::TYPE_AGENCY;
+            $branch->type_id = $agency->id;
+        }
 
         DB::transaction(function() use($data, $branch) {
             $branch->save();
@@ -18,7 +29,19 @@ class BranchManager
 
     public function update($id, $data)
     {
-        $branch = Branch::where('id', $id)->firstOrFail();
+        $query = Branch::where('id', $id);
+        if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            $query->where('type', Branch::TYPE_BRAND)->where('type_id', $brand->id);
+            $data['type'] = Branch::TYPE_BRAND;
+            $data['type_id'] = $brand->id;
+        } else if (Auth::guard('agency')->check()) {
+            $agency = Auth::guard('agency')->user();
+            $query->where('type', Branch::TYPE_AGENCY)->where('type_id', $agency->id);
+            $data['type'] = Branch::TYPE_AGENCY;
+            $data['type_id'] = $agency->id;
+        }
+        $branch = $query->firstOrFail();
 
         DB::transaction(function() use($data, $branch) {
             $branch->update($data);
@@ -44,9 +67,19 @@ class BranchManager
 
     public function delete($id)
     {
-        DB::transaction(function() use($id) {
-            Branch::where('id', $id)->delete();
-            BranchMl::where('id', $id)->delete();
+        $query = Branch::where('id', $id);
+        if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            $query->where('type', Branch::TYPE_BRAND)->where('type_id', $brand->id);
+        } else if (Auth::guard('agency')->check()) {
+            $agency = Auth::guard('agency')->user();
+            $query->where('type', Branch::TYPE_AGENCY)->where('type_id', $agency->id);
+        }
+        $branch = $query->firstOrFail();
+
+        DB::transaction(function() use($branch) {
+            $branch->delete();
+            BrandMl::where('id', $branch->id)->delete();
         });
     }
 }

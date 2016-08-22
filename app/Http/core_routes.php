@@ -8,12 +8,10 @@ $params = [
 
 Route::group($params, function() {
 
-	Route::get('/login', ['middleware' => 'guest:admin', 'uses' => 'AccountController@login', 'as' => 'core_admin_login']);
-	Route::post('/login', ['uses' => 'AccountController@loginApi', 'as' => 'core_admin_login_api']);
+	Route::get('/login', ['middleware' => 'guest:all', 'uses' => 'AccountController@login', 'as' => 'core_admin_login']);
+	Route::post('/login', ['middleware' => 'guest:all', 'uses' => 'AccountController@loginApi', 'as' => 'core_admin_login_api']);
 
 	Route::group(['middleware' => ['auth:admin', 'language']], function() {
-
-		Route::get('/logout', ['uses' => 'AccountController@logout', 'as' => 'core_admin_logout']);
 
 		Route::get('/admin', ['uses' => 'AdminController@table', 'as' => 'core_admin_table']);
 		Route::get('/admin/create', ['uses' => 'AdminController@create', 'as' => 'core_admin_create']);
@@ -37,11 +35,16 @@ Route::group($params, function() {
 		Route::post('/dictionary/update', ['uses' => 'DictionaryController@update', 'as' => 'core_dictionary_update']);
 		Route::post('/dictionary/delete', ['uses' => 'DictionaryController@delete', 'as' => 'core_dictionary_delete']);
 
-		Route::get('/image/show', ['uses' => 'ImageUploaderController@show', 'as' => 'core_image_show']);
-		Route::post('/image/upload', ['uses' => 'ImageUploaderController@upload', 'as' => 'core_image_upload']);
+	});
+
+    Route::group(['middleware' => ['auth:all']], function() {
+
+        Route::get('/logout', ['uses' => 'AccountController@logout', 'as' => 'core_admin_logout']);
+
+        Route::get('/image/show', ['uses' => 'ImageUploaderController@show', 'as' => 'core_image_show']);
+        Route::post('/image/upload', ['uses' => 'ImageUploaderController@upload', 'as' => 'core_image_upload']);
 
         Route::post('/makeAlias', ['uses' => 'ApiController@makeAlias', 'as' => 'core_make_alias']);
-
-	});
+    });
 
 });

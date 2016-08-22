@@ -10,6 +10,8 @@ class AgencyManager
     public function store($data)
     {
         $agency = new Agency($data);
+        $agency->reg_type = Agency::REG_TYPE_ADMIN;
+        $agency->status = '';
         SaveImage::save($data['image'], $agency);
         SaveImage::save($data['cover'], $agency, 'cover');
 

@@ -10,6 +10,8 @@ class BrandManager
     public function store($data)
     {
         $brand = new Brand($data);
+        $brand->reg_type = Brand::REG_TYPE_ADMIN;
+        $brand->status = '';
         SaveImage::save($data['image'], $brand);
         SaveImage::save($data['cover'], $brand, 'cover');
 

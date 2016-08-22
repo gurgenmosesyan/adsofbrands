@@ -152,4 +152,6 @@ return array (
   'base.label.fb_url' => 'Facebook url',
   'base.field.not_valid' => 'Field not valid',
   'base.label.fb_video_id' => 'Facebook video ID',
+  'login.not_confirmed' => 'Your account not confirmed',
+  'admin_menu.options' => 'Options',
 );

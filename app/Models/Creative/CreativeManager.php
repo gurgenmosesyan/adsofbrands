@@ -2,6 +2,7 @@
 
 namespace App\Models\Creative;
 
+use App\Core\Image\SaveImage;
 use DB;
 
 class CreativeManager
@@ -9,6 +10,10 @@ class CreativeManager
     public function store($data)
     {
         $creative = new Creative($data);
+        $creative->reg_type = Creative::REG_TYPE_ADMIN;
+        $creative->status = '';
+        SaveImage::save($data['image'], $creative);
+        SaveImage::save($data['cover'], $creative, 'cover');
 
         DB::transaction(function() use($data, $creative) {
             $creative->save();
@@ -19,6 +24,8 @@ class CreativeManager
     public function update($id, $data)
     {
         $creative = Creative::where('id', $id)->firstOrFail();
+        SaveImage::save($data['image'], $creative);
+        SaveImage::save($data['cover'], $creative, 'cover');
 
         DB::transaction(function() use($data, $creative) {
             $creative->update($data);

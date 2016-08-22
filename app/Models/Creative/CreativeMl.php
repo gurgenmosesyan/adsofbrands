@@ -14,5 +14,6 @@ class CreativeMl extends Model
         'id',
         'lng_id',
         'title',
+        'about'
     ];
 }

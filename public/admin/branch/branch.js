@@ -5,12 +5,15 @@ $branch.resetType = true;
 
 $branch.initSearchPage = function() {
     $branch.listColumns = [
-        {data: 'id'},
-        {data: 'type'},
-        {data: 'brand_agency', sortable: false},
-        {data: 'title'},
-        {data: 'address'}
+        {data: 'id'}
     ];
+    if ($branch.isAdmin) {
+        $branch.listColumns.push({data: 'type'});
+        $branch.listColumns.push({data: 'brand_agency', sortable: false});
+    }
+    $branch.listColumns = $branch.listColumns.concat([
+        {data: 'title'}
+    ]);
     $branch.initSearch();
 };
 

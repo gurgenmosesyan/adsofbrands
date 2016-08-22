@@ -3,12 +3,21 @@
 namespace App\Models\Vacancy;
 
 use App\Core\DataTable;
+use Auth;
 
 class VacancySearch extends DataTable
 {
     public function totalCount()
     {
-        return Vacancy::count();
+        if (Auth::guard('admin')->check()) {
+            return Vacancy::count();
+        } else if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            return Vacancy::where('type', Vacancy::TYPE_BRAND)->where('type_id', $brand->id)->count();
+        } else {
+            $agency = Auth::guard('agency')->user();
+            return Vacancy::where('type', Vacancy::TYPE_AGENCY)->where('type_id', $agency->id)->count();
+        }
     }
 
     public function filteredCount()
@@ -33,19 +42,29 @@ class VacancySearch extends DataTable
     protected function constructQuery()
     {
         $cLngId = cLng('id');
-        $query = Vacancy::select('vacancies.id', 'vacancies.type', 'ml.title', 'brand.title as brand_title', 'agency.title as agency_title')
-            ->joinMl()
-            ->leftJoin('brands_ml as brand', function($query) use($cLngId) {
+        $query = Vacancy::joinMl();
+        if (Auth::guard('admin')->check()) {
+            $query->select('vacancies.id', 'vacancies.type', 'ml.title', 'brand.title as brand_title', 'agency.title as agency_title');
+            $query->leftJoin('brands_ml as brand', function($query) use($cLngId) {
                 $query->on('brand.id', '=', 'vacancies.type_id')->where('brand.lng_id', '=', $cLngId);
             })
             ->leftJoin('agencies_ml as agency', function($query) use($cLngId) {
                 $query->on('agency.id', '=', 'vacancies.type_id')->where('agency.lng_id', '=', $cLngId);
             });
+        } else if(Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            $query->select('vacancies.id', 'ml.title')->where('type', Vacancy::TYPE_BRAND)->where('type_id', $brand->id);
+        } else {
+            $agency = Auth::guard('agency')->user();
+            $query->select('vacancies.id', 'ml.title')->where('type', Vacancy::TYPE_AGENCY)->where('type_id', $agency->id);
+        }
 
         if ($this->search != null) {
-            $query->where('ml.title', 'LIKE', '%'.$this->search.'%')
-                ->orWhere('ml.description', 'LIKE', '%'.$this->search.'%')
-                ->orWhere('ml.text', 'LIKE', '%'.$this->search.'%');
+            $query->where(function($query) {
+                $query->where('ml.title', 'LIKE', '%'.$this->search.'%')
+                    ->orWhere('ml.description', 'LIKE', '%'.$this->search.'%')
+                    ->orWhere('ml.text', 'LIKE', '%'.$this->search.'%');
+            });
         }
         return $query;
     }

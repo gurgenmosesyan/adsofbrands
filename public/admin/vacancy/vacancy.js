@@ -5,11 +5,14 @@ $vacancy.resetType = true;
 
 $vacancy.initSearchPage = function() {
     $vacancy.listColumns = [
-        {data: 'id'},
-        {data: 'type'},
-        {data: 'brand_agency', sortable: false},
-        {data: 'title'}
+        {data: 'id'}
     ];
+    if ($vacancy.isAdmin) {
+        $vacancy.listColumns.push({data: 'type'});
+        $vacancy.listColumns.push({data: 'brand_agency', sortable: false});
+    }
+    $vacancy.listColumns.push({data: 'title'});
+
     $vacancy.initSearch();
 };
 

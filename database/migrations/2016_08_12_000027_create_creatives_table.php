@@ -17,6 +17,22 @@ class CreateCreativesTable extends Migration
             $table->increments('id');
             $table->enum('type', [Creative::TYPE_PERSONAL, Creative::TYPE_BRAND, Creative::TYPE_AGENCY]);
             $table->integer('type_id')->unsigned();
+            $table->string('alias');
+            $table->string('image');
+            $table->string('cover');
+            $table->string('email');
+            $table->string('password')->nullable();
+            $table->string('phone');
+            $table->string('link');
+            $table->string('fb');
+            $table->string('twitter');
+            $table->string('google');
+            $table->string('youtube');
+            $table->string('linkedin');
+            $table->string('vimeo');
+            $table->rememberToken();
+            $table->enum('reg_type', [Creative::REG_TYPE_ADMIN, Creative::REG_TYPE_REGISTERED]);
+            $table->enum('status', ['', Creative::STATUS_PENDING, Creative::STATUS_CONFIRMED]);
             $table->timestamps();
         });
     }

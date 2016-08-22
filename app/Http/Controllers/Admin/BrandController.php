@@ -10,6 +10,7 @@ use App\Http\Requests\Admin\BrandRequest;
 use App\Core\Language\Language;
 use App\Models\Category\Category;
 use App\Models\Country\Country;
+use Auth;
 
 class BrandController extends BaseController
 {
@@ -55,6 +56,10 @@ class BrandController extends BaseController
 
     public function edit($id)
     {
+        $user = Auth::guard('brand')->user();
+        if ($user->id != $id) {
+            abort(404);
+        }
         $brand = Brand::where('id', $id)->firstOrFail();
         $countries = Country::joinMl()->get();
         $categories = Category::joinMl()->get();
@@ -71,6 +76,10 @@ class BrandController extends BaseController
 
     public function update(BrandRequest $request, $id)
     {
+        $user = Auth::guard('brand')->user();
+        if ($user->id != $id) {
+            abort(404);
+        }
         $this->manager->update($id, $request->all());
         return $this->api('OK');
     }

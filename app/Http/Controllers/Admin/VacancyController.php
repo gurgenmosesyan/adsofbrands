@@ -10,6 +10,7 @@ use App\Models\Vacancy\VacancySearch;
 use App\Http\Requests\Admin\VacancyRequest;
 use App\Core\Language\Language;
 use App\Models\Brand\BrandMl;
+use Auth;
 
 class VacancyController extends BaseController
 {
@@ -52,15 +53,26 @@ class VacancyController extends BaseController
 
     public function edit($id)
     {
-        $vacancy = Vacancy::where('id', $id)->firstOrFail();
+        $query = Vacancy::where('id', $id);
+        if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            $query->where('type', Vacancy::TYPE_BRAND)->where('type_id', $brand->id);
+        } else if (Auth::guard('agency')->check()) {
+            $agency = Auth::guard('agency')->user();
+            $query->where('type', Vacancy::TYPE_AGENCY)->where('type_id', $agency->id);
+        }
+        $vacancy = $query->firstOrFail();
         $languages = Language::all();
 
-        if ($vacancy->isBrand()) {
-            $type = BrandMl::current()->where('id', $vacancy->type_id)->first();
-        } else {
-            $type = AgencyMl::current()->where('id', $vacancy->type_id)->first();
+        $typeName = null;
+        if (Auth::guard('admin')->check()) {
+            if ($vacancy->isBrand()) {
+                $type = BrandMl::current()->where('id', $vacancy->type_id)->first();
+            } else {
+                $type = AgencyMl::current()->where('id', $vacancy->type_id)->first();
+            }
+            $typeName = $type == null ? '' : $type->title;
         }
-        $typeName = $type == null ? '' : $type->title;
 
         return view('admin.vacancy.edit')->with([
             'vacancy' => $vacancy,

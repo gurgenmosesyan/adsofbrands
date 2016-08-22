@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Models\Brand\Brand;
 
 class CreateBrandsTable extends Migration
 {
@@ -20,6 +21,7 @@ class CreateBrandsTable extends Migration
             $table->string('image');
             $table->string('cover');
             $table->string('email');
+            $table->string('password')->nullable();
             $table->string('phone');
             $table->string('link');
             $table->string('fb');
@@ -28,6 +30,9 @@ class CreateBrandsTable extends Migration
             $table->string('youtube');
             $table->string('linkedin');
             $table->string('vimeo');
+            $table->rememberToken();
+            $table->enum('reg_type', [Brand::REG_TYPE_ADMIN, Brand::REG_TYPE_REGISTERED]);
+            $table->enum('status', ['', Brand::STATUS_PENDING, Brand::STATUS_CONFIRMED]);
             $table->timestamps();
         });
     }

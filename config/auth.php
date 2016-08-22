@@ -36,14 +36,22 @@ return [
     */
 
 	'guards' => [
-		'user' => [
-			'driver' => 'session',
-			'provider' => 'user',
-		],
 		'admin' => [
 			'driver' => 'session',
 			'provider' => 'admin',
 		],
+        'brand' => [
+            'driver' => 'session',
+            'provider' => 'brand',
+        ],
+        'agency' => [
+            'driver' => 'session',
+            'provider' => 'agency',
+        ],
+        'creative' => [
+            'driver' => 'session',
+            'provider' => 'creative',
+        ],
 	],
 
     /*
@@ -64,14 +72,22 @@ return [
     */
 
     'providers' => [
-        'user' => [
+        'admin' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User\User::class,
+            'model' => App\Core\Admin\Admin::class,
         ],
-	    'admin' => [
-		    'driver' => 'eloquent',
-		    'model' => App\Core\Admin\Admin::class,
-	    ],
+        'brand' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Brand\Brand::class,
+        ],
+        'agency' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Agency\Agency::class,
+        ],
+        'creative' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Creative\Creative::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',

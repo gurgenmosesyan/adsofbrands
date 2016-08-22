@@ -45,7 +45,19 @@ $jsTrans->addTrans([
     $head->renderStyles();
     $head->renderScripts();
 
-    $admin = Auth::guard('admin')->user();
+    if (Auth::guard('admin')->check()) {
+        $admin = Auth::guard('admin')->user();
+        $profileLink = route('core_admin_edit', $admin->id);
+    } else if (Auth::guard('brand')->check()) {
+        $admin = Auth::guard('brand')->user();
+        $profileLink = route('admin_brand_edit', $admin->id);
+    } else if (Auth::guard('agency')->check()) {
+        $admin = Auth::guard('agency')->user();
+        $profileLink = route('admin_agency_edit', $admin->id);
+    } else {
+        $admin = Auth::guard('creative')->user();
+        $profileLink = route('admin_creative_edit', $admin->id);
+    }
     ?>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -74,7 +86,7 @@ $jsTrans->addTrans([
                         <ul class="dropdown-menu">
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="{{route('core_admin_edit', $admin->id)}}" class="btn btn-default btn-flat">{{trans('admin.profile.title')}}</a>
+                                    <a href="{{$profileLink}}" class="btn btn-default btn-flat">{{trans('admin.profile.title')}}</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="{{route('core_admin_logout')}}" class="btn btn-default btn-flat">{{trans('admin.logout.title')}}</a>

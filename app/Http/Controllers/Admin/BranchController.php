@@ -10,6 +10,7 @@ use App\Models\Branch\BranchSearch;
 use App\Http\Requests\Admin\BranchRequest;
 use App\Core\Language\Language;
 use App\Models\Brand\BrandMl;
+use Auth;
 
 class BranchController extends BaseController
 {
@@ -52,15 +53,26 @@ class BranchController extends BaseController
 
     public function edit($id)
     {
-        $branch = Branch::where('id', $id)->firstOrFail();
+        $query = Branch::where('id', $id);
+        if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            $query->where('type', Branch::TYPE_BRAND)->where('type_id', $brand->id);
+        } else if (Auth::guard('agency')->check()) {
+            $agency = Auth::guard('agency')->user();
+            $query->where('type', Branch::TYPE_AGENCY)->where('type_id', $agency->id);
+        }
+        $branch = $query->firstOrFail();
         $languages = Language::all();
 
-        if ($branch->isBrand()) {
-            $type = BrandMl::current()->where('id', $branch->type_id)->first();
-        } else {
-            $type = AgencyMl::current()->where('id', $branch->type_id)->first();
+        $typeName = null;
+        if (Auth::guard('admin')->check()) {
+            if ($branch->isBrand()) {
+                $type = BrandMl::current()->where('id', $branch->type_id)->first();
+            } else {
+                $type = AgencyMl::current()->where('id', $branch->type_id)->first();
+            }
+            $typeName = $type == null ? '' : $type->title;
         }
-        $typeName = $type == null ? '' : $type->title;
 
         return view('admin.branch.edit')->with([
             'branch' => $branch,

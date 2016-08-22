@@ -11,6 +11,7 @@ use App\Http\Requests\Admin\AwardRequest;
 use App\Core\Language\Language;
 use App\Models\Brand\BrandMl;
 use App\Models\Creative\CreativeMl;
+use Auth;
 
 class AwardController extends BaseController
 {
@@ -53,17 +54,31 @@ class AwardController extends BaseController
 
     public function edit($id)
     {
-        $award = Award::where('id', $id)->firstOrFail();
+        $query = Award::where('id', $id);
+        if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            $query->where('type', Award::TYPE_BRAND)->where('type_id', $brand->id);
+        } else if (Auth::guard('agency')->check()) {
+            $agency = Auth::guard('agency')->user();
+            $query->where('type', Award::TYPE_AGENCY)->where('type_id', $agency->id);
+        } else if (Auth::guard('creative')->check()) {
+            $creative = Auth::guard('creative')->user();
+            $query->where('type', Award::TYPE_CREATIVE)->where('type_id', $creative->id);
+        }
+        $award = $query->firstOrFail();
         $languages = Language::all();
 
-        if ($award->isBrand()) {
-            $type = BrandMl::current()->where('id', $award->type_id)->first();
-        } else if ($award->isAgency()) {
-            $type = AgencyMl::current()->where('id', $award->type_id)->first();
-        } else {
-            $type = CreativeMl::current()->where('id', $award->type_id)->first();
+        $typeName = null;
+        if (Auth::guard('admin')->check()) {
+            if ($award->isBrand()) {
+                $type = BrandMl::current()->where('id', $award->type_id)->first();
+            } else if ($award->isAgency()) {
+                $type = AgencyMl::current()->where('id', $award->type_id)->first();
+            } else {
+                $type = CreativeMl::current()->where('id', $award->type_id)->first();
+            }
+            $typeName = $type == null ? '' : $type->title;
         }
-        $typeName = $type == null ? '' : $type->title;
 
         return view('admin.award.edit')->with([
             'award' => $award,

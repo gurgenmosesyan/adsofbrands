@@ -28,25 +28,27 @@ $jsTrans->addTrans([
 <form id="edit-form" class="form-horizontal" method="post" action="{{$url}}">
     <div class="box-body">
 
-        <div class="form-group">
-            <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.type')}}</label>
-            <div class="col-sm-9">
-                <select id="type" name="type" class="form-control">
-                    <option value="">{{trans('admin.base.label.select')}}</option>
-                    <option value="{{Vacancy::TYPE_BRAND}}"{{$vacancy->type == Vacancy::TYPE_BRAND ? ' selected="selected"' : ''}}>{{trans('admin.base.label.brand')}}</option>
-                    <option value="{{Vacancy::TYPE_AGENCY}}"{{$vacancy->type == Vacancy::TYPE_AGENCY ? ' selected="selected"' : ''}}>{{trans('admin.base.label.agency')}}</option>
-                </select>
-                <div id="form-error-type" class="form-error"></div>
+        @if(Auth::guard('admin')->check())
+            <div class="form-group">
+                <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.type')}}</label>
+                <div class="col-sm-9">
+                    <select id="type" name="type" class="form-control">
+                        <option value="">{{trans('admin.base.label.select')}}</option>
+                        <option value="{{Vacancy::TYPE_BRAND}}"{{$vacancy->type == Vacancy::TYPE_BRAND ? ' selected="selected"' : ''}}>{{trans('admin.base.label.brand')}}</option>
+                        <option value="{{Vacancy::TYPE_AGENCY}}"{{$vacancy->type == Vacancy::TYPE_AGENCY ? ' selected="selected"' : ''}}>{{trans('admin.base.label.agency')}}</option>
+                    </select>
+                    <div id="form-error-type" class="form-error"></div>
+                </div>
             </div>
-        </div>
 
-        <div id="type-id" class="form-group dn">
-            <label class="col-sm-3 control-label data-req"></label>
-            <div class="col-sm-9">
-                <input type="text" name="type_id" id="type-search" class="form-control" data-value="{{$vacancy->type_id or ''}}" value="{{$typeName}}">
-                <div id="form-error-type_id" class="form-error"></div>
+            <div id="type-id" class="form-group dn">
+                <label class="col-sm-3 control-label data-req"></label>
+                <div class="col-sm-9">
+                    <input type="text" name="type_id" id="type-search" class="form-control" data-value="{{$vacancy->type_id or ''}}" value="{{$typeName}}">
+                    <div id="form-error-type_id" class="form-error"></div>
+                </div>
             </div>
-        </div>
+        @endif
 
         @foreach($languages as $lng)
             <div class="form-group">
