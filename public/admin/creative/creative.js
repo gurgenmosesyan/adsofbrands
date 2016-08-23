@@ -5,11 +5,15 @@ $creative.resetType = true;
 
 $creative.initSearchPage = function() {
     $creative.listColumns = [
-        {data: 'id'},
-        {data: 'type'},
-        {data: 'brand_agency', sortable: false},
-        {data: 'title'}
+        {data: 'id'}
     ];
+    if ($creative.isAdmin) {
+        $creative.listColumns.push({data: 'type'});
+        $creative.listColumns.push({data: 'brand_agency', sortable: false});
+    }
+    $creative.listColumns = $creative.listColumns.concat([
+        {data: 'title'}
+    ]);
     $creative.initSearch();
 };
 

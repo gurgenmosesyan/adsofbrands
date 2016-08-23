@@ -56,9 +56,11 @@ class BrandController extends BaseController
 
     public function edit($id)
     {
-        $user = Auth::guard('brand')->user();
-        if ($user->id != $id) {
-            abort(404);
+        if (Auth::guard('brand')->check()) {
+            $user = Auth::guard('brand')->user();
+            if ($user->id != $id) {
+                abort(404);
+            }
         }
         $brand = Brand::where('id', $id)->firstOrFail();
         $countries = Country::joinMl()->get();
@@ -76,9 +78,11 @@ class BrandController extends BaseController
 
     public function update(BrandRequest $request, $id)
     {
-        $user = Auth::guard('brand')->user();
-        if ($user->id != $id) {
-            abort(404);
+        if (Auth::guard('brand')->check()) {
+            $user = Auth::guard('brand')->user();
+            if ($user->id != $id) {
+                abort(404);
+            }
         }
         $this->manager->update($id, $request->all());
         return $this->api('OK');

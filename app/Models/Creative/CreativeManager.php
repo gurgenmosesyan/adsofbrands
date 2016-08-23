@@ -3,6 +3,7 @@
 namespace App\Models\Creative;
 
 use App\Core\Image\SaveImage;
+use Auth;
 use DB;
 
 class CreativeManager
@@ -10,6 +11,15 @@ class CreativeManager
     public function store($data)
     {
         $creative = new Creative($data);
+        if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            $creative->type = Creative::TYPE_BRAND;
+            $creative->type_id = $brand->id;
+        } else if (Auth::guard('agency')->check()) {
+            $agency = Auth::guard('agency')->user();
+            $creative->type = Creative::TYPE_AGENCY;
+            $creative->type_id = $agency->id;
+        }
         $creative->reg_type = Creative::REG_TYPE_ADMIN;
         $creative->status = '';
         SaveImage::save($data['image'], $creative);
@@ -23,7 +33,19 @@ class CreativeManager
 
     public function update($id, $data)
     {
-        $creative = Creative::where('id', $id)->firstOrFail();
+        $query = Creative::where('id', $id);
+        if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            $query->where('type', Creative::TYPE_BRAND)->where('type_id', $brand->id);
+            $data['type'] = Creative::TYPE_BRAND;
+            $data['type_id'] = $brand->id;
+        } else if (Auth::guard('agency')->check()) {
+            $agency = Auth::guard('agency')->user();
+            $query->where('type', Creative::TYPE_AGENCY)->where('type_id', $agency->id);
+            $data['type'] = Creative::TYPE_AGENCY;
+            $data['type_id'] = $agency->id;
+        }
+        $creative = $query->firstOrFail();
         SaveImage::save($data['image'], $creative);
         SaveImage::save($data['cover'], $creative, 'cover');
 
@@ -51,9 +73,19 @@ class CreativeManager
 
     public function delete($id)
     {
-        DB::transaction(function() use($id) {
-            Creative::where('id', $id)->delete();
-            CreativeMl::where('id', $id)->delete();
+        $query = Creative::where('id', $id);
+        if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            $query->where('type', Creative::TYPE_BRAND)->where('type_id', $brand->id);
+        } else if (Auth::guard('agency')->check()) {
+            $agency = Auth::guard('agency')->user();
+            $query->where('type', Creative::TYPE_AGENCY)->where('type_id', $agency->id);
+        }
+        $creative = $query->firstOrFail();
+
+        DB::transaction(function() use($creative) {
+            $creative->delete();
+            CreativeMl::where('id', $creative->id)->delete();
         });
     }
 }

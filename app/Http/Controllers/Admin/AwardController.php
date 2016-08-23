@@ -68,7 +68,7 @@ class AwardController extends BaseController
         $award = $query->firstOrFail();
         $languages = Language::all();
 
-        $typeName = null;
+        $typeName = '';
         if (Auth::guard('admin')->check()) {
             if ($award->isBrand()) {
                 $type = BrandMl::current()->where('id', $award->type_id)->first();

@@ -64,7 +64,7 @@ class VacancyController extends BaseController
         $vacancy = $query->firstOrFail();
         $languages = Language::all();
 
-        $typeName = null;
+        $typeName = '';
         if (Auth::guard('admin')->check()) {
             if ($vacancy->isBrand()) {
                 $type = BrandMl::current()->where('id', $vacancy->type_id)->first();

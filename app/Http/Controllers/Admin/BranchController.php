@@ -64,7 +64,7 @@ class BranchController extends BaseController
         $branch = $query->firstOrFail();
         $languages = Language::all();
 
-        $typeName = null;
+        $typeName = '';
         if (Auth::guard('admin')->check()) {
             if ($branch->isBrand()) {
                 $type = BrandMl::current()->where('id', $branch->type_id)->first();

@@ -10,6 +10,7 @@ use App\Models\Creative\CreativeSearch;
 use App\Http\Requests\Admin\CreativeRequest;
 use App\Core\Language\Language;
 use App\Models\Brand\BrandMl;
+use Auth;
 
 class CreativeController extends BaseController
 {
@@ -52,17 +53,32 @@ class CreativeController extends BaseController
 
     public function edit($id)
     {
-        $creative = Creative::where('id', $id)->firstOrFail();
+        if (Auth::guard('creative')->check()) {
+            $user = Auth::guard('creative')->user();
+            if ($user->id != $id) {
+                abort(404);
+            }
+        }
+        $query = Creative::where('id', $id);
+        if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            $query->where('type', Creative::TYPE_BRAND)->where('type_id', $brand->id);
+        } else if (Auth::guard('agency')->check()) {
+            $agency = Auth::guard('agency')->user();
+            $query->where('type', Creative::TYPE_AGENCY)->where('type_id', $agency->id);
+        }
+        $creative = $query->firstOrFail();
         $languages = Language::all();
 
-        if ($creative->isBrand()) {
-            $type = BrandMl::current()->where('id', $creative->type_id)->first();
-            $typeName = $type == null ? '' : $type->title;
-        } else if ($creative->isAgency()) {
-            $type = AgencyMl::current()->where('id', $creative->type_id)->first();
-            $typeName = $type == null ? '' : $type->title;
-        } else {
-            $typeName = '';
+        $typeName = '';
+        if (Auth::guard('admin')->check()) {
+            if ($creative->isBrand()) {
+                $type = BrandMl::current()->where('id', $creative->type_id)->first();
+                $typeName = $type == null ? '' : $type->title;
+            } else if ($creative->isAgency()) {
+                $type = AgencyMl::current()->where('id', $creative->type_id)->first();
+                $typeName = $type == null ? '' : $type->title;
+            }
         }
 
         return view('admin.creative.edit')->with([
@@ -75,6 +91,12 @@ class CreativeController extends BaseController
 
     public function update(CreativeRequest $request, $id)
     {
+        if (Auth::guard('creative')->check()) {
+            $user = Auth::guard('creative')->user();
+            if ($user->id != $id) {
+                abort(404);
+            }
+        }
         $this->manager->update($id, $request->all());
         return $this->api('OK');
     }

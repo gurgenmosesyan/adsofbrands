@@ -12,7 +12,8 @@ $branch.initSearchPage = function() {
         $branch.listColumns.push({data: 'brand_agency', sortable: false});
     }
     $branch.listColumns = $branch.listColumns.concat([
-        {data: 'title'}
+        {data: 'title'},
+        {data: 'address'}
     ]);
     $branch.initSearch();
 };

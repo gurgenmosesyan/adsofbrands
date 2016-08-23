@@ -72,13 +72,11 @@ Route::group($params, function () {
 
         Route::get('/brand', ['uses' => 'BrandController@table', 'as' => 'admin_brand_table']);
         Route::get('/brand/create', ['uses' => 'BrandController@create', 'as' => 'admin_brand_create']);
-        Route::post('/brand', ['uses' => 'BrandController@index', 'as' => 'admin_brand_index']);
         Route::post('/brand/store', ['uses' => 'BrandController@store', 'as' => 'admin_brand_store']);
         Route::post('/brand/delete/{id}', ['uses' => 'BrandController@delete', 'as' => 'admin_brand_delete']);
 
         Route::get('/agency', ['uses' => 'AgencyController@table', 'as' => 'admin_agency_table']);
         Route::get('/agency/create', ['uses' => 'AgencyController@create', 'as' => 'admin_agency_create']);
-        Route::post('/agency', ['uses' => 'AgencyController@index', 'as' => 'admin_agency_index']);
         Route::post('/agency/store', ['uses' => 'AgencyController@store', 'as' => 'admin_agency_store']);
         Route::post('/agency/delete/{id}', ['uses' => 'AgencyController@delete', 'as' => 'admin_agency_delete']);
 
@@ -86,21 +84,8 @@ Route::group($params, function () {
 
     Route::group(['middleware' => ['auth:all']], function() {
 
-        Route::get('/vacancy', ['uses' => 'VacancyController@table', 'as' => 'admin_vacancy_table']);
-        Route::get('/vacancy/create', ['uses' => 'VacancyController@create', 'as' => 'admin_vacancy_create']);
-        Route::get('/vacancy/edit/{id}', ['uses' => 'VacancyController@edit', 'as' => 'admin_vacancy_edit']);
-        Route::post('/vacancy', ['uses' => 'VacancyController@index', 'as' => 'admin_vacancy_index']);
-        Route::post('/vacancy/store', ['uses' => 'VacancyController@store', 'as' => 'admin_vacancy_store']);
-        Route::post('/vacancy/update/{id}', ['uses' => 'VacancyController@update', 'as' => 'admin_vacancy_update']);
-        Route::post('/vacancy/delete/{id}', ['uses' => 'VacancyController@delete', 'as' => 'admin_vacancy_delete']);
-
-        Route::get('/creative', ['uses' => 'CreativeController@table', 'as' => 'admin_creative_table']);
-        Route::get('/creative/create', ['uses' => 'CreativeController@create', 'as' => 'admin_creative_create']);
-        Route::get('/creative/edit/{id}', ['uses' => 'CreativeController@edit', 'as' => 'admin_creative_edit']);
-        Route::post('/creative', ['uses' => 'CreativeController@index', 'as' => 'admin_creative_index']);
-        Route::post('/creative/store', ['uses' => 'CreativeController@store', 'as' => 'admin_creative_store']);
-        Route::post('/creative/update/{id}', ['uses' => 'CreativeController@update', 'as' => 'admin_creative_update']);
-        Route::post('/creative/delete/{id}', ['uses' => 'CreativeController@delete', 'as' => 'admin_creative_delete']);
+        Route::post('/brand', ['uses' => 'BrandController@index', 'as' => 'admin_brand_index']);
+        Route::post('/agency', ['uses' => 'AgencyController@index', 'as' => 'admin_agency_index']);
 
         Route::get('/award', ['uses' => 'AwardController@table', 'as' => 'admin_award_table']);
         Route::get('/award/create', ['uses' => 'AwardController@create', 'as' => 'admin_award_create']);
@@ -118,9 +103,17 @@ Route::group($params, function () {
         Route::post('/commercial/update/{id}', ['uses' => 'CommercialController@update', 'as' => 'admin_commercial_update']);
         Route::post('/commercial/delete/{id}', ['uses' => 'CommercialController@delete', 'as' => 'admin_commercial_delete']);
 
+        Route::get('/creative/edit/{id}', ['uses' => 'CreativeController@edit', 'as' => 'admin_creative_edit']);
+        Route::post('/creative/update/{id}', ['uses' => 'CreativeController@update', 'as' => 'admin_creative_update']);
     });
 
     Route::group(['middleware' => ['auth:brand_agency']], function() {
+
+        Route::get('/creative', ['uses' => 'CreativeController@table', 'as' => 'admin_creative_table']);
+        Route::get('/creative/create', ['uses' => 'CreativeController@create', 'as' => 'admin_creative_create']);
+        Route::post('/creative', ['uses' => 'CreativeController@index', 'as' => 'admin_creative_index']);
+        Route::post('/creative/store', ['uses' => 'CreativeController@store', 'as' => 'admin_creative_store']);
+        Route::post('/creative/delete/{id}', ['uses' => 'CreativeController@delete', 'as' => 'admin_creative_delete']);
 
         Route::get('/branch', ['uses' => 'BranchController@table', 'as' => 'admin_branch_table']);
         Route::get('/branch/create', ['uses' => 'BranchController@create', 'as' => 'admin_branch_create']);
@@ -129,6 +122,14 @@ Route::group($params, function () {
         Route::post('/branch/store', ['uses' => 'BranchController@store', 'as' => 'admin_branch_store']);
         Route::post('/branch/update/{id}', ['uses' => 'BranchController@update', 'as' => 'admin_branch_update']);
         Route::post('/branch/delete/{id}', ['uses' => 'BranchController@delete', 'as' => 'admin_branch_delete']);
+
+        Route::get('/vacancy', ['uses' => 'VacancyController@table', 'as' => 'admin_vacancy_table']);
+        Route::get('/vacancy/create', ['uses' => 'VacancyController@create', 'as' => 'admin_vacancy_create']);
+        Route::get('/vacancy/edit/{id}', ['uses' => 'VacancyController@edit', 'as' => 'admin_vacancy_edit']);
+        Route::post('/vacancy', ['uses' => 'VacancyController@index', 'as' => 'admin_vacancy_index']);
+        Route::post('/vacancy/store', ['uses' => 'VacancyController@store', 'as' => 'admin_vacancy_store']);
+        Route::post('/vacancy/update/{id}', ['uses' => 'VacancyController@update', 'as' => 'admin_vacancy_update']);
+        Route::post('/vacancy/delete/{id}', ['uses' => 'VacancyController@delete', 'as' => 'admin_vacancy_delete']);
 
     });
 

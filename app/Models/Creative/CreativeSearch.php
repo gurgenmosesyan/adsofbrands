@@ -3,12 +3,21 @@
 namespace App\Models\Creative;
 
 use App\Core\DataTable;
+use Auth;
 
 class CreativeSearch extends DataTable
 {
     public function totalCount()
     {
-        return Creative::count();
+        if (Auth::guard('admin')->check()) {
+            return Creative::count();
+        } else if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            return Creative::where('type', Creative::TYPE_BRAND)->where('type_id', $brand->id)->count();
+        } else {
+            $agency = Auth::guard('agency')->user();
+            return Creative::where('type', Creative::TYPE_AGENCY)->where('type_id', $agency->id)->count();
+        }
     }
 
     public function filteredCount()
@@ -39,14 +48,22 @@ class CreativeSearch extends DataTable
     protected function constructQuery()
     {
         $cLngId = cLng('id');
-        $query = Creative::select('creatives.id', 'creatives.type', 'ml.title', 'brand.title as brand_title', 'agency.title as agency_title')
-            ->joinMl()
-            ->leftJoin('brands_ml as brand', function($query) use($cLngId) {
-                $query->on('brand.id', '=', 'creatives.type_id')->where('brand.lng_id', '=', $cLngId);
-            })
-            ->leftJoin('agencies_ml as agency', function($query) use($cLngId) {
-                $query->on('agency.id', '=', 'creatives.type_id')->where('agency.lng_id', '=', $cLngId);
-            });
+        $query = Creative::joinMl();
+        if (Auth::guard('admin')->check()) {
+            $query->select('creatives.id', 'creatives.type', 'ml.title', 'brand.title as brand_title', 'agency.title as agency_title')
+                ->leftJoin('brands_ml as brand', function($query) use($cLngId) {
+                    $query->on('brand.id', '=', 'creatives.type_id')->where('brand.lng_id', '=', $cLngId);
+                })
+                ->leftJoin('agencies_ml as agency', function($query) use($cLngId) {
+                    $query->on('agency.id', '=', 'creatives.type_id')->where('agency.lng_id', '=', $cLngId);
+                });
+        } else if(Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            $query->select('creatives.id', 'ml.title')->where('type', Creative::TYPE_BRAND)->where('type_id', $brand->id);
+        } else {
+            $agency = Auth::guard('agency')->user();
+            $query->select('creatives.id', 'ml.title')->where('type', Creative::TYPE_AGENCY)->where('type_id', $agency->id);
+        }
 
         if ($this->search != null) {
             $query->where('ml.title', 'LIKE', '%'.$this->search.'%');
@@ -66,7 +83,7 @@ class CreativeSearch extends DataTable
             case 'type':
                 $orderCol = 'creatives.type';
                 break;
-            case 'name':
+            case 'title':
                 $orderCol = 'ml.title';
                 break;
             default:

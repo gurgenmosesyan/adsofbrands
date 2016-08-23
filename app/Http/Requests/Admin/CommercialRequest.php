@@ -5,6 +5,7 @@ namespace App\Http\Requests\Admin;
 use App\Http\Requests\Request;
 use App\Models\Commercial\Commercial;
 use App\Models\Commercial\CommercialCreditPerson;
+use Auth;
 
 class CommercialRequest extends Request
 {
@@ -35,6 +36,14 @@ class CommercialRequest extends Request
             'tags.*.tag' => 'required|max:255',
             'credits' => 'array',
         ];
+
+        if (Auth::guard('brand')->check()) {
+            unset($rules['brands']);
+            unset($rules['brands.*.brand_id']);
+        } else if (Auth::guard('agency')->check()) {
+            unset($rules['agencies']);
+            unset($rules['agencies.*.agency_id']);
+        }
 
         $type = $this->get('type');
         if ($type == Commercial::TYPE_VIDEO) {

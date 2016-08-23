@@ -9,6 +9,7 @@ use App\Models\Agency\AgencySearch;
 use App\Http\Requests\Admin\AgencyRequest;
 use App\Models\AgencyCategory\Category;
 use App\Core\Language\Language;
+use Auth;
 
 class AgencyController extends BaseController
 {
@@ -52,6 +53,12 @@ class AgencyController extends BaseController
 
     public function edit($id)
     {
+        if (Auth::guard('agency')->check()) {
+            $user = Auth::guard('agency')->user();
+            if ($user->id != $id) {
+                abort(404);
+            }
+        }
         $agency = Agency::where('id', $id)->firstOrFail();
         $categories = Category::joinMl()->get();
         $languages = Language::all();
@@ -66,6 +73,12 @@ class AgencyController extends BaseController
 
     public function update(AgencyRequest $request, $id)
     {
+        if (Auth::guard('agency')->check()) {
+            $user = Auth::guard('agency')->user();
+            if ($user->id != $id) {
+                abort(404);
+            }
+        }
         $this->manager->update($id, $request->all());
         return $this->api('OK');
     }

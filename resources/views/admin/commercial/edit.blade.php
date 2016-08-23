@@ -107,23 +107,27 @@ $jsTrans->addTrans([
             </div>
         </div>
 
-        <div class="form-group">
-            <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.brands')}}</label>
-            <div class="col-sm-9">
-                <input type="text" id="brand-input" class="form-control" value="">
-                <div id="brand-block" style="margin-top: 10px;"></div>
-                <div id="form-error-brands" class="form-error"></div>
+        @if(Auth::guard('brand')->guest())
+            <div class="form-group">
+                <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.brands')}}</label>
+                <div class="col-sm-9">
+                    <input type="text" id="brand-input" class="form-control" value="">
+                    <div id="brand-block" style="margin-top: 10px;"></div>
+                    <div id="form-error-brands" class="form-error"></div>
+                </div>
             </div>
-        </div>
+        @endif
 
-        <div class="form-group">
-            <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.agencies')}}</label>
-            <div class="col-sm-9">
-                <input type="text" id="agency-input" class="form-control" value="">
-                <div id="agency-block" style="margin-top: 10px;"></div>
-                <div id="form-error-agencies" class="form-error"></div>
+        @if(Auth::guard('agency')->guest())
+            <div class="form-group">
+                <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.agencies')}}</label>
+                <div class="col-sm-9">
+                    <input type="text" id="agency-input" class="form-control" value="">
+                    <div id="agency-block" style="margin-top: 10px;"></div>
+                    <div id="form-error-agencies" class="form-error"></div>
+                </div>
             </div>
-        </div>
+        @endif
 
         <div class="form-group">
             <label class="col-sm-3 control-label">{{trans('admin.base.label.country')}}</label>

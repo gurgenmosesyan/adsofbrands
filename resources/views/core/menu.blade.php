@@ -1,5 +1,6 @@
 <?php
 $isAdmin = Auth::guard('admin')->check();
+$isCreative = Auth::guard('creative')->check();
 ?>
 <ul class="sidebar-menu">
     @if($isAdmin)
@@ -18,7 +19,7 @@ $isAdmin = Auth::guard('admin')->check();
         <li{{$pageMenu == 'agency' ? ' class=active' : ''}}><a href="{{route('admin_agency_table')}}"><i class="fa fa-briefcase"></i> <span>{{trans('admin.agency.form.title')}}</span></a></li>
     @endif
     <li{{$pageMenu == 'commercial' ? ' class=active' : ''}}><a href="{{route('admin_commercial_table')}}"><i class="fa fa-bullhorn"></i> <span>{{trans('admin.commercial.form.title')}}</span></a></li>
-    @if($isAdmin)
+    @if(!$isCreative)
         <li{{$pageMenu == 'creative' ? ' class=active' : ''}}><a href="{{route('admin_creative_table')}}"><i class="fa fa-user"></i> <span>{{trans('admin.creative.form.title')}}</span></a></li>
     @endif
     <li{{$pageMenu == 'award' ? ' class=active' : ''}}><a href="{{route('admin_award_table')}}"><i class="fa fa-gift"></i> <span>{{trans('admin.award.form.title')}}</span></a></li>

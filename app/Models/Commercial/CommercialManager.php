@@ -3,6 +3,7 @@
 namespace App\Models\Commercial;
 
 use App\Core\Image\SaveImage;
+use Auth;
 use DB;
 
 class CommercialManager
@@ -27,7 +28,19 @@ class CommercialManager
 
     public function update($id, $data)
     {
-        $commercial = Commercial::where('id', $id)->firstOrFail();
+        $query = Commercial::where('id', $id);
+        if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            $query->join('commercial_brands as brands', function($query) use($brand) {
+                $query->on('brands.commercial_id', '=', 'commercials.id')->where('brands.brand_id', '=', $brand->id);
+            });
+        } else if (Auth::guard('agency')->check()) {
+            $agency = Auth::guard('agency')->user();
+            $query->join('commercial_agencies as agencies', function($query) use($agency) {
+                $query->on('agencies.commercial_id', '=', 'commercials.id')->where('agencies.agency_id', '=', $agency->id);
+            });
+        }
+        $commercial = $query->firstOrFail();
         $data = $this->processSave($data);
         SaveImage::save($data['image'], $commercial);
         SaveImage::save($data['image_print'], $commercial, 'image_print');
@@ -45,6 +58,13 @@ class CommercialManager
 
     protected function processSave($data)
     {
+        if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            $data['brands'] = ['brand_id' => $brand->id];
+        } else if (Auth::guard('agency')->check()) {
+            $agency = Auth::guard('agency')->user();
+            $data['agencies'] = ['agency_id' => $agency->id];
+        }
         if ($data['type'] == Commercial::TYPE_VIDEO) {
             if ($data['video_type'] == Commercial::VIDEO_TYPE_YOUTUBE) {
                 $data['video_data'] = json_encode(['id' => $data['youtube_id'], 'url' => $data['youtube_url']]);
@@ -146,11 +166,6 @@ class CommercialManager
             $value['commercial_id'] = $commercial->id;
             $credit = new CommercialCredit($value);
             $credit->save();
-            /*$credit['position'] = addslashes($credit['position']);
-            $sql = "INSERT INTO `commercial_creative` (`commercial_id`, `position`) VALUES ( {$commercialId}, '{$credit['position']}' ) ";
-            Yii::app()->db->createCommand($sql)->execute();
-            $com_cr_id = Yii::app()->db->getLastInsertID();
-            $com_cr_id = intval($com_cr_id);*/
 
             $persons = [];
             foreach ($value['persons'] as $person) {
@@ -161,12 +176,6 @@ class CommercialManager
                     $person['type_id'] = 0;
                 }
                 $persons[] = new CommercialCreditPerson($person);
-
-                /*$person['creative_id'] = intval($person['creative_id']);
-                $person['creative_name'] = addslashes($person['creative_name']);
-                $person['creative_separator'] = empty($person['creative_separator']) ? ',' : addslashes($person['creative_separator']);
-                $sql = "REPLACE INTO `commercial_creative_rel` (`com_cr_id`, `creative_id`, `creative_name`, `creative_separator`, `sort_order`) VALUES ( {$com_cr_id}, {$person['creative_id']}, '{$person['creative_name']}', '{$person['creative_separator']}', {$i} ) ";
-                Yii::app()->db->createCommand($sql)->execute();*/
             }
             $credit->persons()->saveMany($persons);
         }
@@ -183,48 +192,28 @@ class CommercialManager
 
         $oldCredits = $commercial->credits->keyBy('id');
         foreach ($data as $key => $value) {
-            //$i = 1;
             if (!empty($value['id'])) {
 
-                //if (isset($oldCredits[$value['id']])) {
+                unset($oldCredits[$value['id']]);
 
-                    unset($oldCredits[$value['id']]);
+                $value['commercial_id'] = $commercial->id;
+                $credit = CommercialCredit::where('id', $value['id'])->firstOrFail();
+                $credit->update($value);
 
-                    $value['commercial_id'] = $commercial->id;
-                    $credit = CommercialCredit::where('id', $value['id'])->firstOrFail();
-                    $credit->update($value);
+                CommercialCreditPerson::where('credit_id', $value['id'])->delete();
 
-                    /*$sql = "UPDATE `commercial_creative` SET `position` = '{$value['position']}' WHERE `id` = {$value['id']} ";
-                    Yii::app()->db->createCommand($sql)->execute();*/
-
-                    CommercialCreditPerson::where('credit_id', $value['id'])->delete();
-
-                    $persons = [];
-                    foreach ($value['persons'] as $person) {
-                        if (mb_substr($person['name'], 0, 1) == '@') {
-                            $person['name'] = '';
-                        } else {
-                            $person['type_id'] = 0;
-                        }
-                        $persons[] = new CommercialCreditPerson($person);
+                $persons = [];
+                foreach ($value['persons'] as $person) {
+                    if (mb_substr($person['name'], 0, 1) == '@') {
+                        $person['name'] = '';
+                    } else {
+                        $person['type_id'] = 0;
                     }
-                    $credit->persons()->saveMany($persons);
+                    $persons[] = new CommercialCreditPerson($person);
+                }
+                $credit->persons()->saveMany($persons);
 
-                    /*$sql = "DELETE FROM `commercial_creative_rel` WHERE `com_cr_id` = {$value['id']} ";
-                    Yii::app()->db->createCommand($sql)->execute();*/
-                    /*$insertStr = '';
-                    foreach ($value['creatives'] AS $creativeRel) {
-                        $insertStr .= "( {$creative['id']}, {$creativeRel['creative_id']}, '{$creativeRel['creative_name']}', '{$creativeRel['creative_separator']}', {$i} ),";
-                        $i++;
-                    }
-                    $insertStr = rtrim($insertStr, ",");*/
-
-                    /*$sql = "INSERT INTO `commercial_creative_rel` (`com_cr_id`, `creative_id`, `creative_name`, `creative_separator`, `sort_order`) VALUES {$insertStr} ";
-                    Yii::app()->db->createCommand($sql)->execute();*/
-
-                    unset($data[$key]);
-
-                //}
+                unset($data[$key]);
             }
         }
 
@@ -232,11 +221,6 @@ class CommercialManager
             $deleteIds = $oldCredits->lists('id');
             CommercialCredit::whereIn('id', $deleteIds)->delete();
             CommercialCreditPerson::whereIn('credit_id', $deleteIds)->delete();
-
-            /*$sql = "DELETE FROM `commercial_creative` WHERE `id` IN ( {$skipIdsStr} ) ";
-            Yii::app()->db->createCommand($sql)->execute();
-            $sql = "DELETE FROM `commercial_creative_rel` WHERE `com_cr_id` IN ( {$skipIdsStr} ) ";
-            Yii::app()->db->createCommand($sql)->execute();*/
         }
 
         if (!empty($data)) {
@@ -244,42 +228,27 @@ class CommercialManager
         }
     }
 
-    /*protected function updateCredits($data, Commercial $commercial, $editMode = false)
-    {
-        if ($editMode) {
-            $creditIds = CommercialCredit::where('commercial_id', $commercial->id)->lists('id')->toArray();
-            CommercialCreditPerson::whereIn('credit_id', $creditIds)->delete();
-            if (empty($data)) {
-                CommercialCredit::where('commercial_id', $commercial->id)->delete();
-            }
-        }
-        $credits = [];
-        if (empty($data)) {
-
-        }
-        //$maxId = CommercialCredit::select(DB::raw('MAX(id) as id'))->where('commercial_id', $commercial->id)->first();
-        foreach ($data as $key => $value) {
-            if (!empty($value['id'])) {
-
-            }
-            $credits[] = new CommercialCredit([
-                'commercial_id' => $commercial->id,
-                'position' => $value['position'],
-                'sort_order' => $value['sort_order']
-            ]);
-            foreach ($value['persons'] as $person) {
-
-            }
-        }
-    }*/
-
     public function delete($id)
     {
-        DB::transaction(function() use($id) {
-            Commercial::where('id', $id)->delete();
-            CommercialMl::where('id', $id)->delete();
-            $creditIds = CommercialCredit::where('commercial_id', $id)->lists('id')->toArray();
-            CommercialCredit::where('commercial_id', $id)->delete();
+        $query = Commercial::where('id', $id);
+        if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            $query->join('commercial_brands as brands', function($query) use($brand) {
+                $query->on('brands.commercial_id', '=', 'commercials.id')->where('brands.brand_id', '=', $brand->id);
+            });
+        } else if (Auth::guard('agency')->check()) {
+            $agency = Auth::guard('agency')->user();
+            $query->join('commercial_agencies as agencies', function($query) use($agency) {
+                $query->on('agencies.commercial_id', '=', 'commercials.id')->where('agencies.agency_id', '=', $agency->id);
+            });
+        }
+        $commercial = $query->firstOrFail();
+
+        DB::transaction(function() use($commercial) {
+            $commercial->delete();
+            CommercialMl::where('id', $commercial->id)->delete();
+            $creditIds = CommercialCredit::where('commercial_id', $commercial->id)->lists('id')->toArray();
+            CommercialCredit::where('commercial_id', $commercial->id)->delete();
             CommercialCreditPerson::whereIn('credit_id', $creditIds)->delete();
         });
     }

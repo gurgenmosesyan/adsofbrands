@@ -21,7 +21,7 @@ class AccountController extends BaseController
 
         $auth = auth()->guard('admin');
         if ($auth->attempt(['email' => $data['email'], 'password' => $data['password']])) {
-            return $this->api('OK', ['path' => route('admin_media_type_table')]);
+            return $this->api('OK', ['path' => route('admin_brand_table')]);
         }
 
         $auth = auth()->guard('brand');

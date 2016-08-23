@@ -27,6 +27,18 @@ class Authenticate
             if (Auth::guard('admin')->guest() && Auth::guard('brand')->guest() && Auth::guard('agency')->guest()) {
                 $notAuth = true;
             }
+        } else if ($guard == 'brand') {
+            if (Auth::guard('admin')->guest() && Auth::guard('brand')->guest()) {
+                $notAuth = true;
+            }
+        } else if ($guard == 'agency') {
+            if (Auth::guard('admin')->guest() && Auth::guard('agency')->guest()) {
+                $notAuth = true;
+            }
+        } else if ($guard == 'creative') {
+            if (Auth::guard('admin')->guest() && Auth::guard('creative')->guest()) {
+                $notAuth = true;
+            }
         } else {
             if (Auth::guard($guard)->guest()) {
                 $notAuth = true;

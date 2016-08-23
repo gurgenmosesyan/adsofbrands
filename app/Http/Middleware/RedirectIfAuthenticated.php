@@ -19,7 +19,7 @@ class RedirectIfAuthenticated
 	{
         if ($guard == 'all') {
             if (Auth::guard('admin')->check()) {
-                return redirect()->route('admin_media_type_table');
+                return redirect()->route('admin_brand_table');
             } else if (Auth::guard('brand')->check()) {
                 $user = Auth::guard('brand')->user();
                 return redirect()->route('admin_brand_edit', $user->id);
@@ -32,7 +32,7 @@ class RedirectIfAuthenticated
             }
         } else {
             if (Auth::guard($guard)->check()) {
-                return redirect()->route('admin_media_type_table');
+                return redirect()->route('admin_brand_table');
             }
         }
 

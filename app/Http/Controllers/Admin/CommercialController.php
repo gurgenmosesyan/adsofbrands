@@ -6,7 +6,6 @@ use App\Http\Controllers\Core\BaseController;
 use App\Models\Agency\AgencyMl;
 use App\Models\Brand\BrandMl;
 use App\Models\Commercial\Commercial;
-use App\Models\Commercial\CommercialCreditPerson;
 use App\Models\Commercial\CommercialManager;
 use App\Models\Commercial\CommercialSearch;
 use App\Http\Requests\Admin\CommercialRequest;
@@ -16,6 +15,7 @@ use App\Models\Country\Country;
 use App\Models\Creative\CreativeMl;
 use App\Models\IndustryType\IndustryType;
 use App\Models\MediaType\MediaType;
+use Auth;
 
 class CommercialController extends BaseController
 {
@@ -69,7 +69,20 @@ class CommercialController extends BaseController
 
     public function edit($id)
     {
-        $commercial = Commercial::where('id', $id)->firstOrFail();
+        $query = Commercial::where('id', $id);
+        if (Auth::guard('brand')->check()) {
+            $brand = Auth::guard('brand')->user();
+            $query->join('commercial_brands as brands', function($query) use($brand) {
+                $query->on('brands.commercial_id', '=', 'commercials.id')->where('brands.brand_id', '=', $brand->id);
+            });
+        } else if (Auth::guard('agency')->check()) {
+            $agency = Auth::guard('agency')->user();
+            $query->join('commercial_agencies as agencies', function($query) use($agency) {
+                $query->on('agencies.commercial_id', '=', 'commercials.id')->where('agencies.agency_id', '=', $agency->id);
+            });
+        }
+        $commercial = $query->firstOrFail();
+
         $mediaTypes = MediaType::joinMl()->get();
         $industryTypes = IndustryType::joinMl()->get();
         $brands = $commercial->brands()->select('brands.id', 'ml.title')->joinMl()->get();
