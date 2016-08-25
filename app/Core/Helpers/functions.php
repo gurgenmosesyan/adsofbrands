@@ -20,6 +20,6 @@ function cLng($key = null) {
     return $language;
 }
 
-function url_with_lng($path, $slash = true) {
+function url_with_lng($path, $slash = false) {
     return url(cLng('code') . '/' . ltrim($path, '/')) . ($slash ? '/' : '');
 }

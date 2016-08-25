@@ -1,74 +1,18 @@
 @media screen and (max-width: 1550px) {
-    #bg-block {
-        height: 590px;
-    }
+    
 }
 @media screen and (max-width: 1400px) {
-    #bg-block {
-        height: 470px;
-    }
+
 }
 @media screen and (max-width: 1180px) {
-    #nav li {
-        padding: 0 10px;
-    }
+
 }
 @media screen and (max-width: 1100px) {
-    #nav li {
-        border-left: none;
-        padding: 0 0 0 15px !important;
-    }
-    #contact .name-box,
-    #contact .email-box {
-        float: none;
-        padding: 0;
-        width: 100%;
-    }
-    #vacancies table th,
-    #vacancies table td {
-        padding-left: 10px;
-    }
-    /*#booking-steps .step-box {
-        margin-left: 2.08%;
-        width: 18.33%;
-    }*/
+
 }
 @media screen and (max-width: 880px) {
-    #header .top-inner {
-        padding: 0;
-    }
-    #header .top-menu li {
-        margin-left: 15px;
-    }
-    #header .social li {
-        margin-right: 10px;
-    }
-    #booking-steps .step-box {
-        margin-left: 0;
-        width: 20%;
-    }
+
 }
 @media screen and (max-width: 768px) {
-    #header .top-menu {
-        margin-right: 7px;
-    }
-    #header .social li {
-        margin-right: 5px;
-    }
-    #header .white-inner {
-        padding: 0 20px;
-    }
-    #footer .footer-part {
-        margin-bottom: 8px;
-        width: 100%;
-    }
-    #footer div {
-        float: none;
-    }
-    #footer .phone {
-        text-align: left;
-    }
-    #footer .info p {
-        text-align: left;
-    }
+
 }
