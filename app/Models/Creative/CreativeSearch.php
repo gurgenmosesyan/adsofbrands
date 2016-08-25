@@ -57,7 +57,8 @@ class CreativeSearch extends DataTable
                 ->leftJoin('agencies_ml as agency', function($query) use($cLngId) {
                     $query->on('agency.id', '=', 'creatives.type_id')->where('agency.lng_id', '=', $cLngId);
                 });
-        } else if(Auth::guard('brand')->check()) {
+        }
+        if (Auth::guard('brand')->check()) {
             $brand = Auth::guard('brand')->user();
             $query->select('creatives.id', 'ml.title')->where('type', Creative::TYPE_BRAND)->where('type_id', $brand->id);
         } else {

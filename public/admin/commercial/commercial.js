@@ -207,13 +207,11 @@ $commercial.creditAutoComplete = function(html) {
             input.loading();
             $.ajax({
                 type: 'post',
-                url: '/admpanel/'+url,
+                url: '/admpanel/commercial/'+url,
                 dataType: 'json',
                 data: {
-                    search : {
-                        title : searchVal,
-                        skip_ids: skipIds
-                    },
+                    title : searchVal,
+                    skip_ids: skipIds,
                     _token : $main.token
                 },
                 success: function(result) {

@@ -6,6 +6,8 @@ use App\Http\Controllers\Core\BaseController;
 use App\Models\Agency\AgencyMl;
 use App\Models\Brand\BrandMl;
 use App\Models\Commercial\Commercial;
+use App\Models\Commercial\CommercialCredit;
+use App\Models\Commercial\CommercialCreditPerson;
 use App\Models\Commercial\CommercialManager;
 use App\Models\Commercial\CommercialSearch;
 use App\Http\Requests\Admin\CommercialRequest;
@@ -15,6 +17,7 @@ use App\Models\Country\Country;
 use App\Models\Creative\CreativeMl;
 use App\Models\IndustryType\IndustryType;
 use App\Models\MediaType\MediaType;
+use Illuminate\Http\Request;
 use Auth;
 
 class CommercialController extends BaseController
@@ -46,6 +49,29 @@ class CommercialController extends BaseController
         $categories = Category::joinMl()->get();
         $languages = Language::all();
 
+        $credits = [];
+        if (Auth::guard('creative')->check()) {
+            $query = Auth::guard('creative')->user();
+            $creative = $query->joinMl()->first();
+            $credits = [
+                [
+                    'id' => '',
+                    'commercial_id' => $commercial->id,
+                    'position' => '',
+                    'sort_order' => '',
+                    'persons' => [
+                        [
+                            'credit_id' => '',
+                            'type' => 'creative',
+                            'type_id' => $creative->id,
+                            'name' => '@'.$creative->title,
+                            'separator' => ','
+                        ]
+                    ]
+                ]
+            ];
+        }
+
         return view('admin.commercial.edit')->with([
             'commercial' => $commercial,
             'mediaTypes' => $mediaTypes,
@@ -55,7 +81,7 @@ class CommercialController extends BaseController
             'countries' => $countries,
             'categories' => $categories,
             'advertisings' => [],
-            'credits' => [],
+            'credits' => $credits,
             'languages' => $languages,
             'saveMode' => 'add'
         ]);
@@ -80,6 +106,12 @@ class CommercialController extends BaseController
             $query->join('commercial_agencies as agencies', function($query) use($agency) {
                 $query->on('agencies.commercial_id', '=', 'commercials.id')->where('agencies.agency_id', '=', $agency->id);
             });
+        } else if (Auth::guard('creative')->check()) {
+            $creative = Auth::guard('creative')->user();
+            $commercialIds = CommercialCredit::join('commercial_credit_persons as person', function($query) use($creative) {
+                $query->on('person.credit_id', '=', 'commercial_credits.id')->where('person.type', '=', CommercialCreditPerson::TYPE_CREATIVE)->where('type_id', '=', $creative->id);
+            })->lists('commercial_credits.commercial_id')->toArray();
+            $query->whereIn('id', $commercialIds);
         }
         $commercial = $query->firstOrFail();
 
@@ -132,5 +164,29 @@ class CommercialController extends BaseController
     {
         $this->manager->delete($id);
         return $this->api('OK');
+    }
+
+    public function brand(Request $request)
+    {
+        $title = $request->input('title');
+        $skipIds = $request->input('skip_ids');
+        $brands = BrandMl::where('title', 'LIKE', '%'.$title.'%')->whereNotIn('id', $skipIds)->get();
+        return $this->api('OK', $brands);
+    }
+
+    public function agency(Request $request)
+    {
+        $title = $request->input('title');
+        $skipIds = $request->input('skip_ids');
+        $brands = AgencyMl::where('title', 'LIKE', '%'.$title.'%')->whereNotIn('id', $skipIds)->get();
+        return $this->api('OK', $brands);
+    }
+
+    public function creative(Request $request)
+    {
+        $title = $request->input('title');
+        $skipIds = $request->input('skip_ids');
+        $brands = CreativeMl::where('title', 'LIKE', '%'.$title.'%')->whereNotIn('id', $skipIds)->get();
+        return $this->api('OK', $brands);
     }
 }

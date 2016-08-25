@@ -37,12 +37,15 @@ class CommercialRequest extends Request
             'credits' => 'array',
         ];
 
+        $creative = null;
         if (Auth::guard('brand')->check()) {
             unset($rules['brands']);
             unset($rules['brands.*.brand_id']);
         } else if (Auth::guard('agency')->check()) {
             unset($rules['agencies']);
             unset($rules['agencies.*.agency_id']);
+        } else if (Auth::guard('creative')->check()) {
+            $creative = Auth::guard('creative')->user();
         }
 
         $type = $this->get('type');
@@ -73,6 +76,7 @@ class CommercialRequest extends Request
             }
         }
 
+        $issetCreative = false;
         $credits = $this->get('credits');
         if (is_array($credits)) {
             foreach ($credits as $key => $credit) {
@@ -83,16 +87,31 @@ class CommercialRequest extends Request
                 if (is_array($credit['persons'])) {
                     foreach ($credit['persons'] as $subKey => $person) {
                         $rules['credits.'.$key.'.persons.'.$subKey.'.type'] = 'required|in:'.CommercialCreditPerson::TYPE_CREATIVE.','.CommercialCreditPerson::TYPE_BRAND.','.CommercialCreditPerson::TYPE_AGENCY;
+                        $type = $person['type'];
+                        $typeIdRule = 'integer';
                         if (!empty($person['name']) && mb_substr($person['name'], 0, 1) == '@') {
-                            $rules['credits.'.$key.'.persons.'.$subKey.'.type_id'] = 'required|integer';
-                        } else {
-                            $rules['credits.'.$key.'.persons.'.$subKey.'.type_id'] = 'integer';
+                            $typeIdRule = 'required|'.$typeIdRule;
                         }
+                        if ($type == CommercialCreditPerson::TYPE_BRAND) {
+                            $typeIdRule .= '|exists:brands,id';
+                        } else if ($type == CommercialCreditPerson::TYPE_AGENCY) {
+                            $typeIdRule .= '|exists:agencies,id';
+                        } else if ($type == CommercialCreditPerson::TYPE_CREATIVE) {
+                            $typeIdRule .= '|exists:creatives,id';
+                            if ($creative != null && $creative->id == $person['type_id']) {
+                                $issetCreative = true;
+                            }
+
+                        }
+                        $rules['credits.'.$key.'.persons.'.$subKey.'.type_id'] = $typeIdRule;
                         $rules['credits.'.$key.'.persons.'.$subKey.'.name'] = 'required|max:255';
                         $rules['credits.'.$key.'.persons.'.$subKey.'.separator'] = 'required|max:1';
                     }
                 }
             }
+        }
+        if ($creative != null && !$issetCreative) {
+            $rules['credits_creative'] = ['required'];
         }
         return $rules;
     }

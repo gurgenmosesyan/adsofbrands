@@ -39,6 +39,12 @@ class CommercialManager
             $query->join('commercial_agencies as agencies', function($query) use($agency) {
                 $query->on('agencies.commercial_id', '=', 'commercials.id')->where('agencies.agency_id', '=', $agency->id);
             });
+        } else if (Auth::guard('creative')->check()) {
+            $creative = Auth::guard('creative')->user();
+            $commercialIds = CommercialCredit::join('commercial_credit_persons as person', function($query) use($creative) {
+                $query->on('person.credit_id', '=', 'commercial_credits.id')->where('person.type', '=', CommercialCreditPerson::TYPE_CREATIVE)->where('type_id', '=', $creative->id);
+            })->lists('commercial_credits.commercial_id')->toArray();
+            $query->whereIn('id', $commercialIds);
         }
         $commercial = $query->firstOrFail();
         $data = $this->processSave($data);
@@ -241,6 +247,12 @@ class CommercialManager
             $query->join('commercial_agencies as agencies', function($query) use($agency) {
                 $query->on('agencies.commercial_id', '=', 'commercials.id')->where('agencies.agency_id', '=', $agency->id);
             });
+        } else if (Auth::guard('creative')->check()) {
+            $creative = Auth::guard('creative')->user();
+            $commercialIds = CommercialCredit::join('commercial_credit_persons as person', function($query) use($creative) {
+                $query->on('person.credit_id', '=', 'commercial_credits.id')->where('person.type', '=', CommercialCreditPerson::TYPE_CREATIVE)->where('type_id', '=', $creative->id);
+            })->lists('commercial_credits.commercial_id')->toArray();
+            $query->whereIn('id', $commercialIds);
         }
         $commercial = $query->firstOrFail();
 

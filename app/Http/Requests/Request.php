@@ -43,6 +43,7 @@ abstract class Request extends FormRequest
 			'max*' => trans('admin.base.field.max_length', ['max' => ':max']),
 			'min*' => trans('admin.base.field.min_length', ['min' => ':min']),
             'ml' => trans('admin.error.ml'),
+            'credits_creative.required' => trans('admin.creative.commercial.me_required'),
 		];
 	}
 
