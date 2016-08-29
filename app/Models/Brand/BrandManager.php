@@ -26,6 +26,9 @@ class BrandManager
     {
         $brand = Brand::where('id', $id)->firstOrFail();
         $data = $this->processSave($data);
+        if (!empty($data['password'])) {
+            $brand->password = bcrypt($data['password']);
+        }
         SaveImage::save($data['image'], $brand);
         SaveImage::save($data['cover'], $brand, 'cover');
 
@@ -37,9 +40,6 @@ class BrandManager
 
     protected function processSave($data)
     {
-        if (!empty($data['password'])) {
-            $data['password'] = bcrypt($data['password']);
-        }
         if (!isset($data['top'])) {
             $data['top'] = Brand::NOT_TOP;
         }

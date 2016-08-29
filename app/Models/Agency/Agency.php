@@ -22,7 +22,6 @@ class Agency extends Model implements AuthenticatableContract
         'category_id',
         'alias',
         'email',
-        'password',
         'phone',
         'link',
         'fb',

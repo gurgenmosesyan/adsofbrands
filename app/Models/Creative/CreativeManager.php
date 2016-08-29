@@ -48,7 +48,7 @@ class CreativeManager
         }
         $creative = $query->firstOrFail();
         if (!empty($data['password'])) {
-            $data['password'] = bcrypt($data['password']);
+            $creative->password = bcrypt($data['password']);
         }
         $data['active'] = Creative::ACTIVE;
         SaveImage::save($data['image'], $creative);

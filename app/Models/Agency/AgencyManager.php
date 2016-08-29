@@ -27,7 +27,7 @@ class AgencyManager
         $agency = Agency::where('id', $id)->firstOrFail();
         $data['active'] = Agency::ACTIVE;
         if (!empty($data['password'])) {
-            $data['password'] = bcrypt($data['password']);
+            $agency->password = bcrypt($data['password']);
         }
         SaveImage::save($data['image'], $agency);
         SaveImage::save($data['cover'], $agency, 'cover');

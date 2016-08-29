@@ -49,7 +49,8 @@ $account.init = function() {
         return false;
     });
     $('#forgot-form').submit(function() {
-        $account.sendForm($(this), function(data) {
+        var form = $(this);
+        $account.sendForm(form, function(data) {
             alert(data.text);
             form.find('input:text').val('');
         });

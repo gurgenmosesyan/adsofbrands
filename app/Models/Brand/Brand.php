@@ -25,7 +25,6 @@ class Brand extends Model implements AuthenticatableContract
         'category_id',
         'alias',
         'email',
-        'password',
         'phone',
         'link',
         'top',

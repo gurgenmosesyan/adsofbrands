@@ -26,7 +26,6 @@ class Creative extends Model implements AuthenticatableContract
         'type_id',
         'alias',
         'email',
-        'password',
         'phone',
         'link',
         'fb',

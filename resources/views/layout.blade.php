@@ -58,7 +58,7 @@ $footerMenu = FooterMenuManager::get();
             }
             ?>
             <div class="login fr">
-                <a href="{{$link}}" class="btn" target="_blank">{{trans('www.base.label.profile')}}</a>
+                <a href="{{$link}}" class="btn">{{trans('www.base.label.profile')}}</a>
             </div>
         @else
             <div class="registration fr">
