@@ -18,12 +18,15 @@ class Creative extends Model implements AuthenticatableContract
     const REG_TYPE_REGISTERED = 'registered';
     const STATUS_PENDING = 'pending';
     const STATUS_CONFIRMED = 'confirmed';
+    const ACTIVE = '1';
+    const NOT_ACTIVE = '0';
 
     protected $fillable = [
         'type',
         'type_id',
         'alias',
         'email',
+        'password',
         'phone',
         'link',
         'fb',
@@ -31,7 +34,8 @@ class Creative extends Model implements AuthenticatableContract
         'google',
         'youtube',
         'linkedin',
-        'vimeo'
+        'vimeo',
+        'active'
     ];
 
     protected $table = 'creatives';

@@ -78,6 +78,7 @@ body a.underline:hover {
 .fs36 { font-size: 36px; }
 .fs38 { font-size: 38px; }
 .fs40 { font-size: 40px; }
+.lh25 { line-height: 25px; }
 .clearfix::after {
     display: block;
     content: " ";

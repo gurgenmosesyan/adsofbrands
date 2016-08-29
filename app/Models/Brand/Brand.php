@@ -17,12 +17,15 @@ class Brand extends Model implements AuthenticatableContract
     const STATUS_CONFIRMED = 'confirmed';
     const TOP = '1';
     const NOT_TOP = '0';
+    const ACTIVE = '1';
+    const NOT_ACTIVE = '0';
 
     protected $fillable = [
         'country_id',
         'category_id',
         'alias',
         'email',
+        'password',
         'phone',
         'link',
         'top',
@@ -33,7 +36,8 @@ class Brand extends Model implements AuthenticatableContract
         'linkedin',
         'vimeo',
         'rating',
-        'qt'
+        'qt',
+        'active'
     ];
 
     protected $table = 'brands';

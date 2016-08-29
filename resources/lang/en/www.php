@@ -50,7 +50,7 @@ return array (
   'register.success.text' => 'You have successfully registered. For activate your account please check your email.',
   'activation.title' => 'Account activation',
   'activation.wrong_hash' => 'Account activation hash is wrong.',
-  'activation.success' => 'Your account successfully activated.',
+  'activation.success' => 'Your account successfully activated.<br />Please sign-in and update your profile for set your profile public.',
   'email.default.from' => '@info@adsofbrands.com',
   'sign_in.title' => 'Sign in',
   'account.forgot_password' => 'Forgot password?',

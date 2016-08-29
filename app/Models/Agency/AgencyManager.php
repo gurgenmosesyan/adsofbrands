@@ -12,6 +12,7 @@ class AgencyManager
         $agency = new Agency($data);
         $agency->reg_type = Agency::REG_TYPE_ADMIN;
         $agency->status = '';
+        $agency->active = Agency::ACTIVE;
         SaveImage::save($data['image'], $agency);
         SaveImage::save($data['cover'], $agency, 'cover');
 
@@ -24,6 +25,10 @@ class AgencyManager
     public function update($id, $data)
     {
         $agency = Agency::where('id', $id)->firstOrFail();
+        $data['active'] = Agency::ACTIVE;
+        if (!empty($data['password'])) {
+            $data['password'] = bcrypt($data['password']);
+        }
         SaveImage::save($data['image'], $agency);
         SaveImage::save($data['cover'], $agency, 'cover');
 

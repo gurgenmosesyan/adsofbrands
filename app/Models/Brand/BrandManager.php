@@ -37,9 +37,13 @@ class BrandManager
 
     protected function processSave($data)
     {
+        if (!empty($data['password'])) {
+            $data['password'] = bcrypt($data['password']);
+        }
         if (!isset($data['top'])) {
             $data['top'] = Brand::NOT_TOP;
         }
+        $data['active'] = Brand::ACTIVE;
         return $data;
     }
 

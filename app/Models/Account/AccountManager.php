@@ -39,6 +39,7 @@ class AccountManager
         $user->hash = self::generateRandomUniqueHash();
         $user->reg_type = Account::REG_TYPE_REGISTERED;
         $user->status = Account::STATUS_PENDING;
+        $user->active = Account::NOT_ACTIVE;
         $user->save();
 
         DB::transaction(function() use($user) {

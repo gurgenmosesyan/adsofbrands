@@ -35,6 +35,7 @@ class CreateAgenciesTable extends Migration
             $table->rememberToken();
             $table->enum('reg_type', [Agency::REG_TYPE_ADMIN, Agency::REG_TYPE_REGISTERED]);
             $table->enum('status', ['', Agency::STATUS_PENDING, Agency::STATUS_CONFIRMED]);
+            $table->enum('active', [Agency::ACTIVE, Agency::NOT_ACTIVE]);
             $table->timestamps();
         });
     }

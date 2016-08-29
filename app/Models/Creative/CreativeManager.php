@@ -22,6 +22,7 @@ class CreativeManager
         }
         $creative->reg_type = Creative::REG_TYPE_ADMIN;
         $creative->status = '';
+        $creative->active = Creative::ACTIVE;
         SaveImage::save($data['image'], $creative);
         SaveImage::save($data['cover'], $creative, 'cover');
 
@@ -46,6 +47,10 @@ class CreativeManager
             $data['type_id'] = $agency->id;
         }
         $creative = $query->firstOrFail();
+        if (!empty($data['password'])) {
+            $data['password'] = bcrypt($data['password']);
+        }
+        $data['active'] = Creative::ACTIVE;
         SaveImage::save($data['image'], $creative);
         SaveImage::save($data['cover'], $creative, 'cover');
 

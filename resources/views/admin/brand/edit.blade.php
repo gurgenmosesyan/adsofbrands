@@ -80,7 +80,7 @@ $mls = $brand->ml->keyBy('lng_id');
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.cover')}}</label>
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.cover')}}</label>
                 <div class="col-sm-9">
                     <?php ImgUploader::uploader('brand', 'cover', 'cover', $brand->cover); ?>
                 </div>
@@ -111,6 +111,23 @@ $mls = $brand->ml->keyBy('lng_id');
                     <div id="form-error-email" class="form-error"></div>
                 </div>
             </div>
+
+            @if(Auth::guard('brand')->check())
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">{{trans('admin.base.label.password')}}</label>
+                    <div class="col-sm-9">
+                        <input type="password" name="password" class="form-control" value="">
+                        <div id="form-error-password" class="form-error"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">{{trans('admin.base.label.re_password')}}</label>
+                    <div class="col-sm-9">
+                        <input type="password" name="re_password" class="form-control" value="">
+                        <div id="form-error-re_password" class="form-error"></div>
+                    </div>
+                </div>
+            @endif
 
             <div class="form-group">
                 <label class="col-sm-3 control-label">{{trans('admin.base.label.phone')}}</label>

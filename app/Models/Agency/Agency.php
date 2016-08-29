@@ -15,11 +15,14 @@ class Agency extends Model implements AuthenticatableContract
     const REG_TYPE_REGISTERED = 'registered';
     const STATUS_PENDING = 'pending';
     const STATUS_CONFIRMED = 'confirmed';
+    const ACTIVE = '1';
+    const NOT_ACTIVE = '0';
 
     protected $fillable = [
         'category_id',
         'alias',
         'email',
+        'password',
         'phone',
         'link',
         'fb',
@@ -29,7 +32,8 @@ class Agency extends Model implements AuthenticatableContract
         'linkedin',
         'vimeo',
         'rating',
-        'qt'
+        'qt',
+        'active'
     ];
 
     protected $table = 'agencies';

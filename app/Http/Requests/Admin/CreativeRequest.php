@@ -20,7 +20,7 @@ class CreativeRequest extends Request
         $rules = [
             'alias' => 'required|max:255',
             'image' => 'required|core_image',
-            'cover' => 'required|core_image',
+            'cover' => 'core_image',
             'email' => 'email|max:255|unique:creatives,email'.$creativeId.'|unique:adm_users,email|unique:brands,email|unique:agencies,email',
             'phone' => 'max:255',
             'link' => 'required|url|max:255',
@@ -45,6 +45,9 @@ class CreativeRequest extends Request
                     $rules['type_id'] = 'required|exists:agencies,id';
                 }
             }
+        } else if (Auth::guard('creative')->check()) {
+            $rules['password'] = 'required_with:re_password|min:6|max:255|regex:/[a-z]{1,}[0-9]{1,}/i';
+            $rules['re_password'] = 'required_with:password|same:password';
         }
 
         return $rules;
