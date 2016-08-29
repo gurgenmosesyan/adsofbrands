@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\Request;
+use App\Models\Brand\Brand;
 use Route;
 
 class BrandRequest extends Request
@@ -24,12 +25,15 @@ class BrandRequest extends Request
             'email' => 'email|max:255|unique:brands,email'.$brandId.'|unique:adm_users,email|unique:agencies,email|unique:creatives,email',
             'phone' => 'max:255',
             'link' => 'required|url|max:255',
+            'top' => 'in:'.Brand::NOT_TOP.','.Brand::TOP,
             'fb' => 'url|max:255',
             'twitter' => 'url|max:255',
             'google' => 'url|max:255',
             'youtube' => 'url|max:255',
             'linkedin' => 'url|max:255',
             'vimeo' => 'url|max:255',
+            'rating' => 'numeric',
+            'qt' => 'integer',
             'ml' => 'ml',
             'ml.*.title' => 'required|max:255',
             'ml.*.sub_title' => 'required|max:255',

@@ -14,7 +14,7 @@ $pageMenu = 'news';
         <tr>
             <th>{{trans('admin.base.label.id')}}</th>
             <th>{{trans('admin.base.label.title')}}</th>
-            <th>{{trans('admin.base.label.sub_title')}}</th>
+            <th>{{trans('admin.base.label.description')}}</th>
             <th class="th-actions"></th>
         </tr>
         </thead>

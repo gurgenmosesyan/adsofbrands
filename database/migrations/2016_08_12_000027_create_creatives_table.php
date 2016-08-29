@@ -30,6 +30,7 @@ class CreateCreativesTable extends Migration
             $table->string('youtube');
             $table->string('linkedin');
             $table->string('vimeo');
+            $table->string('hash');
             $table->rememberToken();
             $table->enum('reg_type', [Creative::REG_TYPE_ADMIN, Creative::REG_TYPE_REGISTERED]);
             $table->enum('status', ['', Creative::STATUS_PENDING, Creative::STATUS_CONFIRMED]);

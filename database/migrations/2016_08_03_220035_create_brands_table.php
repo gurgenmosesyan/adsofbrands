@@ -24,12 +24,16 @@ class CreateBrandsTable extends Migration
             $table->string('password')->nullable();
             $table->string('phone');
             $table->string('link');
+            $table->enum('top', [Brand::NOT_TOP, Brand::TOP]);
             $table->string('fb');
             $table->string('twitter');
             $table->string('google');
             $table->string('youtube');
             $table->string('linkedin');
             $table->string('vimeo');
+            $table->float('rating')->unsigned();
+            $table->integer('qt')->unsigned();
+            $table->string('hash');
             $table->rememberToken();
             $table->enum('reg_type', [Brand::REG_TYPE_ADMIN, Brand::REG_TYPE_REGISTERED]);
             $table->enum('status', ['', Brand::STATUS_PENDING, Brand::STATUS_CONFIRMED]);

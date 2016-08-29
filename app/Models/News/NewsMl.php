@@ -14,7 +14,7 @@ class NewsMl extends Model
         'id',
         'lng_id',
         'title',
-        'sub_title',
+        'description',
         'text',
     ];
 }

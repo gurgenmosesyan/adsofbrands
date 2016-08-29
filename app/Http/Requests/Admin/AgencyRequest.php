@@ -29,6 +29,8 @@ class AgencyRequest extends Request
             'youtube' => 'url|max:255',
             'linkedin' => 'url|max:255',
             'vimeo' => 'url|max:255',
+            'rating' => 'numeric',
+            'qt' => 'integer',
             'ml' => 'ml',
             'ml.*.title' => 'required|max:255',
             'ml.*.sub_title' => 'required|max:255',

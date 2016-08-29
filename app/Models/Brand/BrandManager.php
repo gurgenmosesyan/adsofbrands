@@ -9,6 +9,7 @@ class BrandManager
 {
     public function store($data)
     {
+        $data = $this->processSave($data);
         $brand = new Brand($data);
         $brand->reg_type = Brand::REG_TYPE_ADMIN;
         $brand->status = '';
@@ -24,6 +25,7 @@ class BrandManager
     public function update($id, $data)
     {
         $brand = Brand::where('id', $id)->firstOrFail();
+        $data = $this->processSave($data);
         SaveImage::save($data['image'], $brand);
         SaveImage::save($data['cover'], $brand, 'cover');
 
@@ -31,6 +33,14 @@ class BrandManager
             $brand->update($data);
             $this->updateMl($data['ml'], $brand);
         });
+    }
+
+    protected function processSave($data)
+    {
+        if (!isset($data['top'])) {
+            $data['top'] = Brand::NOT_TOP;
+        }
+        return $data;
     }
 
     protected function storeMl($data, Brand $brand)

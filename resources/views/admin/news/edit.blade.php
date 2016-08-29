@@ -35,10 +35,10 @@ $mls = $news->ml->keyBy('lng_id');
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.sub_title').' ('.$lng->code.')'}}</label>
+                <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.description').' ('.$lng->code.')'}}</label>
                 <div class="col-sm-9">
-                    <input type="text" name="ml[{{$lng->id}}][sub_title]" class="title form-control" value="{{isset($mls[$lng->id]) ? $mls[$lng->id]->sub_title : ''}}">
-                    <div id="form-error-ml_{{$lng->id}}_sub_title" class="form-error"></div>
+                    <textarea name="ml[{{$lng->id}}][description]" class="form-control">{{isset($mls[$lng->id]) ? $mls[$lng->id]->description : ''}}</textarea>
+                    <div id="form-error-ml_{{$lng->id}}_description" class="form-error"></div>
                 </div>
             </div>
         @endforeach

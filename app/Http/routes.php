@@ -17,6 +17,18 @@ Route::group(['middleware' => ['web', 'front']], function() {
 
         Route::post('/api/contact', 'ApiController@contact');
         Route::post('/api/subscribe', 'ApiController@subscribe');
+
+        Route::group(['middleware' => 'guest:all'], function() {
+            Route::get('/sign-in', 'AccountController@login');
+            Route::get('/register', 'AccountController@register');
+            Route::get('/activation/{hash}', 'AccountController@activation');
+            Route::get('/reset', 'AccountController@forgot');
+            Route::get('/reset/{hash}', 'AccountController@reset');
+            Route::post('/api/login', 'AccountApiController@login');
+            Route::post('/api/register', 'AccountApiController@register');
+            Route::post('/api/forgot', 'AccountApiController@forgot');
+            Route::post('/api/reset', 'AccountApiController@reset');
+        });
     });
 
 });

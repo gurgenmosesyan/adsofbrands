@@ -16,7 +16,7 @@ class NewsRequest extends Request
             'date' => 'date',
             'ml' => 'ml',
             'ml.*.title' => 'required|max:255',
-            'ml.*.sub_title' => 'required|max:255',
+            'ml.*.description' => 'required|max:2000',
             'ml.*.text' => 'required|max:65000',
             'brands' => 'array',
             'brands.*.brand_id' => 'required|integer|exists:brands,id',

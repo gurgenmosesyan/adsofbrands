@@ -16,7 +16,7 @@ class CreateNewsMlTable extends Migration
             $table->integer('id')->unsigned();
             $table->tinyInteger('lng_id')->unsigned();
             $table->string('title');
-            $table->string('sub_title');
+            $table->text('description');
             $table->text('text');
             $table->primary(['id', 'lng_id']);
         });

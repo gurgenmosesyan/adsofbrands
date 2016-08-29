@@ -1,4 +1,5 @@
 <?php
+use App\Models\Brand\Brand;
 use App\Core\Helpers\ImgUploader;
 
 $head->appendScript('/assets/plugins/ckeditor/ckeditor.js');
@@ -124,6 +125,30 @@ $mls = $brand->ml->keyBy('lng_id');
                 <div class="col-sm-9">
                     <input type="text" name="link" class="form-control" value="{{$brand->link or ''}}">
                     <div id="form-error-link" class="form-error"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.top')}}</label>
+                <div class="col-sm-9">
+                    <input type="checkbox" name="top" class="minimal-checkbox" value="{{Brand::TOP}}"{{$brand->isTop() ? ' checked="checked"' : ''}}>
+                    <div id="form-error-top" class="form-error"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.rating')}}</label>
+                <div class="col-sm-4">
+                    <input type="text" name="rating" class="form-control" value="{{$brand->rating}}">
+                    <div id="form-error-rating" class="form-error"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.quantity_vote')}}</label>
+                <div class="col-sm-4">
+                    <input type="text" name="qt" class="form-control" value="{{$brand->qt}}">
+                    <div id="form-error-qt" class="form-error"></div>
                 </div>
             </div>
 

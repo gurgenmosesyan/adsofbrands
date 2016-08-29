@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Models\FooterMenu\FooterMenu;
 
 class CreateFooterMenuTable extends Migration
 {
@@ -14,7 +15,11 @@ class CreateFooterMenuTable extends Migration
     {
         Schema::create('footer_menu', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('alias');
+            $table->enum('static', FooterMenu::IS_NOT_STATIC, FooterMenu::IS_STATIC);
+            $table->integer('sort_order')->unsigned();
             $table->timestamps();
+            $table->index('alias', 'alias');
         });
     }
 

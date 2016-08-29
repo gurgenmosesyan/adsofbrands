@@ -114,6 +114,22 @@ $mls = $agency->ml->keyBy('lng_id');
                 </div>
             </div>
 
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.rating')}}</label>
+                <div class="col-sm-4">
+                    <input type="text" name="rating" class="form-control" value="{{$agency->rating}}">
+                    <div id="form-error-rating" class="form-error"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.quantity_vote')}}</label>
+                <div class="col-sm-4">
+                    <input type="text" name="qt" class="form-control" value="{{$agency->qt}}">
+                    <div id="form-error-qt" class="form-error"></div>
+                </div>
+            </div>
+
             <h4 class="col-sm-offset-3 col-sm-9">{{trans('admin.base.label.social_pages')}}</h4>
 
             <div class="form-group">

@@ -27,7 +27,9 @@ class Agency extends Model implements AuthenticatableContract
         'google',
         'youtube',
         'linkedin',
-        'vimeo'
+        'vimeo',
+        'rating',
+        'qt'
     ];
 
     protected $table = 'agencies';

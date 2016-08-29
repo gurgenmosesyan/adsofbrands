@@ -30,6 +30,7 @@ class CreateCommercialsTable extends Migration
             $table->string('image');
             $table->string('advertising');
             $table->integer('views_count')->unsigned();
+            $table->integer('comments_count')->unsigned();
             $table->float('rating')->unsigned();
             $table->integer('qt')->unsigned();
             $table->timestamps();

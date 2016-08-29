@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<?php echo $data['message']; ?>
+<?php echo $data['body']; ?>
 
 </body>
 </html>

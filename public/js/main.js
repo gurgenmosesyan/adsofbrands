@@ -92,7 +92,7 @@ $main.initContactForm = function() {
     });
 };
 
-$main.initSlider = function() {
+/*$main.initSlider = function() {
     $('#slider').owlCarousel({
         singleItem: true,
         autoPlay: 5900,
@@ -103,40 +103,27 @@ $main.initSlider = function() {
         slideSpeed: 1200,
         rewindSpeed: 2000
     });
-};
+};*/
 
-$main.homeAccCarousel = function() {
-    $('#home-acc').owlCarousel({
+$main.initItemsCar = function() {
+    $('.items-car').owlCarousel({
         autoPlay: true,
         navigation: true,
         navigationText: ['',''],
         pagination: true,
         slideSpeed: 700,
         itemsCustom: [
-            [0, 1],
-            [800, 2],
-            [1200, 3]
+            [0, 3],
+            [800, 5],
+            [1200, 7]
         ]
     });
 };
 
 $main.initSubscribe = function() {
-    $('.top-menu .subscribe a').on('click', function() {
-        var subscribeBtn = $(this).parent('li');
-        subscribeBtn.addClass('dpn');
-        $('.top-menu .subscribe-box').removeClass('dpn');
-        $(document).bind('click', function(e) {
-            var clicked = $(e.target);
-            if (!clicked.parents().is('#subscribe-form')) {
-                $('.top-menu .subscribe-box').addClass('dpn');
-                subscribeBtn.removeClass('dpn');
-                $(document).unbind('click');
-            }
-        });
-        return false;
-    });
     $('#subscribe-form').submit(function() {
-        var form = $(this);
+        var form = $(this),
+            info = form.find('.info');
         if (form.hasClass('sending')) {
             return false;
         }
@@ -147,16 +134,14 @@ $main.initSubscribe = function() {
             data: form.serializeArray(),
             dataType: 'json',
             success: function(result) {
-                if (result.status == 'OK' || result.status == 'EXIST') {
-                    $('.subscribe-box').addClass('dpn');
-                    $('.top-menu .subscribe').removeClass('dpn');
-                    $('#subscribe-form input:text').val('');
-                    alert(result.data);
-                } else if (result.errors) {
-                    alert(result.errors.email);
+                info.removeClass('success error');
+                if (result.status == 'OK') {
+                    info.text(result.data).addClass('success');
+                    form.find('input:text').val('');
                 } else {
-                    alert('Error in subscribing');
+                    info.text(result.errors.email[0]).addClass('error');
                 }
+                info.addClass('visible');
                 form.removeClass('sending');
             }
         });
@@ -164,7 +149,17 @@ $main.initSubscribe = function() {
     });
 };
 
+$main.initSelect = function(obj) {
+    obj.find('select').change(function() {
+        var self = $(this),
+            text = self.find('option:selected').text();
+        self.prev('.select-title').text($.trim(text));
+    }).change();
+};
+
 $(document).ready(function() {
 
     $main.initSubscribe();
+
+    $main.initSelect($('#account'));
 });

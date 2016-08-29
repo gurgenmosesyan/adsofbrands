@@ -5,7 +5,7 @@ $news.initSearchPage = function() {
     $news.listColumns = [
         {data: 'id'},
         {data: 'title'},
-        {data: 'sub_title'}
+        {data: 'description'}
     ];
     $news.initSearch();
 };

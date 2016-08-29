@@ -155,4 +155,5 @@ return array (
   'login.not_confirmed' => 'Your account not confirmed',
   'admin_menu.options' => 'Options',
   'creative.commercial.me_required' => 'You have to take part in this commercial',
+  'base.label.static' => 'Static',
 );

@@ -15,6 +15,8 @@ class Brand extends Model implements AuthenticatableContract
     const REG_TYPE_REGISTERED = 'registered';
     const STATUS_PENDING = 'pending';
     const STATUS_CONFIRMED = 'confirmed';
+    const TOP = '1';
+    const NOT_TOP = '0';
 
     protected $fillable = [
         'country_id',
@@ -23,12 +25,15 @@ class Brand extends Model implements AuthenticatableContract
         'email',
         'phone',
         'link',
+        'top',
         'fb',
         'twitter',
         'google',
         'youtube',
         'linkedin',
-        'vimeo'
+        'vimeo',
+        'rating',
+        'qt'
     ];
 
     protected $table = 'brands';
@@ -41,6 +46,11 @@ class Brand extends Model implements AuthenticatableContract
     public function getCover()
     {
         return url('/'.self::IMAGES_PATH.'/'.$this->cover);
+    }
+
+    public function isTop()
+    {
+        return $this->top == self::TOP;
     }
 
     public function ml()
