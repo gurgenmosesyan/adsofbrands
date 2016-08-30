@@ -1,31 +1,238 @@
-@media screen and (max-width: 1550px) {
-    
+@media screen and (max-width: 1650px) {
+    #home-main {
+        background-size: 820px;
+    }
+    #home-main .bg-right {
+        width: 180px;
+    }
+}
+@media screen and (max-width: 1600px) {
+    #news-box .news-see-all {
+        padding-right: 6%;
+    }
 }
 @media screen and (max-width: 1400px) {
     #home-main {
         background-size: 780px;
     }
     #home-main .bg-right {
-        height: 417px;
-        width: 170px;
+        width: 162px;
     }
     #home-main .info-box {
-        max-width: 500px;
-        margin-left: 50px;
+        padding-left: 829px;
+    }
+    #news-box .news-see-all {
+        padding-right: 4%;
+    }
+    #footer .menu-col {
+        padding-right: 12%;
     }
 }
-@media screen and (max-width: 1230px) {
-
+@media screen and (max-width: 1300px) {
+    #home-main {
+        background-size: 700px;
+    }
+    #home-main .bg-right {
+        width: 140px;
+    }
+    #home-main .bg-ads {
+        background-size: 700px;
+        width: 700px;
+    }
+    #home-main .info-box {
+        padding-left: 780px;
+    }
+    #footer .menu-col {
+        padding-right: 10%;
+    }
 }
-@media screen and (max-width: 1180px) {
-
+@media screen and (max-width: 1270px) {
+    #home-main .info-box {
+        padding-left: 750px;
+    }
+}
+@media screen and (max-width: 1210px) {
+    #home-main {
+        background-size: 600px;
+    }
+    #home-main .bg-right {
+        width: 120px;
+    }
+    #home-main .bg-ads {
+        background-size: 600px;
+        width: 600px;
+    }
+    #home-main .info-box {
+        padding-left: 680px;
+    }
+}
+@media screen and (max-width: 1150px) {
+    #home-main .info-box {
+        padding-left: 650px;
+    }
 }
 @media screen and (max-width: 1100px) {
-
+    #home-main {
+        background-size: 500px;
+    }
+    #home-main .bg-right {
+        display: none;
+    }
+    #home-main .bg-ads {
+        background-size: 500px;
+        width: 500px;
+    }
+    #home-main .info-box {
+        padding-left: 580px;
+    }
+    #news-box .news {
+        width: 50%;
+    }
 }
-@media screen and (max-width: 880px) {
-
+@media screen and (max-width: 1050px) {
+    #home-main .info-box {
+        padding-left: 535px;
+    }
 }
-@media screen and (max-width: 768px) {
-
+@media screen and (max-width: 1000px) {
+    #home-main {
+        background-size: 700px;
+    }
+    #home-main .bg-ads {
+        display: none;
+    }
+    #home-main .info-box {
+        padding-left: 100px;
+    }
+}
+@media screen and (max-width: 950px) {
+    #footer .footer-right {
+        float: none;
+        margin: 0 auto 55px auto;
+        width: auto;
+    }
+    #footer .menu {
+        padding-right: 0;
+        margin: 0 auto;
+    }
+}
+@media screen and (max-width: 850px) {
+    #news-box .news-right {
+        float: none;
+        margin: 0 auto 45px auto;
+        padding-left: 0;
+        width: auto;
+    }
+    #news-box .news-left {
+        padding-right: 0;
+    }
+}
+@media screen and (max-width: 800px) {
+    .car-block p {
+        margin-bottom: 55px;
+    }
+    .car-box .see-all {
+        left: 15px;
+        right: auto;
+    }
+    .items-car .owl-buttons .owl-prev {
+        left: 80px;
+        right: auto;
+    }
+    .items-car .owl-buttons .owl-next {
+        left: 116px;
+        right: auto;
+    }
+}
+@media screen and (max-width: 710px) {
+    #home-main {
+        background-size: contain;
+    }
+}
+@media screen and (max-width: 650px) {
+    #home-top .titles {
+        margin-top: 20px;
+    }
+    #footer .footer-bottom .fl,
+    #footer .footer-bottom .fr {
+        float: none;
+    }
+    #footer .footer-bottom {
+        height: auto;
+        padding-bottom: 10px;
+        text-align: center;
+    }
+    #footer .footer-bottom p {
+        margin-bottom: 12px;
+    }
+    #footer .privacy {
+        margin-left: 0;
+    }
+}
+@media screen and (max-width: 600px) {
+    #home-main .info-box {
+        padding-top: 40px;
+        padding-left: 40px;
+    }
+    #news-box .news {
+        width: 100%;
+    }
+    #news-box h2 {
+        float: none;
+    }
+    #news-box .news-see-all {
+        float: none;
+        margin-bottom: 14px;
+    }
+    #news-box .title-box {
+        height: auto;
+    }
+}
+@media screen and (max-width: 500px) {
+    #home-main {
+        background-size: cover;
+    }
+    #home-main .info-box {
+        padding-top: 20px;
+        padding-left: 0;
+    }
+    #home-main h2,
+    #home-main .info {
+        margin-bottom: 10px;
+    }
+    #home-main .sub-title {
+        margin-bottom: 15px;
+    }
+    #home-main h3 {
+        margin-bottom: 15px;
+    }
+    #home-main .btn-box {
+        margin: 25px 0 10px;
+    }
+    #home-main .social-box div {
+        float: none;
+    }
+    #home-main .facebook {
+        margin-left: 0;
+    }
+    #subscribe-form input[type="text"] {
+        width: 50%;
+    }
+}
+@media screen and (max-width: 440px) {
+    #subscribe-form input[type="text"] {
+        padding: 0 18px;
+        width: 40%;
+    }
+    #subscribe-form input[type="submit"] {
+        padding: 0 15px;
+    }
+}
+@media screen and (max-width: 400px) {
+    #home-top {
+        height: 250px;
+    }
+    #home-top .titles {
+        margin-top: 10px;
+    }
 }

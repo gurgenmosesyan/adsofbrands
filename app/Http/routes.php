@@ -29,6 +29,9 @@ Route::group(['middleware' => ['web', 'front']], function() {
             Route::post('/api/forgot', 'AccountApiController@forgot');
             Route::post('/api/reset', 'AccountApiController@reset');
         });
+
+        Route::get('/brand/{alias}/{id}', 'BrandController@index');
+
     });
 
 });

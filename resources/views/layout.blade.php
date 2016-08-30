@@ -94,47 +94,7 @@ $footerMenu = FooterMenuManager::get();
     <div class="footer-main">
         <div class="page">
 
-            <div class="menu fl">
-                <?php $separator = intval(ceil($footerMenu->count() / 4)); ?>
-                <ul class="menu-col fl mln">
-                    @foreach($footerMenu->slice(0, $separator) as $value)
-                        @if($value->isStatic())
-                            <li><a href="{{url_with_lng('/'.$value->alias)}}" class="fs18">{{$value->title}}</a></li>
-                        @else
-                            <li><a href="{{url_with_lng('/page/'.$value->alias)}}" class="fs18">{{$value->title}}</a></li>
-                        @endif
-                    @endforeach
-                </ul>
-                <ul class="menu-col fl">
-                    @foreach($footerMenu->slice($separator, $separator) as $value)
-                        @if($value->isStatic())
-                            <li><a href="{{url_with_lng('/'.$value->alias)}}" class="fs18">{{$value->title}}</a></li>
-                        @else
-                            <li><a href="{{url_with_lng('/page/'.$value->alias)}}" class="fs18">{{$value->title}}</a></li>
-                        @endif
-                    @endforeach
-                </ul>
-                <ul class="menu-col fl">
-                    @foreach($footerMenu->slice($separator*2, $separator) as $value)
-                        @if($value->isStatic())
-                            <li><a href="{{url_with_lng('/'.$value->alias)}}" class="fs18">{{$value->title}}</a></li>
-                        @else
-                            <li><a href="{{url_with_lng('/page/'.$value->alias)}}" class="fs18">{{$value->title}}</a></li>
-                        @endif
-                    @endforeach
-                </ul>
-                <ul class="menu-col fl">
-                    @foreach($footerMenu->slice($separator*3) as $value)
-                        @if($value->isStatic())
-                            <li><a href="{{url_with_lng('/'.$value->alias)}}" class="fs18">{{$value->title}}</a></li>
-                        @else
-                            <li><a href="{{url_with_lng('/page/'.$value->alias)}}" class="fs18">{{$value->title}}</a></li>
-                        @endif
-                    @endforeach
-                </ul>
-                <div class="cb"></div>
-            </div>
-            <div class="fr">
+            <div class="footer-right fr">
                 <div class="subscribe">
                     <h3 class="fb fs26">{{trans('www.subscribe.title')}}</h3>
                     <form id="subscribe-form" action="{{url_with_lng('/api/subscribe')}}" method="post">
@@ -150,6 +110,46 @@ $footerMenu = FooterMenuManager::get();
                     <a href="{{trans('www.social.link.youtube')}}" class="youtube social db fl" target="_blank"></a>
                     <div class="cb"></div>
                 </div>
+            </div>
+            <div class="menu">
+                <?php $separator = intval(ceil($footerMenu->count() / 4)); ?>
+                <ul class="menu-col">
+                    @foreach($footerMenu->slice(0, $separator) as $value)
+                        @if($value->isStatic())
+                            <li><a href="{{url_with_lng('/'.$value->alias)}}" class="fs18">{{$value->title}}</a></li>
+                        @else
+                            <li><a href="{{url_with_lng('/page/'.$value->alias)}}" class="fs18">{{$value->title}}</a></li>
+                        @endif
+                    @endforeach
+                </ul>
+                <ul class="menu-col">
+                    @foreach($footerMenu->slice($separator, $separator) as $value)
+                        @if($value->isStatic())
+                            <li><a href="{{url_with_lng('/'.$value->alias)}}" class="fs18">{{$value->title}}</a></li>
+                        @else
+                            <li><a href="{{url_with_lng('/page/'.$value->alias)}}" class="fs18">{{$value->title}}</a></li>
+                        @endif
+                    @endforeach
+                </ul>
+                <ul class="menu-col">
+                    @foreach($footerMenu->slice($separator*2, $separator) as $value)
+                        @if($value->isStatic())
+                            <li><a href="{{url_with_lng('/'.$value->alias)}}" class="fs18">{{$value->title}}</a></li>
+                        @else
+                            <li><a href="{{url_with_lng('/page/'.$value->alias)}}" class="fs18">{{$value->title}}</a></li>
+                        @endif
+                    @endforeach
+                </ul>
+                <ul class="menu-col last">
+                    @foreach($footerMenu->slice($separator*3) as $value)
+                        @if($value->isStatic())
+                            <li><a href="{{url_with_lng('/'.$value->alias)}}" class="fs18">{{$value->title}}</a></li>
+                        @else
+                            <li><a href="{{url_with_lng('/page/'.$value->alias)}}" class="fs18">{{$value->title}}</a></li>
+                        @endif
+                    @endforeach
+                </ul>
+                <div class="cb"></div>
             </div>
             <div class="cb"></div>
         </div>

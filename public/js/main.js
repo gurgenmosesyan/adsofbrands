@@ -92,30 +92,22 @@ $main.initContactForm = function() {
     });
 };
 
-/*$main.initSlider = function() {
-    $('#slider').owlCarousel({
-        singleItem: true,
-        autoPlay: 5900,
-        navigation: true,
-        navigationText: ['',''],
-        pagination: true,
-        paginationSpeed: 1200,
-        slideSpeed: 1200,
-        rewindSpeed: 2000
-    });
-};*/
-
 $main.initItemsCar = function() {
     $('.items-car').owlCarousel({
         autoPlay: true,
         navigation: true,
         navigationText: ['',''],
-        pagination: true,
+        pagination: false,
         slideSpeed: 700,
         itemsCustom: [
-            [0, 3],
-            [800, 5],
-            [1200, 7]
+            [0, 2],
+            [550, 3],
+            [735, 4],
+            [920, 5],
+            [1100, 6],
+            [1250, 7],
+            [1450, 8],
+            [1600, 9]
         ]
     });
 };

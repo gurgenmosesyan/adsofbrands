@@ -78,6 +78,7 @@ body a.underline:hover {
 .fs36 { font-size: 36px; }
 .fs38 { font-size: 38px; }
 .fs40 { font-size: 40px; }
+.lh22 { line-height: 22px; }
 .lh25 { line-height: 25px; }
 .clearfix::after {
     display: block;
@@ -276,12 +277,11 @@ body .page {
 }
 #home-top .titles {
     color: #ffffff;
-    margin: 58px auto 0 auto;
-    line-height: 22px;
+    margin: 64px auto 0 auto;
     max-width: 658px;
 }
 #home-top h1 {
-    margin-bottom: 11px;
+    margin-bottom: 15px;
 }
 #home-main {
     background: #F0F0F0 url('../imgs/main-bg-left.png') no-repeat 22px center;
@@ -297,23 +297,13 @@ body .page {
     top: 0;
     width: 100%;
 }
-#home-main .bg-left {
-    background: url('../imgs/main-bg-left.png') no-repeat left center;
-    background-size: cover;
-    position: absolute;
-    left: 1%;
-    top: 0;
-    height: 100%;
-    width: 886px;
-    max-width: 99%;
-}
 #home-main .bg-right {
     background: url('../imgs/main-bg-right.png') no-repeat;
     background-size: contain;
     position: absolute;
     right: 0;
     top: 0;
-    height: 490px;
+    height: 100%;
     width: 200px;
 }
 #home-main .page {
@@ -323,13 +313,13 @@ body .page {
     background: url('../imgs/main-bg-ads.png') no-repeat left center;
     background-size: contain;
     height: 100%;
-    position: relative;
     width: 769px;
 }
 #home-main .info-box {
-    max-width: 690px;
-    margin: 68px 0 0 110px;
-    position: relative;
+    padding: 68px 0 0 879px;
+    /*max-width: 690px;
+    margin: 68px 0 0 110px;*/
+    /*position: relative;*/
 }
 #home-main h2 {
     margin-bottom: 20px;
@@ -348,7 +338,7 @@ body .page {
     padding-left: 40px;
 }
 #home-main .btn-box {
-    margin: 35px 0 24px 0;
+    margin: 35px 0 24px;
 }
 #home-main .social-title {
     height: 39px;
@@ -424,6 +414,7 @@ body .page {
     background-color: #ffffff;
     border: 1px solid #D3D3D3;
     border-radius: 3px;
+    margin: 0 auto;
     padding: 8px;
     width: 150px;
 }
@@ -468,24 +459,40 @@ body .page {
 }
 
 /* latest news */
-#latest-news {
+#news-box {
     background-color: #EEEEEE;
     padding: 70px 0;
 }
-#latest-news .title-box {
+#news-box .title-box {
     height: 60px;
 }
-#latest-news .ad {
-    margin-top: 60px;
+#news-box .news-see-all {
+    padding-right: 8%;
 }
-#latest-news .img {
+#news-box .news-left {
+    padding-right: 320px;
+}
+#news-box .news-right {
+    padding-left: 8px;
+    margin-top: 60px;
+    width: 312px;
+}
+#news-box .news {
+    box-sizing: border-box;
+    display: inline-block;
+    margin-bottom: 32px;
+    padding-right: 3%;
+    vertical-align: top;
+    width: 33%;
+}
+#news-box .img {
     margin-bottom: 16px;
 }
-#latest-news .date {
+#news-box .date {
     color: #828282;
     margin-bottom: 18px;
 }
-#latest-news h3 {
+#news-box h3 {
     margin-bottom: 14px;
 }
 
@@ -495,10 +502,22 @@ body .page {
 }
 #footer .footer-main {
     background: #202020 url('../imgs/footer-dot-bg.png');
-    padding: 80px 0;
+    padding: 80px 0 55px;
+}
+#footer .footer-right {
+    width: 442px;
+}
+#footer .menu {
+    padding-right: 480px;
 }
 #footer .menu-col {
-    margin-left: 148px;
+    display: inline-block;
+    margin-bottom: 25px;
+    padding-right: 14%;
+    vertical-align: top;
+}
+#footer .menu-col.last {
+    padding-right: 0;
 }
 #footer .menu li {
     margin-bottom: 30px;
@@ -532,6 +551,9 @@ body .page {
     border-radius: 0 25px 25px 0;
     cursor: pointer;
     padding: 0 25px;
+}
+#subscribe-form input[type="submit"]:hover {
+    background-color: #E5AF0A;
 }
 #subscribe-form.sending input[type="submit"] {
     background-color: #A9A9A9;
@@ -659,4 +681,18 @@ body .page {
 #account .form-error {
     color: #ff0000;
     margin-top: 5px;
+}
+
+/* main pages */
+#main-inner {
+    padding: 39px 0 350px;
+}
+#main-right {
+    width: 336px;
+}
+#main-right .inner {
+    width: 240px;
+}
+#main-left {
+    padding-right: 336px;
 }

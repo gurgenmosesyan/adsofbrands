@@ -14,7 +14,7 @@ $title = trans('www.homepage.title');
     <div class="overlay">
         <div class="titles">
             <h1 class="fb fs34">{!!trans('www.home.top.title')!!}</h1>
-            <p class="light fs20">{{trans('www.home.top.sub_title')}}</p>
+            <p class="light fs20 lh22">{{trans('www.home.top.sub_title')}}</p>
         </div>
     </div>
 </div>
@@ -23,10 +23,10 @@ $title = trans('www.homepage.title');
     <div class="bg-right"></div>
     <div class="dot-bg">
         <div class="page">
-            <div class="fl bg-ads"></div>
-            <div class="fl info-box">
+            <div class="bg-ads fl"></div>
+            <div class="info-box">
                 <h2 class="fb fs40">{{trans('www.home.main.title')}}</h2>
-                <p class="sub-title fs20">{{trans('www.home.main.sub_title')}}</p>
+                <p class="sub-title fs20 lh22">{{trans('www.home.main.sub_title')}}</p>
                 <h3 class="fb fs22">{{trans('www.home.main.title2')}}</h3>
                 <p class="fb info fs20">{{trans('www.home.main.text1')}}</p>
                 <p class="fb info fs20">{{trans('www.home.main.text2')}}</p>
@@ -67,31 +67,29 @@ $title = trans('www.homepage.title');
     <a href="#"><img src="{{url('/imgs/temp/ad2.jpg')}}" /></a>
 </div>
 
-<div id="latest-news">
+<div id="news-box">
     <div class="page">
-        <div class="fl">
+        <div class="news-right fr">
+            <a href="#"><img src="{{url('/imgs/temp/ad3.jpg')}}" /></a>
+        </div>
+        <div class="news-left">
             <div class="title-box">
                 <h2 class="fl tu fb fs38">{{trans('www.base.label.latest_news')}}</h2>
-                <div class="fr">
+                <div class="news-see-all fr">
                     <a href="{{url_with_lng('/news', true)}}" class="btn see-all">{{trans('www.base.label.see_all')}}</a>
                 </div>
                 <div class="cb"></div>
             </div>
-            <div class="latest-news">
-                @foreach($latestNews as $value)
-                    <div class="news">
+            <div class="news-box">
+                @foreach($latestNews as $value)<div class="news">
                         <div class="img">
                             <a href="{{url_with_lng('/news/'.$value->id)}}"><img src="{{$value->getImage()}}" width="332" /></a>
                         </div>
                         <div class="date fs14 tu">{{strftime('%b. %d, %Y', strtotime($value->created_at))}}</div>
                         <h3 class="fb fs26">{{$value->title}}</h3>
                         <p class="fs20">{{$value->description}}</p>
-                    </div>
-                @endforeach
+                    </div>@endforeach
             </div>
-        </div>
-        <div class="ad fr">
-            <a href="#"><img src="{{url('/imgs/temp/ad3.jpg')}}" /></a>
         </div>
         <div class="cb"></div>
     </div>
