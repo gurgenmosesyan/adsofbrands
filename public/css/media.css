@@ -24,6 +24,13 @@
     #news-box .news-see-all {
         padding-right: 4%;
     }
+    #main-left {
+        width: 77%;
+    }
+    #main-left .title,
+    #main-left .phone-box {
+        margin-right: 7%;
+    }
     #footer .menu-col {
         padding-right: 12%;
     }
@@ -41,6 +48,13 @@
     }
     #home-main .info-box {
         padding-left: 780px;
+    }
+    #main-left {
+        width: 74%;
+    }
+    #main-left .title,
+    #main-left .phone-box {
+        margin-right: 4%;
     }
     #footer .menu-col {
         padding-right: 10%;
@@ -88,6 +102,9 @@
     #news-box .news {
         width: 50%;
     }
+    #main-left {
+        width: 70%;
+    }
 }
 @media screen and (max-width: 1050px) {
     #home-main .info-box {
@@ -104,6 +121,9 @@
     #home-main .info-box {
         padding-left: 100px;
     }
+    #main-left {
+        width: 68%;
+    }
 }
 @media screen and (max-width: 950px) {
     #footer .footer-right {
@@ -114,6 +134,9 @@
     #footer .menu {
         padding-right: 0;
         margin: 0 auto;
+    }
+    #main-left {
+        width: 65%;
     }
 }
 @media screen and (max-width: 850px) {
@@ -143,15 +166,24 @@
         left: 116px;
         right: auto;
     }
+    #main-left {
+        width: 60%;
+    }
 }
 @media screen and (max-width: 710px) {
     #home-main {
         background-size: contain;
     }
+    #main-left {
+        width: 55%;
+    }
 }
 @media screen and (max-width: 650px) {
     #home-top .titles {
         margin-top: 20px;
+    }
+    #main-left {
+        width: 50%;
     }
     #footer .footer-bottom .fl,
     #footer .footer-bottom .fr {
@@ -186,6 +218,11 @@
     }
     #news-box .title-box {
         height: auto;
+    }
+}
+@media screen and (max-width: 570px) {
+    #main-left {
+        width: 47%;
     }
 }
 @media screen and (max-width: 500px) {

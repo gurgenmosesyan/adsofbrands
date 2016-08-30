@@ -65,4 +65,5 @@ return array (
   'password_reset.wrong_hash' => 'Password reset hash is wrong.',
   'reset.success.text' => 'Your password successfully changed',
   'base.label.profile' => 'Profile',
+  'social_pages.title' => 'Social pages:',
 );
