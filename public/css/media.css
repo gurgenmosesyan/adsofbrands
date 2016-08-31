@@ -27,9 +27,21 @@
     #main-left {
         width: 77%;
     }
-    #main-left .title,
+    #main-left .main-title,
     #main-left .phone-box {
         margin-right: 7%;
+    }
+    #awards .award {
+        width: 47%;
+    }
+    #awards .award-right {
+        margin-left: 6%;
+    }
+    #awards .year {
+        width: 18%;
+    }
+    #awards .info {
+        width: 78%;
     }
     #footer .menu-col {
         padding-right: 12%;
@@ -52,7 +64,7 @@
     #main-left {
         width: 74%;
     }
-    #main-left .title,
+    #main-left .main-title,
     #main-left .phone-box {
         margin-right: 4%;
     }
@@ -84,6 +96,15 @@
     #home-main .info-box {
         padding-left: 650px;
     }
+    #awards .year {
+        width: 25%;
+    }
+    #awards .info {
+        width: 71%;
+    }
+    #awards .info p {
+        width: 100%;
+    }
 }
 @media screen and (max-width: 1100px) {
     #home-main {
@@ -104,6 +125,10 @@
     }
     #main-left {
         width: 70%;
+    }
+    #vacancies .left {
+        margin: 0 0 20px;
+        width: 100%;
     }
 }
 @media screen and (max-width: 1050px) {
@@ -138,6 +163,20 @@
     #main-left {
         width: 65%;
     }
+    #awards .award {
+        width: 100%;
+        margin-left: 0;
+    }
+    #awards .award-2 {
+        border-top: 1px solid #D3D3D3;
+        padding-top: 25px;
+    }
+    #awards .info p.title {
+        width: 60%;
+    }
+    #awards .info p.category {
+        width: 36%;
+    }
 }
 @media screen and (max-width: 850px) {
     #news-box .news-right {
@@ -167,23 +206,30 @@
         right: auto;
     }
     #main-left {
-        width: 60%;
+        float: none;
+        margin-bottom: 40px;
+        width: 100%;
+    }
+    #main-right {
+        float: none;
+        text-align: center;
+        width: 100%;
+    }
+    #main-right > div {
+        display: inline-block;
+        margin: 0 10px;
+        vertical-align: top;
+        width: 240px;
     }
 }
 @media screen and (max-width: 710px) {
     #home-main {
         background-size: contain;
     }
-    #main-left {
-        width: 55%;
-    }
 }
 @media screen and (max-width: 650px) {
     #home-top .titles {
         margin-top: 20px;
-    }
-    #main-left {
-        width: 50%;
     }
     #footer .footer-bottom .fl,
     #footer .footer-bottom .fr {
@@ -219,10 +265,13 @@
     #news-box .title-box {
         height: auto;
     }
-}
-@media screen and (max-width: 570px) {
-    #main-left {
-        width: 47%;
+    #main-right {
+        float: none;
+        width: 240px;
+        margin: 0 auto;
+    }
+    #main-right > div {
+        display: block;
     }
 }
 @media screen and (max-width: 500px) {
@@ -255,6 +304,13 @@
     #subscribe-form input[type="text"] {
         width: 50%;
     }
+    #awards .year {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    #awards .info {
+        width: 100%;
+    }
 }
 @media screen and (max-width: 440px) {
     #subscribe-form input[type="text"] {
@@ -271,5 +327,9 @@
     }
     #home-top .titles {
         margin-top: 10px;
+    }
+    #awards .info p.title,
+    #awards .info p.category {
+        width: 100%;
     }
 }

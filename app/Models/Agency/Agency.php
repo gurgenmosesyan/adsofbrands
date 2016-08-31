@@ -47,6 +47,11 @@ class Agency extends Model implements AuthenticatableContract
         return url('/'.self::IMAGES_PATH.'/'.$this->cover);
     }
 
+    public function getLink()
+    {
+        return url_with_lng('/agencies/'.$this->alias.'/'.$this->id);
+    }
+
     public function ml()
     {
         return $this->hasMany(AgencyMl::class, 'id', 'id');

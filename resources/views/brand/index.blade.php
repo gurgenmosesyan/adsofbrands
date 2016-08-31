@@ -2,6 +2,8 @@
 $title = $brand->title;
 
 $fbSDK = true;
+
+$url = $brand->getLink();
 ?>
 @extends('layout')
 
@@ -15,9 +17,9 @@ $fbSDK = true;
             <div class="cover" style="background-image: url('{{$brand->getCover()}}');"></div>
             <div class="logo-box fl">
                 <div class="logo"><img src="{{$brand->getImage()}}" /></div>
-                <div class="rating fs24 fb">{{$brand->rating}}</div>
+                <div class="main-rating fs24 fb">{{$brand->rating}}</div>
             </div>
-            <div class="title fl">
+            <div class="main-title fl">
                 <h1 class="fb fs32">{{$brand->title}}</h1>
                 <p>{{$brand->sub_title}}</p>
             </div>
@@ -51,6 +53,18 @@ $fbSDK = true;
                 </ul>
             </div>
             <div class="cb"></div>
+            <ul class="menu">
+                <li class="first{{$alias == 'ads' ? ' active' : ''}}"><a href="{{$url}}" class="fsb fs18">{{trans('www.base.label.ads')}}</a></li><li{!!$alias == 'creatives' ? ' class="active"' : ''!!}><a href="{{$url.'/key-people'}}" class="fsb fs18">{{trans('www.base.label.key_people')}}</a></li><li{!!$alias == 'awards' ? ' class="active"' : ''!!}><a href="{{$url.'/awards'}}" class="fsb fs18">{{trans('www.base.label.awards')}}</a></li><li{!!$alias == 'vacancies' ? ' class="active"' : ''!!}><a href="{{$url.'/vacancies'}}" class="fsb fs18">{{trans('www.base.label.vacancies')}}</a></li><li{!!$alias == 'news' ? ' class="active"' : ''!!}><a href="{{$url.'/news'}}" class="fsb fs18">{{trans('www.base.label.news')}}</a></li><li{!!$alias == 'agencies' ? ' class="active"' : ''!!}><a href="{{$url.'/partner-agencies'}}" class="fsb fs18">{{trans('www.base.label.partner_agencies')}}</a></li><li class="last{{$alias == 'contacts' ? ' active' : ''}}"><a href="{{$url.'/contacts'}}" class="fsb fs18">{{trans('www.base.label.contacts')}}</a></li>
+            </ul>
+
+            @if($alias == 'ads' || $alias == 'creatives')
+                @include('blocks.items', ['items' => $items])
+            @elseif($alias == 'awards')
+                @include('blocks.awards', ['awards' => $awards])
+            @elseif($alias == 'vacancies')
+                @include('blocks.vacancies', ['vacancies' => $vacancies])
+            @endif
+
         </div>
         <div id="main-right" class="fr">
             {{--<div class="inner fr">--}}

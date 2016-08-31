@@ -1,5 +1,4 @@
-@foreach($items as $value)
-    <a href="" class="item db">
+@foreach($items as $value)<a href="{{$value->getLink()}}" class="item db">
         <span class="img db">
             <img src="{{$value->getImage()}}" />
             <span class="rating db fb fs18">{{number_format($value->rating, 1)}}</span>
@@ -11,5 +10,4 @@
                 {{$value->comments_count > 999  ?'999+' : $value->comments_count}}
             </span>
         </span>
-    </a>
-@endforeach
+    </a>@endforeach

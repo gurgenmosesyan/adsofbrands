@@ -30,7 +30,13 @@ Route::group(['middleware' => ['web', 'front']], function() {
             Route::post('/api/reset', 'AccountApiController@reset');
         });
 
-        Route::get('/brand/{alias}/{id}', 'BrandController@index');
+        Route::get('/brands/{alias}/{id}', 'BrandController@index');
+        Route::get('/brands/{alias}/{id}/key-people', 'BrandController@creatives');
+        Route::get('/brands/{alias}/{id}/awards', 'BrandController@awards');
+        Route::get('/brands/{alias}/{id}/vacancies', 'BrandController@vacancies');
+        Route::get('/brands/{alias}/{id}/news', 'BrandController@news');
+        Route::get('/brands/{alias}/{id}/partner-agencies', 'BrandController@agencies');
+        Route::get('/brands/{alias}/{id}/contacts', 'BrandController@contacts');
 
     });
 

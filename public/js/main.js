@@ -149,6 +149,21 @@ $main.initSelect = function(obj) {
     }).change();
 };
 
+$main.initVacancy = function() {
+    $('#vacancies').find('.show-more').on('click', function() {
+        var self = $(this),
+            textBox = self.parent('div').prev('.left').find('.hidden');
+        if (self.hasClass('active')) {
+            self.removeClass('active').text($trans.get('www.base.label.show_more'));
+            textBox.stop().slideUp(400);
+        } else {
+            self.addClass('active').text($trans.get('www.base.label.show_less'));
+            textBox.stop().slideDown(400);
+        }
+        return false;
+    });
+};
+
 $(document).ready(function() {
 
     $main.initSubscribe();

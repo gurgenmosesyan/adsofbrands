@@ -54,6 +54,21 @@ class Creative extends Model implements AuthenticatableContract
         return $this->type == self::TYPE_AGENCY;
     }
 
+    public function getImage()
+    {
+        return url('/'.self::IMAGES_PATH.'/'.$this->image);
+    }
+
+    public function getCover()
+    {
+        return url('/'.self::IMAGES_PATH.'/'.$this->cover);
+    }
+
+    public function getLink()
+    {
+        return url_with_lng('/creatives/'.$this->alias.'/'.$this->id);
+    }
+
     public function ml()
     {
         return $this->hasMany(CreativeMl::class, 'id', 'id');

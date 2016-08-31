@@ -90,6 +90,11 @@ class Commercial extends Model
         return url('/'.self::IMAGES_PATH.'/'.$this->image_print);
     }
 
+    public function getLink()
+    {
+        return url_with_lng('/ads/'.$this->alias.'/'.$this->id);
+    }
+
     public function ml()
     {
         return $this->hasMany(CommercialMl::class, 'id', 'id');

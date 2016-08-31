@@ -3,6 +3,10 @@
 namespace App\Models\Brand;
 
 use App\Core\Model;
+use App\Models\Award\Award;
+use App\Models\Commercial\Commercial;
+use App\Models\Creative\Creative;
+use App\Models\Vacancy\Vacancy;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
@@ -51,6 +55,11 @@ class Brand extends Model implements AuthenticatableContract
         return url('/'.self::IMAGES_PATH.'/'.$this->cover);
     }
 
+    public function getLink()
+    {
+        return url_with_lng('/brands/'.$this->alias.'/'.$this->id);
+    }
+
     public function isTop()
     {
         return $this->top == self::TOP;
@@ -59,6 +68,26 @@ class Brand extends Model implements AuthenticatableContract
     public function ml()
     {
         return $this->hasMany(BrandMl::class, 'id', 'id');
+    }
+
+    public function commercials()
+    {
+        return $this->belongsToMany(Commercial::class, 'commercial_brands', 'brand_id', 'commercial_id');
+    }
+
+    public function creatives()
+    {
+        return $this->hasMany(Creative::class, 'type_id', 'id')->where('type', Creative::TYPE_BRAND);
+    }
+
+    public function awards()
+    {
+        return $this->hasMany(Award::class, 'type_id', 'id')->where('type', Award::TYPE_BRAND);
+    }
+
+    public function vacancies()
+    {
+        return $this->hasMany(Vacancy::class, 'type_id', 'id')->where('type', Award::TYPE_BRAND);
     }
 
     public function getFile($column)

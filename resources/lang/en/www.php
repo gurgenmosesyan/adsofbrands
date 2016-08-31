@@ -66,4 +66,12 @@ return array (
   'reset.success.text' => 'Your password successfully changed',
   'base.label.profile' => 'Profile',
   'social_pages.title' => 'Social pages:',
+  'base.label.key_people' => 'Key people',
+  'base.label.awards' => 'Awards',
+  'base.label.vacancies' => 'Vacancies',
+  'base.label.partner_agencies' => 'Partner agencies',
+  'base.label.about' => 'About',
+  'base.label.contacts' => 'Contacts',
+  'base.label.show_less' => 'show less',
+  'base.label.show_more' => 'show more',
 );
