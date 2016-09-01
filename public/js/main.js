@@ -33,29 +33,6 @@ $main.basePath = function(path) {
     return $main.baseUrl + path;
 };
 
-$main.includeGoogleMap = function() {
-    var s = document.createElement("script");
-    s.type = "text/javascript";
-    s.src = "https://maps.googleapis.com/maps/api/js?v=3";
-    $("head").append(s);
-};
-
-$main.initMap = function() {
-    $main.map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 14,
-        styles: [
-            {"featureType":"poi","elementType":"all","stylers":[{"color":"#C9C9C9"},{"visibility":"on"}]},
-            {"featureType":"landscape","elementType":"all","stylers":[{"color":"#E6E7E7"}]}
-        ],
-        center: {lat: 40.531119, lng: 44.703520}
-    });
-    new google.maps.Marker({
-        position: {lat: 40.530749, lng: 44.694859},
-        map: $main.map,
-        icon : "/images/marker.png"
-    });
-};
-
 $main.resetForm = function(form) {
     $('.form-error', form).text('').closest('.form-box').removeClass('has-error');
 };
@@ -161,6 +138,46 @@ $main.initVacancy = function() {
             textBox.stop().slideDown(400);
         }
         return false;
+    });
+};
+
+$main.includeGoogleMap = function() {
+    var s = document.createElement("script");
+    s.type = "text/javascript";
+    s.src = "https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyB-SSsZhHh-0vkfQ6Y8PX6U_95e3hxNp8g";
+    $("head").append(s);
+};
+
+$main.initMap = function() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 14,
+        styles: [
+            {"featureType":"poi","elementType":"geometry","stylers":[{"color":"#F2F2F2"},{"visibility":"on"}]},
+            {"featureType":"landscape","elementType":"all","stylers":[{"color":"#F2F2F2"}]},
+            {"featureType":"water","elementType":"all","stylers":[{"color":"#FFC001"}]},
+            {"featureType":"road","elementType":"geometry","stylers":[{"color":"#D6D6D6"}]},
+        ],
+        center: {lat: 40.181117, lng: 44.514335}
+    });
+    $main.latLng = [];
+    var bounds = new google.maps.LatLngBounds();
+    for (var i in $main.branches) {
+        var lat = parseFloat($main.branches[i].lat),
+            lng = parseFloat($main.branches[i].lng);
+        var latLng = new google.maps.LatLng(lat, lng);
+        bounds.extend(latLng);
+        new google.maps.Marker({
+            position: {lat: lat, lng: lng},
+            map: map,
+            icon : "/imgs/pin.png"
+        });
+    }
+    map.setCenter(bounds.getCenter());
+    map.fitBounds(bounds);
+    google.maps.event.addListenerOnce(map, 'bounds_changed', function() {
+        if (map.getZoom() > 15) {
+            map.setZoom(15);
+        }
     });
 };
 

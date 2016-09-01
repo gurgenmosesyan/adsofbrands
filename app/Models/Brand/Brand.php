@@ -4,8 +4,10 @@ namespace App\Models\Brand;
 
 use App\Core\Model;
 use App\Models\Award\Award;
+use App\Models\Branch\Branch;
 use App\Models\Commercial\Commercial;
 use App\Models\Creative\Creative;
+use App\Models\News\News;
 use App\Models\Vacancy\Vacancy;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -88,6 +90,16 @@ class Brand extends Model implements AuthenticatableContract
     public function vacancies()
     {
         return $this->hasMany(Vacancy::class, 'type_id', 'id')->where('type', Award::TYPE_BRAND);
+    }
+
+    public function news()
+    {
+        return $this->belongsToMany(News::class, 'news_brands', 'brand_id', 'news_id');
+    }
+
+    public function branches()
+    {
+        return $this->hasMany(Branch::class, 'type_id', 'id')->where('type', Award::TYPE_BRAND);
     }
 
     public function getFile($column)

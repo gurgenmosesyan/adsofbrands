@@ -31,6 +31,11 @@ class News extends Model
         return url('/'.self::IMAGES_PATH.'/'.$this->image);
     }
 
+    public function scopeTop($query)
+    {
+        return $query->where('top', self::TOP);
+    }
+
     public function ml()
     {
         return $this->hasMany(NewsMl::class, 'id', 'id');

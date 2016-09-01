@@ -31,8 +31,6 @@ class CreateBrandsTable extends Migration
             $table->string('youtube');
             $table->string('linkedin');
             $table->string('vimeo');
-            $table->float('rating')->unsigned();
-            $table->integer('qt')->unsigned();
             $table->string('hash');
             $table->rememberToken();
             $table->enum('reg_type', [Brand::REG_TYPE_ADMIN, Brand::REG_TYPE_REGISTERED]);

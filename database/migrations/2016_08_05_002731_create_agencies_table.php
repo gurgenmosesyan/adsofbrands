@@ -29,8 +29,6 @@ class CreateAgenciesTable extends Migration
             $table->string('youtube');
             $table->string('linkedin');
             $table->string('vimeo');
-            $table->float('rating')->unsigned();
-            $table->integer('qt')->unsigned();
             $table->string('hash');
             $table->rememberToken();
             $table->enum('reg_type', [Agency::REG_TYPE_ADMIN, Agency::REG_TYPE_REGISTERED]);

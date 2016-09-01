@@ -74,4 +74,5 @@ return array (
   'base.label.contacts' => 'Contacts',
   'base.label.show_less' => 'show less',
   'base.label.show_more' => 'show more',
+  'base.label.top_news' => 'Top news',
 );

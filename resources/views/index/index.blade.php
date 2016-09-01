@@ -49,19 +49,43 @@ $title = trans('www.homepage.title');
 </div>
 
 <div id="features-ads">
-    @include('blocks.carousel', ['items' => $featuresAds, 'title' => trans('www.base.label.features'), 'text' => trans('www.base.label.features.text')])
+    @include('blocks.carousel', [
+        'items' => $featuresAds,
+        'itemRating' => true,
+        'title' => trans('www.base.label.features'),
+        'text' => trans('www.base.label.features.text'),
+        'link' => url_with_lng('/ads', true)
+    ])
 </div>
 <div id="top-ads">
-    @include('blocks.carousel', ['items' => $topAds, 'title' => trans('www.base.label.top_ads'), 'text' => trans('www.base.label.top_ads.text')])
+    @include('blocks.carousel', [
+        'items' => $topAds,
+        'itemRating' => true,
+        'title' => trans('www.base.label.top_ads'),
+        'text' => trans('www.base.label.top_ads.text'),
+        'link' => url_with_lng('/ads', true)
+    ])
 </div>
 <div id="home-ad1" class="tc">
     <a href="#"><img src="{{url('/imgs/temp/ad1.jpg')}}" /></a>
 </div>
 <div id="top-rated-agencies">
-    @include('blocks.carousel', ['items' => $topRatedAgencies, 'title' => trans('www.base.label.top_rated_agencies'), 'text' => trans('www.base.label.top_rated_agencies.text')])
+    @include('blocks.carousel', [
+        'items' => $topRatedAgencies,
+        'itemRating' => false,
+        'title' => trans('www.base.label.top_rated_agencies'),
+        'text' => trans('www.base.label.top_rated_agencies.text'),
+        'link' => url_with_lng('/agencies', true)
+    ])
 </div>
 <div id="top-brands">
-    @include('blocks.carousel', ['items' => $topBrands, 'title' => trans('www.base.label.top_brands'), 'text' => trans('www.base.label.top_brands.text')])
+    @include('blocks.carousel', [
+        'items' => $topBrands,
+        'itemRating' => false,
+        'title' => trans('www.base.label.top_brands'),
+        'text' => trans('www.base.label.top_brands.text'),
+        'link' => url_with_lng('/brands', true)
+    ])
 </div>
 <div id="home-ad2" class="tc">
     <a href="#"><img src="{{url('/imgs/temp/ad2.jpg')}}" /></a>

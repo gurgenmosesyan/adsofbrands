@@ -8,9 +8,9 @@
         <div class="car-content">
             <div class="page">
                 <div class="items-car owl-carousel">
-                    @include('blocks.items', ['items' => $items])
+                    @include('blocks.items', ['items' => $items, 'itemRating' => $itemRating])
                 </div>
-                <a href="{{url_with_lng('/ads', true)}}" class="see-all btn fb">{{trans('www.base.label.see_all')}}</a>
+                <a href="{{$link}}" class="see-all btn fb">{{trans('www.base.label.see_all')}}</a>
             </div>
         </div>
     </div>
