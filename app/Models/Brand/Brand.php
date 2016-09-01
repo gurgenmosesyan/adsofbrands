@@ -40,8 +40,6 @@ class Brand extends Model implements AuthenticatableContract
         'youtube',
         'linkedin',
         'vimeo',
-        'rating',
-        'qt',
         'active'
     ];
 

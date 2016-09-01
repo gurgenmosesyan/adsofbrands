@@ -1,4 +1,5 @@
 <?php
+use App\Models\Agency\Agency;
 use App\Core\Helpers\ImgUploader;
 
 $head->appendScript('/assets/plugins/ckeditor/ckeditor.js');
@@ -132,18 +133,10 @@ $mls = $agency->ml->keyBy('lng_id');
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">{{trans('admin.base.label.rating')}}</label>
-                <div class="col-sm-4">
-                    <input type="text" name="rating" class="form-control" value="{{$agency->rating}}">
-                    <div id="form-error-rating" class="form-error"></div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-3 control-label">{{trans('admin.base.label.quantity_vote')}}</label>
-                <div class="col-sm-4">
-                    <input type="text" name="qt" class="form-control" value="{{$agency->qt}}">
-                    <div id="form-error-qt" class="form-error"></div>
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.top')}}</label>
+                <div class="col-sm-9">
+                    <input type="checkbox" name="top" class="minimal-checkbox" value="{{Agency::TOP}}"{{$agency->isTop() ? ' checked="checked"' : ''}}>
+                    <div id="form-error-top" class="form-error"></div>
                 </div>
             </div>
 

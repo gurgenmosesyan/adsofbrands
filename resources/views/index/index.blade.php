@@ -51,7 +51,7 @@ $title = trans('www.homepage.title');
 <div id="features-ads">
     @include('blocks.carousel', [
         'items' => $featuresAds,
-        'itemRating' => true,
+        'ad' => true,
         'title' => trans('www.base.label.features'),
         'text' => trans('www.base.label.features.text'),
         'link' => url_with_lng('/ads', true)
@@ -60,7 +60,7 @@ $title = trans('www.homepage.title');
 <div id="top-ads">
     @include('blocks.carousel', [
         'items' => $topAds,
-        'itemRating' => true,
+        'ad' => true,
         'title' => trans('www.base.label.top_ads'),
         'text' => trans('www.base.label.top_ads.text'),
         'link' => url_with_lng('/ads', true)
@@ -71,9 +71,9 @@ $title = trans('www.homepage.title');
 </div>
 <div id="top-rated-agencies">
     @include('blocks.carousel', [
-        'items' => $topRatedAgencies,
-        'itemRating' => false,
-        'title' => trans('www.base.label.top_rated_agencies'),
+        'items' => $topAgencies,
+        'ad' => false,
+        'title' => trans('www.base.label.top_agencies'),
         'text' => trans('www.base.label.top_rated_agencies.text'),
         'link' => url_with_lng('/agencies', true)
     ])
@@ -81,7 +81,7 @@ $title = trans('www.homepage.title');
 <div id="top-brands">
     @include('blocks.carousel', [
         'items' => $topBrands,
-        'itemRating' => false,
+        'ad' => false,
         'title' => trans('www.base.label.top_brands'),
         'text' => trans('www.base.label.top_brands.text'),
         'link' => url_with_lng('/brands', true)

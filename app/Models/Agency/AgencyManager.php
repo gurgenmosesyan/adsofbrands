@@ -9,10 +9,10 @@ class AgencyManager
 {
     public function store($data)
     {
+        $data = $this->processSave($data);
         $agency = new Agency($data);
         $agency->reg_type = Agency::REG_TYPE_ADMIN;
         $agency->status = '';
-        $agency->active = Agency::ACTIVE;
         SaveImage::save($data['image'], $agency);
         SaveImage::save($data['cover'], $agency, 'cover');
 
@@ -25,7 +25,7 @@ class AgencyManager
     public function update($id, $data)
     {
         $agency = Agency::where('id', $id)->firstOrFail();
-        $data['active'] = Agency::ACTIVE;
+        $data = $this->processSave($data);
         if (!empty($data['password'])) {
             $agency->password = bcrypt($data['password']);
         }
@@ -36,6 +36,15 @@ class AgencyManager
             $agency->update($data);
             $this->updateMl($data['ml'], $agency);
         });
+    }
+
+    protected function processSave($data)
+    {
+        if (!isset($data['top'])) {
+            $data['top'] = Agency::NOT_TOP;
+        }
+        $data['active'] = Agency::ACTIVE;
+        return $data;
     }
 
     protected function storeMl($data, Agency $agency)

@@ -22,8 +22,6 @@ return array (
   'base.label.see_all' => 'See all',
   'base.label.top_ads' => 'Top ads',
   'base.label.top_ads.text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  'base.label.top_rated_agencies' => 'Top rated agencies',
-  'base.label.top_rated_agencies.text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
   'base.label.top_brands' => 'Top brands',
   'base.label.top_brands.text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
   'base.label.latest_news' => 'Latest news',
@@ -75,4 +73,8 @@ return array (
   'base.label.show_less' => 'show less',
   'base.label.show_more' => 'show more',
   'base.label.top_news' => 'Top news',
+  'base.label.top_agencies' => 'Top agencies',
+  'base.label.top_agencies.text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+  'base.label.top_rated_agencies.text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+  'base.label.no_photo' => 'no photo available',
 );

@@ -435,7 +435,6 @@ body .page {
     text-shadow: 0 0 2px #111111;
 }
 .item .title {
-    margin-bottom: 15px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -443,6 +442,7 @@ body .page {
 }
 .item .bottom {
     color: #474747;
+    margin-top: 15px;
 }
 .item .bottom span {
     background-repeat: no-repeat;
@@ -725,8 +725,32 @@ body .page {
     border: 2px solid #FEC414;
     height: 319px;
 }
+#main-left .empty-cover {
+    background-color: #EEEEEE;
+    border: 1px solid #D3D3D3;
+    height: 319px;
+    position: relative;
+}
+#main-left .empty-cover .img-box {
+    position: absolute;
+    left: 50%;
+    margin-left: -84px;
+    top: 100px;
+    width: 168px;
+}
+#main-left .empty-cover .img-box p {
+    color: #b2b2b2;
+    margin-top: 17px;
+}
+#main-left .empty-cover .dot {
+    background: url('../imgs/dot-bg.png');
+    height: 100%;
+    position: absolute;
+    width: 100%;
+}
 #main-left .logo-box {
     margin: -60px 0 0 12px;
+    position: relative;
 }
 #main-left .logo {
     background-color: #ffffff;
@@ -935,4 +959,25 @@ body .page {
 }
 #branches .contact-info {
     margin-bottom: 37px;
+}
+.html {
+    line-height: 22px;
+}
+.html ul {
+    margin: 25px 0;
+}
+.html ul li {
+    background: url('../imgs/list-dot.png') no-repeat 0 3px;
+    font-size: 18px;
+    min-height: 10px;
+    padding-left: 24px;
+}
+.html p {
+    margin-bottom: 25px;
+}
+.html a {
+    text-decoration: underline;
+}
+.html a:hover {
+    text-decoration: none;
 }

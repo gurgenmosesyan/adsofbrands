@@ -101,6 +101,19 @@ class BrandController extends Controller
         ]);
     }
 
+    public function about($lngCode, $alias, $id)
+    {
+        $brand = Brand::joinMl()->where('brands.id', $id)->firstOrFail();
+        if ($brand->alias != $alias) {
+            return redirect(url_with_lng('/brand/'.$brand->alias.'/'.$brand->id));
+        }
+        $alias = 'about';
+        return view('brand.index')->with([
+            'brand' => $brand,
+            'alias' => $alias
+        ]);
+    }
+
     public function branches($lngCode, $alias, $id)
     {
         $brand = Brand::joinMl()->where('brands.id', $id)->firstOrFail();

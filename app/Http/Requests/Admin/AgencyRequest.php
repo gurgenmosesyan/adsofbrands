@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Requests\Admin;
+
+use App\Models\Agency\Agency;
 use Route;
 use Auth;
 
@@ -24,14 +26,13 @@ class AgencyRequest extends Request
             'email' => 'email|max:255|unique:agencies,email'.$agencyId.'|unique:adm_users,email|unique:brands,email|unique:creatives,email',
             'phone' => 'max:255',
             'link' => 'required|url|max:255',
+            'top' => 'in:'.Agency::TOP.','.Agency::NOT_TOP,
             'fb' => 'url|max:255',
             'twitter' => 'url|max:255',
             'google' => 'url|max:255',
             'youtube' => 'url|max:255',
             'linkedin' => 'url|max:255',
             'vimeo' => 'url|max:255',
-            'rating' => 'numeric',
-            'qt' => 'integer',
             'ml' => 'ml',
             'ml.*.title' => 'required|max:255',
             'ml.*.sub_title' => 'required|max:255',

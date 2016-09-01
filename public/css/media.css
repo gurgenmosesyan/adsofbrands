@@ -10,6 +10,9 @@
     #news-box .news-see-all {
         padding-right: 6%;
     }
+    #main-left .menu li a {
+        padding:  0 27px;
+    }
 }
 @media screen and (max-width: 1400px) {
     #home-main {
@@ -30,6 +33,9 @@
     #main-left .main-title,
     #main-left .phone-box {
         margin-right: 7%;
+    }
+    #main-left .menu li a {
+        padding:  0 25px;
     }
     #awards .award {
         width: 47%;

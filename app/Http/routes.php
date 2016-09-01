@@ -36,7 +36,13 @@ Route::group(['middleware' => ['web', 'front']], function() {
         Route::get('/brands/{alias}/{id}/vacancies', 'BrandController@vacancies');
         Route::get('/brands/{alias}/{id}/news', 'BrandController@news');
         Route::get('/brands/{alias}/{id}/partner-agencies', 'BrandController@agencies');
+        Route::get('/brands/{alias}/{id}/about', 'BrandController@about');
         Route::get('/brands/{alias}/{id}/contacts', 'BrandController@branches');
+
+        Route::get('/creative/{alias}/{id}', 'CreativeController@index');
+        Route::get('/creative/{alias}/{id}/clients', 'CreativeController@brands');
+        Route::get('/creative/{alias}/{id}/awards', 'CreativeController@awards');
+        Route::get('/creative/{alias}/{id}/about', 'CreativeController@about');
 
     });
 

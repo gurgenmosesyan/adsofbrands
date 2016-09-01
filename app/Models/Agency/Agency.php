@@ -17,6 +17,8 @@ class Agency extends Model implements AuthenticatableContract
     const STATUS_CONFIRMED = 'confirmed';
     const ACTIVE = '1';
     const NOT_ACTIVE = '0';
+    const TOP = '1';
+    const NOT_TOP = '0';
 
     protected $fillable = [
         'category_id',
@@ -24,14 +26,13 @@ class Agency extends Model implements AuthenticatableContract
         'email',
         'phone',
         'link',
+        'top',
         'fb',
         'twitter',
         'google',
         'youtube',
         'linkedin',
         'vimeo',
-        'rating',
-        'qt',
         'active'
     ];
 
@@ -50,6 +51,11 @@ class Agency extends Model implements AuthenticatableContract
     public function getLink()
     {
         return url_with_lng('/agencies/'.$this->alias.'/'.$this->id);
+    }
+
+    public function isTop()
+    {
+        return $this->top == self::TOP;
     }
 
     public function ml()

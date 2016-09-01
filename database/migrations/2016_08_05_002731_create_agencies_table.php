@@ -23,6 +23,7 @@ class CreateAgenciesTable extends Migration
             $table->string('password')->nullable();
             $table->string('phone');
             $table->string('link');
+            $table->enum('top', [Agency::NOT_TOP, Agency::TOP]);
             $table->string('fb');
             $table->string('twitter');
             $table->string('google');
