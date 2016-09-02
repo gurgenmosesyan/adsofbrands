@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand\Brand;
+use App\Models\Commercial\Commercial;
+use App\Models\Commercial\CommercialCreditPerson;
 use App\Models\Creative\Creative;
 use DB;
 
@@ -14,7 +17,13 @@ class CreativeController extends Controller
             return redirect(url_with_lng('/creative/'.$creative->alias.'/'.$creative->id));
         }
         $alias = 'ads';
-        $items = $creative->commercials()->select('commercials.id','commercials.alias','commercials.image','commercials.rating','commercials.comments_count','commercials.views_count','ml.title')->joinMl()->get();
+        $commercialIds = CommercialCreditPerson::select('credits.commercial_id')
+            ->join('commercial_credits as credits', function($query) {
+                $query->on('credits.id', '=', 'commercial_credit_persons.credit_id');
+            })
+            ->where('commercial_credit_persons.type', CommercialCreditPerson::TYPE_CREATIVE)
+            ->where('commercial_credit_persons.type_id', $creative->id)->lists('commercial_id')->toArray();
+        $items = Commercial::joinMl()->whereIn('commercials.id', $commercialIds)->get();
         return view('creative.index')->with([
             'creative' => $creative,
             'alias' => $alias,
@@ -28,8 +37,16 @@ class CreativeController extends Controller
         if ($creative->alias != $alias) {
             return redirect(url_with_lng('/creative/'.$creative->alias.'/'.$creative->id));
         }
-        $alias = 'creatives';
-        $items = $creative->creatives()->joinMl()->get();
+        $alias = 'clients';
+        $commercialIds = CommercialCreditPerson::select('credits.commercial_id')
+            ->join('commercial_credits as credits', function($query) {
+                $query->on('credits.id', '=', 'commercial_credit_persons.credit_id');
+            })
+            ->where('commercial_credit_persons.type', CommercialCreditPerson::TYPE_CREATIVE)
+            ->where('commercial_credit_persons.type_id', $creative->id)->lists('commercial_id')->toArray();
+        $items = Brand::joinMl()->join('commercial_brands as c_brands', function($query) {
+            $query->on('c_brands.brand_id', '=', 'brands.id');
+        })->whereIn('c_brands.commercial_id', $commercialIds);
         return view('creative.index')->with([
             'creative' => $creative,
             'alias' => $alias,

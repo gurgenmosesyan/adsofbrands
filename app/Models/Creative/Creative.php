@@ -3,6 +3,7 @@
 namespace App\Models\Creative;
 
 use App\Core\Model;
+use App\Models\Award\Award;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
@@ -66,7 +67,12 @@ class Creative extends Model implements AuthenticatableContract
 
     public function getLink()
     {
-        return url_with_lng('/creatives/'.$this->alias.'/'.$this->id);
+        return url_with_lng('/creative/'.$this->alias.'/'.$this->id);
+    }
+
+    public function awards()
+    {
+        return $this->hasMany(Award::class, 'type_id', 'id')->where('type', Award::TYPE_CREATIVE);
     }
 
     public function ml()

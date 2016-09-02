@@ -1,4 +1,6 @@
 <?php
+use App\Models\News\News;
+
 $topNews = News::joinMl()->top()->latest()->take(2)->get();
 ?>
 <div class="right-ad">
