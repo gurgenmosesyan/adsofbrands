@@ -90,10 +90,10 @@ class BrandController extends Controller
             return redirect(url_with_lng('/brand/'.$brand->alias.'/'.$brand->id));
         }
         $alias = 'agencies';
-        $commercialIds = DB::table('commercial_brands')->where('brand_id', $brand->id)->lists('commercial_id');
-        $items = Agency::joinMl()->join('commercial_agencies as c_agency', function($query) {
-            $query->on('c_agency.agency_id', '=', 'agencies.id');
-        })->whereIn('c_agency.commercial_id', $commercialIds)->get();
+        $agencyIds = DB::table('commercial_brands')->join('commercial_agencies', function($query) {
+            $query->on('commercial_agencies.commercial_id', '=', 'commercial_brands.commercial_id');
+        })->where('commercial_brands.brand_id', $brand->id)->lists('commercial_agencies.agency_id');
+        $items = Agency::joinMl()->whereIn('agencies.id', $agencyIds)->get();
         return view('brand.index')->with([
             'brand' => $brand,
             'alias' => $alias,

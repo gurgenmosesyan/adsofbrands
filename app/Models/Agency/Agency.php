@@ -3,6 +3,12 @@
 namespace App\Models\Agency;
 
 use App\Core\Model;
+use App\Models\Award\Award;
+use App\Models\Branch\Branch;
+use App\Models\Commercial\Commercial;
+use App\Models\Creative\Creative;
+use App\Models\News\News;
+use App\Models\Vacancy\Vacancy;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
@@ -61,6 +67,36 @@ class Agency extends Model implements AuthenticatableContract
     public function ml()
     {
         return $this->hasMany(AgencyMl::class, 'id', 'id');
+    }
+
+    public function commercials()
+    {
+        return $this->belongsToMany(Commercial::class, 'commercial_agencies', 'agency_id', 'commercial_id');
+    }
+
+    public function creatives()
+    {
+        return $this->hasMany(Creative::class, 'type_id', 'id')->where('type', Creative::TYPE_AGENCY);
+    }
+
+    public function awards()
+    {
+        return $this->hasMany(Award::class, 'type_id', 'id')->where('type', Award::TYPE_AGENCY);
+    }
+
+    public function vacancies()
+    {
+        return $this->hasMany(Vacancy::class, 'type_id', 'id')->where('type', Award::TYPE_AGENCY);
+    }
+
+    public function news()
+    {
+        return $this->belongsToMany(News::class, 'news_agencies', 'agency_id', 'news_id');
+    }
+
+    public function branches()
+    {
+        return $this->hasMany(Branch::class, 'type_id', 'id')->where('type', Award::TYPE_AGENCY);
     }
 
     public function getFile($column)

@@ -78,4 +78,6 @@ return array (
   'base.label.top_rated_agencies.text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
   'base.label.no_photo' => 'no photo available',
   'base.label.clients' => 'Clients',
+  'base.label.work' => 'Work',
+  'base.label.creatives' => 'Creatives',
 );
