@@ -11,10 +11,10 @@ class IndexController extends Controller
 {
     public function index()
     {
-        $featuresAds = Commercial::joinMl()->where('featured', Commercial::FEATURED)->get();
-        $topAds = Commercial::joinMl()->where('top', Commercial::TOP)->get();
-        $topAgencies = Agency::joinMl()->where('top', Agency::TOP)->get();
-        $topBrands = Brand::joinMl()->where('top', Brand::TOP)->get();
+        $featuresAds = Commercial::joinMl()->where('featured', Commercial::FEATURED)->latest()->get();
+        $topAds = Commercial::joinMl()->where('top', Commercial::TOP)->latest()->get();
+        $topAgencies = Agency::joinMl()->where('top', Agency::TOP)->latest()->get();
+        $topBrands = Brand::joinMl()->where('top', Brand::TOP)->latest()->get();
         $latestNews = News::joinMl()->latest()->take(3)->get();
 
         return view('index.index')->with([

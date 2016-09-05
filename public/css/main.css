@@ -674,11 +674,12 @@ body .page {
 #account .sign-in-link {
     line-height: 59px;
 }
-#account .has-error input,
-#account .has-error .select-title {
-    border-color: #ff0000;
+.has-error input,
+.has-error textarea,
+.has-error .select-title {
+    border-color: #ff0000 !important;
 }
-#account .form-error {
+.form-error {
     color: #ff0000;
     margin-top: 5px;
 }
@@ -834,7 +835,7 @@ body .page {
     background-color: #EEEEEE;
     border: 1px solid #D3D3D3;
     height: 42px;
-    line-height: 46px;
+    line-height: 47px;
     margin: 0 0 5px -1px;
     vertical-align: top;
 }
@@ -961,7 +962,22 @@ body .page {
     margin-bottom: 37px;
 }
 .html {
-    line-height: 22px;
+    font-size: 18px;
+}
+.html h1,.html h2,.html h3 {
+    font-family: 'Khula-Semibold', tahoma, verdana, sans-serif;
+}
+.html h1 {
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+.html h2 {
+    font-size: 30px;
+    margin-bottom: 27px;
+}
+.html h3 {
+    font-size: 24px;
+    margin-bottom: 25px;
 }
 .html ul {
     margin: 25px 0;
@@ -974,10 +990,126 @@ body .page {
 }
 .html p {
     margin-bottom: 25px;
+    line-height: 22px;
 }
 .html a {
     text-decoration: underline;
 }
 .html a:hover {
     text-decoration: none;
+}
+#contact-left {
+    margin-right: 3%;
+    width: 43%;
+}
+#contact-left h1 {
+    margin-bottom: 29px;
+}
+#contact-right {
+    width: 54%;
+}
+#contact-right #map {
+    height: 505px;
+}
+#contact-form .form-box {
+    margin-bottom: 12px;
+}
+#contact-form input[type="text"],
+#contact-form textarea {
+    background-color: #F0F0F0;
+    box-sizing: border-box;
+    border: 1px solid #D6D6D6;
+    border-radius: 3px;
+    font-size: 18px;
+    width: 100%;
+}
+#contact-form input[type="text"] {
+    height: 56px;
+    padding: 0 18px;
+}
+#contact-form textarea {
+    height: 168px;
+    padding: 10px 18px;
+}
+#contact-form input[type="text"]:focus,
+#contact-form textarea:focus {
+    background-color: #ffffff;
+}
+#contact-form input[type="submit"] {
+    background-color: #FFC001;
+    border-radius: 30px;
+    cursor: pointer;
+    height: 56px;
+    line-height: 60px;
+    margin-top: 12px;
+    padding: 0 32px;
+}
+#contact-form input[type="submit"]:hover {
+    background-color: #E5AF0A;
+}
+#contact-form.sending input[type="submit"] {
+    background-color: #A9A9A9;
+    color: #7f7f7f;
+    cursor: default;
+}
+#paging li {
+    border-radius: 30px;
+    display: inline-block;
+    height: 30px;
+    line-height: 34px;
+    margin: 0 10px;
+    min-width: 20px;
+    padding: 0 5px;
+    text-align: center;
+    vertical-align: top;
+}
+#paging .prev {
+    margin-left: 0;
+}
+#paging .next {
+    margin-right: 0;
+}
+#paging .prev a,
+#paging .next a {
+    border-radius: 30px;
+    height: 30px;
+    width: 30px;
+}
+#paging .prev a {
+    background: #FFC001 url('../imgs/paging-left.png') no-repeat 10px 8px;
+}
+#paging .next a {
+    background: #FFC001 url('../imgs/paging-right.png') no-repeat 11px 8px;
+}
+#paging li.active {
+    background-color: #FFC001;
+}
+#paging li a {
+    display: block;
+}
+#paging li a:hover {
+    opacity: 0.8;
+}
+#paging li.active a,
+#paging li.disabled a {
+    cursor: default;
+    opacity: 1;
+}
+#paging li.disabled a {
+    background-color: #A9A9A9;
+}
+#news-inner h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+#news-inner .date {
+    color: #828282;
+    font-size: 20px;
+    margin-bottom: 40px;
+}
+#news-inner .news-img {
+    margin: 0 0 20px 30px;
+}
+#rel-news .rel-title {
+    margin: 50px 0 23px;
 }

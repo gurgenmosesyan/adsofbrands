@@ -16,7 +16,7 @@
 </div>
 <script type="text/javascript">
     $main.includeGoogleMap();
-    $main.branches = <?php echo json_encode($branches); ?>;
+    $main.coordinates = <?php echo json_encode($branches); ?>;
     setTimeout(function() {
         $main.initMap();
     }, 1000);

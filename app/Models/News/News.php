@@ -31,6 +31,11 @@ class News extends Model
         return url('/'.self::IMAGES_PATH.'/'.$this->image);
     }
 
+    public function getLink()
+    {
+        return url_with_lng('/news/'.$this->alias.'/'.$this->id);
+    }
+
     public function scopeTop($query)
     {
         return $query->where('top', self::TOP);

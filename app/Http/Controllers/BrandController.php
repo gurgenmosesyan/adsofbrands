@@ -75,7 +75,7 @@ class BrandController extends Controller
             return redirect(url_with_lng('/brand/'.$brand->alias.'/'.$brand->id));
         }
         $alias = 'news';
-        $news = $brand->news()->select('news.id','news.alias','news.image','ml.title','ml.description')->joinMl()->get();
+        $news = $brand->news()->select('news.id','news.alias','news.image','ml.title','ml.description')->joinMl()->paginate(12);
         return view('brand.index')->with([
             'brand' => $brand,
             'alias' => $alias,

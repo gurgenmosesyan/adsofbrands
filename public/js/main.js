@@ -37,9 +37,14 @@ $main.resetForm = function(form) {
     $('.form-error', form).text('').closest('.form-box').removeClass('has-error');
 };
 
-$main.showErrors = function(errors, form) {
+$main.showErrors = function(errors, form, animate) {
     for (var i in errors) {
         $('#form-error-'+ i.replace(/\./g, '_'), form).text(errors[i]).closest('.form-box').addClass('has-error');
+    }
+    if (animate) {
+        $('html, body').animate({
+            scrollTop: $('.has-error:first').offset().top-20
+        }, 500);
     }
 };
 
@@ -58,9 +63,10 @@ $main.initContactForm = function() {
             success: function(result) {
                 $main.resetForm(form);
                 if (result.status == 'OK') {
-                    alert(result.data);
+                    alert(result.data.text);
+                    form.find('.subject, .message').val('');
                 } else {
-                    $main.showErrors(result.errors, form);
+                    $main.showErrors(result.errors, form, true);
                 }
                 form.removeClass('sending');
             }
@@ -148,7 +154,7 @@ $main.includeGoogleMap = function() {
     $("head").append(s);
 };
 
-$main.initMap = function() {
+$main.initMap = function(abPin) {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
         styles: [
@@ -161,15 +167,15 @@ $main.initMap = function() {
     });
     $main.latLng = [];
     var bounds = new google.maps.LatLngBounds();
-    for (var i in $main.branches) {
-        var lat = parseFloat($main.branches[i].lat),
-            lng = parseFloat($main.branches[i].lng);
+    for (var i in $main.coordinates) {
+        var lat = parseFloat($main.coordinates[i].lat),
+            lng = parseFloat($main.coordinates[i].lng);
         var latLng = new google.maps.LatLng(lat, lng);
         bounds.extend(latLng);
         new google.maps.Marker({
             position: {lat: lat, lng: lng},
             map: map,
-            icon : "/imgs/pin.png"
+            icon : abPin ? '/imgs/pin-ab.png' : '/imgs/pin.png'
         });
     }
     map.setCenter(bounds.getCenter());

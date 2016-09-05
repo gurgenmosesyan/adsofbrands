@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactRequest;
 use App\Http\Requests\SubscribeRequest;
+use App\Email\EmailManager;
 use Mail;
 use DB;
 
@@ -12,12 +13,16 @@ class ApiController extends Controller
     public function contact(ContactRequest $request)
     {
         $data = $request->all();
-        Mail::send(['emails.default_html', 'emails.default'], ['data' => $data], function($message) use($data) {
-            $message->from($data['email']);
-            $message->to(trans('www.contact.admin_email'), trans('www.contact.admin_name'));
-            $message->subject(trans('www.contact.email_subject'));
-        });
-        return $this->api('OK', trans('www.contact.email.success_text'));
+
+        $emailManager = new EmailManager();
+        $emailManager->storeEmail([
+            'to' => $data['email'],
+            'to_name' => $data['name'],
+            'subject' => $data['subject'],
+            'body' => $data['message']
+        ]);
+
+        return $this->api('OK', ['text' => trans('www.contact.email.success_text')]);
     }
 
     public function subscribe(SubscribeRequest $request)

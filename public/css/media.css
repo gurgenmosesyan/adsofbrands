@@ -155,6 +155,11 @@
     #main-left {
         width: 68%;
     }
+    #contact-left,
+    #contact-right {
+        margin-right: 0;
+        width: 100%;
+    }
 }
 @media screen and (max-width: 950px) {
     #footer .footer-right {
@@ -234,10 +239,25 @@
         margin-bottom: 16px;
         padding: 0;
     }
+    #contact-left {
+        margin-right: 3%;
+        width: 43%;
+    }
+    #contact-right {
+        width: 54%;
+    }
 }
 @media screen and (max-width: 710px) {
     #home-main {
         background-size: contain;
+    }
+    #contact-left,
+    #contact-right {
+        margin-right: 0;
+        width: 100%;
+    }
+    #contact-right #map {
+        height: 400px;
     }
 }
 @media screen and (max-width: 650px) {

@@ -75,7 +75,7 @@ class AgencyController extends Controller
             return redirect(url_with_lng('/agencies/'.$agency->alias.'/'.$agency->id));
         }
         $alias = 'news';
-        $news = $agency->news()->select('news.id','news.alias','news.image','ml.title','ml.description')->joinMl()->get();
+        $news = $agency->news()->select('news.id','news.alias','news.image','ml.title','ml.description')->joinMl()->paginate(12);
         return view('agency.index')->with([
             'agency' => $agency,
             'alias' => $alias,
