@@ -19,6 +19,7 @@ class NewsManager
             $this->updateBrands($data['brands'], $news);
             $this->updateAgencies($data['agencies'], $news);
             $this->updateCreatives($data['creatives'], $news);
+            $this->updateTags($data['tags'], $news);
         });
     }
 
@@ -34,6 +35,7 @@ class NewsManager
             $this->updateBrands($data['brands'], $news, true);
             $this->updateAgencies($data['agencies'], $news, true);
             $this->updateCreatives($data['creatives'], $news, true);
+            $this->updateTags($data['tags'], $news, true);
         });
     }
 
@@ -47,6 +49,9 @@ class NewsManager
         }
         if (!isset($data['creatives'])) {
             $data['creatives'] = [];
+        }
+        if (!isset($data['tags'])) {
+            $data['tags'] = [];
         }
         return $data;
     }
@@ -89,6 +94,20 @@ class NewsManager
             $news->creatives()->detach();
         }
         $news->creatives()->attach($data);
+    }
+
+    protected function updateTags($data, News $news, $editMode = false)
+    {
+        if ($editMode) {
+            NewsTag::where('news_id', $news->id)->delete();
+        }
+        $tags = [];
+        foreach ($data as $value) {
+            $tags[] = new NewsTag($value);
+        }
+        if (!empty($tags)) {
+            $news->tags()->saveMany($tags);
+        }
     }
 
     public function delete($id)

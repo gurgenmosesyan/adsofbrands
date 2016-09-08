@@ -2,6 +2,7 @@
 use App\Models\News\News;
 use App\Core\Helpers\ImgUploader;
 
+$head->appendStyle('/admin/news/news.css');
 $head->appendScript('/assets/plugins/ckeditor/ckeditor.js');
 $head->appendScript('/admin/news/news.js');
 
@@ -22,6 +23,7 @@ $mls = $news->ml->keyBy('lng_id');
     $news.brands = <?php echo json_encode($brands); ?>;
     $news.agencies = <?php echo json_encode($agencies); ?>;
     $news.creatives = <?php echo json_encode($creatives); ?>;
+    $news.tags = <?php echo json_encode($news->tags); ?>;
 </script>
 <form id="edit-form" class="form-horizontal" method="post" action="{{$url}}">
     <div class="box-body">
@@ -100,6 +102,15 @@ $mls = $news->ml->keyBy('lng_id');
                 <input type="text" id="creative-input" class="form-control" value="">
                 <div id="creative-block" style="margin-top: 10px;"></div>
                 <div id="form-error-creatives" class="form-error"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{trans('admin.base.label.tags')}}</label>
+            <div class="col-sm-9">
+                <input type="text" id="tag" class="form-control" value="">
+                <div id="tags" style="margin-top: 10px;"></div>
+                <div id="form-error-tags" class="form-error"></div>
             </div>
         </div>
 

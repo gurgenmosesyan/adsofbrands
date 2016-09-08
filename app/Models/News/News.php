@@ -61,6 +61,11 @@ class News extends Model
         return $this->belongsToMany(Creative::class, 'news_creatives', 'news_id', 'creative_id');
     }
 
+    public function tags()
+    {
+        return $this->hasMany(NewsTag::class, 'news_id', 'id');
+    }
+
     public function getFile($column)
     {
         return $this->$column;

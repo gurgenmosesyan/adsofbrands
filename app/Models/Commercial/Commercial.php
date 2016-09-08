@@ -5,6 +5,9 @@ namespace App\Models\Commercial;
 use App\Core\Model;
 use App\Models\Agency\Agency;
 use App\Models\Brand\Brand;
+use App\Models\Country\CountryMl;
+use App\Models\IndustryType\IndustryTypeMl;
+use App\Models\MediaType\MediaType;
 
 class Commercial extends Model
 {
@@ -123,6 +126,21 @@ class Commercial extends Model
     public function tags()
     {
         return $this->hasMany(CommercialTag::class, 'commercial_id', 'id');
+    }
+
+    public function media_type()
+    {
+        return $this->belongsTo(MediaType::class, 'media_type_id', 'id');
+    }
+
+    public function industry_type_ml()
+    {
+        return $this->belongsTo(IndustryTypeMl::class, 'industry_type_id', 'id')->current();
+    }
+
+    public function country_ml()
+    {
+        return $this->belongsTo(CountryMl::class, 'country_id', 'id')->current();
     }
 
     public function getFile($column)

@@ -26,6 +26,10 @@ Route::group(['middleware' => ['web', 'front']], function() {
             Route::post('/api/reset', 'AccountApiController@reset');
         });
 
+        Route::get('/ads', 'CommercialController@all');
+        Route::get('/ads/{alias}/{id}', 'CommercialController@index');
+
+        Route::get('/brands', 'BrandController@all');
         Route::get('/brands/{alias}/{id}', 'BrandController@index');
         Route::get('/brands/{alias}/{id}/key-people', 'BrandController@creatives');
         Route::get('/brands/{alias}/{id}/awards', 'BrandController@awards');
@@ -35,6 +39,7 @@ Route::group(['middleware' => ['web', 'front']], function() {
         Route::get('/brands/{alias}/{id}/about', 'BrandController@about');
         Route::get('/brands/{alias}/{id}/contacts', 'BrandController@branches');
 
+        Route::get('/agencies', 'AgencyController@all');
         Route::get('/agencies/{alias}/{id}', 'AgencyController@index');
         Route::get('/agencies/{alias}/{id}/creatives', 'AgencyController@creatives');
         Route::get('/agencies/{alias}/{id}/awards', 'AgencyController@awards');
@@ -50,6 +55,8 @@ Route::group(['middleware' => ['web', 'front']], function() {
         Route::get('/creative/{alias}/{id}/about', 'CreativeController@about');
 
         Route::get('/page/{alias}', 'PageController@index');
+
+        Route::get('/team', 'TeamController@index');
 
         Route::get('/news', 'NewsController@all');
         Route::get('/news/{alias}/{id}', 'NewsController@index');

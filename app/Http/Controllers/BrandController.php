@@ -4,10 +4,45 @@ namespace App\Http\Controllers;
 
 use App\Models\Agency\Agency;
 use App\Models\Brand\Brand;
+use App\Models\Category\CategoryMl;
+use App\Models\Country\CountryMl;
+use Illuminate\Http\Request;
 use DB;
 
 class BrandController extends Controller
 {
+    public function all(Request $request)
+    {
+        $countries = CountryMl::current()->get();
+        $categories = CategoryMl::current()->get();
+
+        $countryId = $request->input('country');
+        $categoryId = $request->input('category');
+
+        $topBrands = Brand::joinMl()->where('top', Brand::TOP)->latest()->take(7)->get();
+        $skipIds = [];
+        foreach ($topBrands as $value) {
+            $skipIds[] = $value->id;
+        }
+        $query = Brand::joinMl()->whereNotIn('brands.id', $skipIds);
+        if (!empty($countryId)) {
+            $query->where('brands.country_id', $countryId);
+        }
+        if (!empty($categoryId)) {
+            $query->where('brands.category_id', $categoryId);
+        }
+        $brands = $query->latest()->paginate(35);
+
+        return view('brand.all')->with([
+            'countries' => $countries,
+            'categories' => $categories,
+            'countryId' => $countryId,
+            'categoryId' => $categoryId,
+            'topBrands' => $topBrands,
+            'brands' => $brands
+        ]);
+    }
+
     public function index($lngCode, $alias, $id)
     {
         $brand = Brand::joinMl()->where('brands.id', $id)->firstOrFail();

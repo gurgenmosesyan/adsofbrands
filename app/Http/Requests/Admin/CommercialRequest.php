@@ -91,17 +91,17 @@ class CommercialRequest extends Request
                         $typeIdRule = 'integer';
                         if (!empty($person['name']) && mb_substr($person['name'], 0, 1) == '@') {
                             $typeIdRule = 'required|'.$typeIdRule;
-                        }
-                        if ($type == CommercialCreditPerson::TYPE_BRAND) {
-                            $typeIdRule .= '|exists:brands,id';
-                        } else if ($type == CommercialCreditPerson::TYPE_AGENCY) {
-                            $typeIdRule .= '|exists:agencies,id';
-                        } else if ($type == CommercialCreditPerson::TYPE_CREATIVE) {
-                            $typeIdRule .= '|exists:creatives,id';
-                            if ($creative != null && $creative->id == $person['type_id']) {
-                                $issetCreative = true;
-                            }
+                            if ($type == CommercialCreditPerson::TYPE_BRAND) {
+                                $typeIdRule .= '|exists:brands,id';
+                            } else if ($type == CommercialCreditPerson::TYPE_AGENCY) {
+                                $typeIdRule .= '|exists:agencies,id';
+                            } else if ($type == CommercialCreditPerson::TYPE_CREATIVE) {
+                                $typeIdRule .= '|exists:creatives,id';
+                                if ($creative != null && $creative->id == $person['type_id']) {
+                                    $issetCreative = true;
+                                }
 
+                            }
                         }
                         $rules['credits.'.$key.'.persons.'.$subKey.'.type_id'] = $typeIdRule;
                         $rules['credits.'.$key.'.persons.'.$subKey.'.name'] = 'required|max:255';

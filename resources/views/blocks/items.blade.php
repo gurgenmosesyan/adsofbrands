@@ -1,4 +1,5 @@
 @foreach($items as $value)<a href="{{$value->getLink()}}" class="item db">
+    <span class="item-box db">
         <span class="img db">
             <img src="{{$value->getImage()}}" />
             @if($ad)
@@ -14,4 +15,5 @@
                 </span>
             </span>
         @endif
-    </a>@endforeach
+    </span>
+</a>@endforeach

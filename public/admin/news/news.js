@@ -104,6 +104,42 @@ $news.generateTypes = function(data, type) {
     }
 };
 
+$news.addTag = function(tag) {
+    if (!tag) {
+        return;
+    }
+    var html =  '<div class="tag">'+
+                    '#' + tag+
+                    ' <a href="#" class="remove"><i class="fa fa-remove"></i></a>'+
+                    '<input type="hidden" name="tags[][tag]" value="'+ tag +'">'+
+                '</div>';
+    html = $(html);
+    $('.remove', html).on('click', function() {
+        html.remove();
+        return false;
+    });
+    $('#tags').append(html);
+    $('#tag').val('');
+};
+
+$news.initTags = function() {
+    var tag = $('#tag');
+    tag.change(function() {
+        $news.addTag(tag.val());
+    });
+    tag.keydown(function(e) {
+        if (e.keyCode == 13 || e.keyCode == 9 ) {
+            $news.addTag(tag.val());
+            return false;
+        }
+    });
+    if (!$.isEmptyObject($news.tags)) {
+        for (var i in $news.tags) {
+            $news.addTag($news.tags[i].tag);
+        }
+    }
+};
+
 $news.initEditPage = function() {
 
     $news.initForm();
@@ -120,6 +156,8 @@ $news.initEditPage = function() {
 
     $news.initTypeAutoComplete('creative');
     $news.generateTypes($news.creatives, 'creative');
+
+    $news.initTags();
 
     //CKEDITOR.config.height = 120;
 };

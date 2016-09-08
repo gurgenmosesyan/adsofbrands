@@ -41,7 +41,7 @@ $footerMenu = FooterMenuManager::get();
     }(document, 'script', 'facebook-jssdk'));</script>
 @endif
 <script type="text/javascript">
-    $main.baseUrl = '{{url('')}}';
+    $main.baseUrl = '{{url_with_lng('')}}';
     var $locSettings = {"trans": <?php echo json_encode($jsTrans->getTrans()); ?>};
 </script>
 

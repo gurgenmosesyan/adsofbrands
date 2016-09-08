@@ -15,10 +15,13 @@ $fbSDK = true;
 
                 <div id="news-inner">
                     <div class="html">
-                        <img src="{{$news->getImage()}}" class="news-img" align="right" />
+                        <div class="news-img fr">
+                            <img src="{{$news->getImage()}}" alt="{{$news->title}}" />
+                        </div>
                         <h1 class="fsb fs40">{{$news->title}}</h1>
                         <p class="date tu">{{strftime('%b. %d, %Y', strtotime($news->created_at))}}</p>
                         {!!$news->text!!}
+                        <div class="cb"></div>
                     </div>
                 </div>
 

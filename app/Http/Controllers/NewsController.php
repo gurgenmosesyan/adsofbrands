@@ -22,7 +22,11 @@ class NewsController extends Controller
             return redirect(url_with_lng('/news/'.$news->alias.'/'.$news->id));
         }
 
-        $relNews = News::joinMl()->latest()->take(3)->get();
+        $relNewsIds = $news->tags()->select('tag2.news_id')->join('news_tags as tag2', function($query) use($news) {
+            $query->on('tag2.tag', '=', 'news_tags.tag')->where('tag2.news_id', '!=', $news->id);
+        })->lists('news_id')->toArray();
+
+        $relNews = News::joinMl()->whereIn('news.id', $relNewsIds)->latest()->take(3)->get();
 
         return view('news.index')->with([
             'news' => $news,

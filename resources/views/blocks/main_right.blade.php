@@ -9,6 +9,12 @@ $topNews = News::joinMl()->top()->latest()->take(2)->get();
 <div class="fb-like-box">
     <div class="fb-page" data-href="https://web.facebook.com/aobpage" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"></div>
 </div>
+@if(isset($includeTopAds))
+    <div class="right-top-ads">
+        <h3 class="fb fs28 tu tc">{{trans('www.base.label.our_tops')}}</h3>
+        @include('blocks.items', ['items' => $topAds, 'ad' => true])
+    </div>
+@endif
 @if(!$topNews->isEmpty())
     <div id="top-news">
         <h3 class="fb tu fs28">{{trans('www.base.label.top_news')}}</h3>

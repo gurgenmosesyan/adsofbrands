@@ -3,11 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agency\Agency;
+use App\Models\AgencyCategory\CategoryMl;
 use App\Models\Brand\Brand;
+use Illuminate\Http\Request;
 use DB;
 
 class AgencyController extends Controller
 {
+    public function all(Request $request)
+    {
+        $categories = CategoryMl::current()->get();
+
+        $categoryId = $request->input('category');
+
+        $topAgencies = Agency::joinMl()->where('top', Agency::TOP)->latest()->take(7)->get();
+        $skipIds = [];
+        foreach ($topAgencies as $value) {
+            $skipIds[] = $value->id;
+        }
+        $query = Agency::joinMl()->whereNotIn('agencies.id', $skipIds);
+        if (!empty($categoryId)) {
+            $query->where('agencies.category_id', $categoryId);
+        }
+        $agencies = $query->latest()->paginate(35);
+
+        return view('agency.all')->with([
+            'categories' => $categories,
+            'categoryId' => $categoryId,
+            'topAgencies' => $topAgencies,
+            'agencies' => $agencies
+        ]);
+    }
+
     public function index($lngCode, $alias, $id)
     {
         $agency = Agency::joinMl()->where('agencies.id', $id)->firstOrFail();

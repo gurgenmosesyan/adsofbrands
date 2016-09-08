@@ -1,0 +1,15 @@
+#tags .tag {
+    background-color: #F4F4F4;
+    border: 1px solid #dddddd;
+    border-radius: 2px;
+    display: inline-block;
+    font-weight: 600;
+    margin: 0 5px 5px 0;
+    padding: 5px 10px;
+}
+#tags .tag .remove {
+    color: #555555;
+}
+#tags .tag .remove:hover {
+    color: #777777;
+}

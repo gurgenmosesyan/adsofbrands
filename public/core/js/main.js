@@ -16,6 +16,7 @@ $main.initSearch = function() {
     listColumns.push(actions);
     var order = self.order || [[0, "desc"]];
     $main.table = $('#data-table').DataTable({
+        "pageLength": 25,
         "autoWidth": false,
         "processing": true,
         "oLanguage": {

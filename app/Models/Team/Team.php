@@ -15,9 +15,9 @@ class Team extends Model
 
     protected $table = 'team';
 
-    public function getIcon()
+    public function getImage()
     {
-        return url('/'.self::IMAGES_PATH.'/'.$this->icon);
+        return url('/'.self::IMAGES_PATH.'/'.$this->image);
     }
 
     public function ml()

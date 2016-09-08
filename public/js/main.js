@@ -28,6 +28,7 @@ $trans.get = function (key, paramData) {
 };
 
 var $main = {};
+$main.filterInited = false;
 
 $main.basePath = function(path) {
     return $main.baseUrl + path;
@@ -187,9 +188,80 @@ $main.initMap = function(abPin) {
     });
 };
 
+$main.initFilterDate = function() {
+    var filter = $('#filter');
+    var media = filter.find('.media-type').find('select'),
+        industry = filter.find('.industry-type').find('select'),
+        country = filter.find('.country').find('select'),
+        category = filter.find('.category').find('select'),
+        date = $('#alt-date'),
+        url = '';
+    filter.find('.date').datepicker({
+        altField: '#alt-date',
+        altFormat: 'yy-mm-dd',
+        dateFormat: 'dd/mm/yy',
+        onSelect: function(selectedDate, dateObj) {
+            $(this).change();
+        }
+    }).on('change', function (e) {
+        if (!$(this).val()) {
+            date.val('');
+        }
+        if (media.val()) {
+            url += '&media='+media.val();
+        }
+        if (industry.val()) {
+            url += '&industry='+industry.val();
+        }
+        if (country.val()) {
+            url += '&country='+country.val();
+        }
+        if (category.val()) {
+            url += '&category='+category.val();
+        }
+        if (date.val()) {
+            url += '&date='+date.val();
+        }
+        url = url ? '?'+url.substr(1) : '';
+        document.location.href = $main.filterUrl+url;
+    });
+};
+
+$main.initFilter = function() {
+    var filter = $('#filter');
+    var media = filter.find('.media-type').find('select'),
+        industry = filter.find('.industry-type').find('select'),
+        country = filter.find('.country').find('select'),
+        category = filter.find('.category').find('select'),
+        date = $('#alt-date'),
+        url = '';
+    filter.find('select').change(function() {
+        if (media.val()) {
+            url += '&media='+media.val();
+        }
+        if (industry.val()) {
+            url += '&industry='+industry.val();
+        }
+        if (country.val()) {
+            url += '&country='+country.val();
+        }
+        if (category.val()) {
+            url += '&category='+category.val();
+        }
+        if (date.val()) {
+            url += '&date='+date.val();
+        }
+        url = url ? '?'+url.substr(1) : '';
+        document.location.href = $main.filterUrl+url;
+    });
+};
+
 $(document).ready(function() {
 
     $main.initSubscribe();
 
     $main.initSelect($('#account'));
+    $main.initSelect($('#filter'));
+
+    $main.initFilter();
 });

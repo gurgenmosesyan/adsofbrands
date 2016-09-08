@@ -23,7 +23,9 @@ class NewsRequest extends Request
             'agencies' => 'array',
             'agencies.*.agency_id' => 'required|integer|exists:agencies,id',
             'creatives' => 'array',
-            'creatives.*.creative_id' => 'required|integer|exists:creatives,id'
+            'creatives.*.creative_id' => 'required|integer|exists:creatives,id',
+            'tags' => 'array',
+            'tags.*.tag' => 'required|max:255',
         ];
     }
 }
