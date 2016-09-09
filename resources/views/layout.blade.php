@@ -9,7 +9,7 @@ $footerMenu = FooterMenuManager::get();
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>{{$title.' - adsofbrands.com'}}</title>
-    <link rel="shortcut icon" href="{{url('/favicon.ico')}}" type="image/x-icon" />
+    <link rel="icon" href="{{url('/favicon.png')}}" />
     <?php
     use App\Core\Helpers\UserAgent;
 

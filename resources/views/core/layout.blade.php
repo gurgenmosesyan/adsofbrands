@@ -15,6 +15,7 @@ $jsTrans->addTrans([
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{{isset($pageTitle) ? $appName.' - '.$pageTitle : $appName}}</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="icon" href="{{url('/favicon.png')}}" />
 
     <!-- Ionicons -->
     {{--<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">--}}
