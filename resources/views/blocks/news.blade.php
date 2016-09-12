@@ -9,9 +9,7 @@
         </h3>
         <p class="fs20">{{$value->description}}</p>
         </div>@endforeach
-
     @if(!isset($notPaginate))
         @include('pagination.default', ['pagination' => $news, 'notPaginate' => true])
     @endif
-
 </div>

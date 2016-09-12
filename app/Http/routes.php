@@ -10,6 +10,8 @@ Route::group(['middleware' => ['web', 'front']], function() {
 
         Route::get('/', 'IndexController@index');
 
+        Route::get('/search', 'SearchController@index');
+
         Route::get('/contacts', 'ContactController@index');
         Route::post('/api/contacts', 'ApiController@contact');
         Route::post('/api/subscribe', 'ApiController@subscribe');

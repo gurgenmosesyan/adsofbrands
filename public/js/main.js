@@ -76,6 +76,22 @@ $main.initContactForm = function() {
     });
 };
 
+$main.initSearch = function() {
+    var form = $('#search-form');
+    $('#search-icon').on('click', function() {
+        form.stop().fadeIn(150, function() {
+            form.find('input:text').focus();
+        });
+        $(document).unbind('click').bind('click', function(e) {
+            if (!$(e.target).parents().is('#search-form')) {
+                form.stop().fadeOut(100).find('input:text').val('');
+                $(document).unbind('click');
+            }
+        });
+        return false;
+    });
+};
+
 $main.initItemsCar = function() {
     $('.items-car').owlCarousel({
         autoPlay: true,
@@ -257,6 +273,8 @@ $main.initFilter = function() {
 };
 
 $(document).ready(function() {
+
+    $main.initSearch();
 
     $main.initSubscribe();
 

@@ -231,16 +231,41 @@ body .page {
     line-height: normal;
 }
 #header .search {
-    background: url('../imgs/search.png') no-repeat;
     height: 28px;
     margin: 26px 45px 0 10px;
+    position: relative;
     width: 26px;
 }
-#header .search:hover {
-    opacity: 0.85;
-}
-#header .search a {
+#search-icon {
+    background: url('../imgs/search.png') no-repeat;
     height: 100%;
+}
+#search-form {
+    background-color: #202020;
+    position: absolute;
+    top: 0;
+    left: -380px;
+    height: 30px;
+    width: 406px;
+}
+#search-form input[type="text"] {
+    background: none !important;
+    color: #ffffff;
+    height: 100%;
+    padding-right: 17px;
+    vertical-align: top;
+    width: 363px;
+}
+#search-form input[type="submit"] {
+    background: url('../imgs/search.png') no-repeat;
+    vertical-align: top;
+    height: 28px;
+    width: 26px;
+}
+#search-icon:hover,
+#search-form input[type="submit"]:hover {
+    cursor: pointer;
+    opacity: 0.85;
 }
 #header .top-menu {
     padding-top: 3px;

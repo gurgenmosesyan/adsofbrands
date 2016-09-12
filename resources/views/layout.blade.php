@@ -79,7 +79,10 @@ $footerMenu = FooterMenuManager::get();
             </div>
         @endif
         <div class="fr search">
-            <a href="" class="db"></a>
+            <a href="#" id="search-icon" class="db"></a>
+            <form id="search-form" action="{{url_with_lng('/search')}}" method="get"{!!empty($q) ? ' class="dn"' : ''!!} autocomplete="off">
+                <input type="text" name="q" class="fs18" value="{{$q or ''}}" /><input type="submit" value="" />
+            </form>
         </div>
         <ul class="top-menu clearfix fr">
             <li class="fr{{isset($pageMenu) && $pageMenu == 'news' ? ' active' : ''}}"><a href="{{url_with_lng('/news', true)}}" class="fb fs18">{{trans('www.base.label.news')}}</a></li>
