@@ -16,7 +16,6 @@ class CreateCommercialsTable extends Migration
         Schema::create('commercials', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('media_type_id')->unsigned();
-            $table->integer('industry_type_id')->unsigned();
             $table->integer('country_id')->unsigned();
             $table->integer('category_id')->unsigned();
             $table->string('alias');

@@ -13,7 +13,7 @@ class CommercialManager
         $data = $this->processSave($data);
         $commercial = new Commercial($data);
         SaveImage::save($data['image'], $commercial);
-        SaveImage::save($data['image_print'], $commercial, 'image_print');
+        SaveImage::savePrintImage($data['image_print'], $commercial, 'image_print');
 
         DB::transaction(function() use($data, $commercial) {
             $commercial->save();
@@ -49,7 +49,7 @@ class CommercialManager
         $commercial = $query->firstOrFail();
         $data = $this->processSave($data);
         SaveImage::save($data['image'], $commercial);
-        SaveImage::save($data['image_print'], $commercial, 'image_print');
+        SaveImage::savePrintImage($data['image_print'], $commercial, 'image_print');
 
         DB::transaction(function() use($data, $commercial) {
             $commercial->update($data);

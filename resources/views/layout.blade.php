@@ -82,13 +82,13 @@ $footerMenu = FooterMenuManager::get();
             <a href="" class="db"></a>
         </div>
         <ul class="top-menu clearfix fr">
-            <li class="fr"><a href="{{url_with_lng('/news', true)}}" class="fb fs18">{{trans('www.base.label.news')}}</a></li>
+            <li class="fr{{isset($pageMenu) && $pageMenu == 'news' ? ' active' : ''}}"><a href="{{url_with_lng('/news', true)}}" class="fb fs18">{{trans('www.base.label.news')}}</a></li>
             <li class="dot fr"></li>
-            <li class="fr"><a href="{{url_with_lng('/agencies', true)}}" class="fb fs18">{{trans('www.base.label.agencies')}}</a></li>
+            <li class="fr{{isset($pageMenu) && $pageMenu == 'agencies' ? ' active' : ''}}"><a href="{{url_with_lng('/agencies', true)}}" class="fb fs18">{{trans('www.base.label.agencies')}}</a></li>
             <li class="dot fr"></li>
-            <li class="fr"><a href="{{url_with_lng('/brands', true)}}" class="fb fs18">{{trans('www.base.label.brands')}}</a></li>
+            <li class="fr{{isset($pageMenu) && $pageMenu == 'brands' ? ' active' : ''}}"><a href="{{url_with_lng('/brands', true)}}" class="fb fs18">{{trans('www.base.label.brands')}}</a></li>
             <li class="dot fr"></li>
-            <li class="fr"><a href="{{url_with_lng('/ads', true)}}" class="fb fs18">{{trans('www.base.label.ads')}}</a></li>
+            <li class="fr{{isset($pageMenu) && $pageMenu == 'ads' ? ' active' : ''}}"><a href="{{url_with_lng('/ads', true)}}" class="fb fs18">{{trans('www.base.label.ads')}}</a></li>
         </ul>
         <div class="cb"></div>
     </div>

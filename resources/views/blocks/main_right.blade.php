@@ -20,9 +20,15 @@ $topNews = News::joinMl()->top()->latest()->take(2)->get();
         <h3 class="fb tu fs28">{{trans('www.base.label.top_news')}}</h3>
         @foreach($topNews as $key => $value)
             <div class="news news-{{$key}}">
-                <div class="img"><img src="{{$value->getImage()}}" width="240" /></div>
+                <div class="img">
+                    <a href="{{$value->getLink()}}">
+                        <img src="{{$value->getImage()}}" alt="{{$value->title}}" width="240" />
+                    </a>
+                </div>
                 <p class="date tu fs14">{{strftime('%b. %d, %Y', strtotime($value->created_at))}}</p>
-                <h4 class="fb fs20 lh23">{{$value->title}}</h4>
+                <h4 class="fb fs20 lh23">
+                    <a href="{{$value->getLink()}}">{{$value->title}}</a>
+                </h4>
                 <p class="description lh20">{{$value->description}}</p>
             </div>
         @endforeach

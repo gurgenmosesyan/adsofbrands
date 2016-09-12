@@ -9,8 +9,8 @@ return [
             'extensions' => [
                 'jpg', 'jpeg', 'png'
             ],
-            //'width' => 560,
-            //'height' => 335,
+            'width' => 150,
+            'height' => 150,
             //'min_width' => 500,
             //'max_width' => 200,
             //'min_height' => 500,
@@ -20,12 +20,8 @@ return [
             'extensions' => [
                 'jpg', 'jpeg', 'png'
             ],
-            //'width' => 560,
-            //'height' => 335,
-            //'min_width' => 500,
-            //'max_width' => 200,
-            //'min_height' => 500,
-            //'max_height' => 200,
+            'min_width' => 1250,
+            'min_height' => 320,
         ]
     ]
 ];

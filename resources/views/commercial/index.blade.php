@@ -8,9 +8,12 @@ $head->appendStyle('/css/jquery.mCustomScrollbar.css');
 $title = $ad->title;
 
 $fbSDK = true;
+$pageMenu = 'ads';
 
 $mediaType = $ad->media_type()->joinMl()->first();
-$brand = $ad->brands()->first();
+$brand = $ad->brands()->select('brands.id','brands.alias','brands.image','ml.title')->join('brands_ml as ml', function($query) {
+    $query->on('ml.id', '=', 'brands.id');
+})->first();
 $agency = $ad->agencies()->first();
 
 $brandAds = Commercial::joinMl()->join('commercial_brands as c_brands', function($query) use($brand) {
@@ -40,17 +43,19 @@ $similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('co
                     @if($ad->isVideo())
                         @if($ad->isYoutube())
                             <?php $videoData = json_decode($ad->video_data); ?>
-                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/{{$videoData->id}}" frameborder="0" allowfullscreen></iframe>
+                            <iframe width="100%" height="450" src="https://www.youtube.com/embed/{{$videoData->id}}" frameborder="0" allowfullscreen></iframe>
                         @elseif($ad->isVimeo())
                             <?php $videoData = json_decode($ad->video_data); ?>
-                                <iframe src="https://player.vimeo.com/video/{{$videoData->id}}" width="100%" height="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                                <iframe src="https://player.vimeo.com/video/{{$videoData->id}}" width="100%" height="450" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                         @elseif($ad->isFb())
-                            <iframe src="https://www.facebook.com/plugins/video.php?href={{$ad->video_data}}" width="100%" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
+                            <iframe src="https://www.facebook.com/plugins/video.php?href={{$ad->video_data}}" width="100%" height="450" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
                         @else
                             {!!$ad->video_data!!}
                         @endif
                     @else
-                        <div class="print-image" style="background-image: url('{{$ad->getPrintImage()}}');"></div>
+                        <div class="print-image">
+                            <img src="{{$ad->getPrintImage()}}" alt="{{$ad->title}}" />
+                        </div>
                     @endif
                 </div>
                 <div class="prev-next fb">
@@ -87,13 +92,15 @@ $similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('co
                     <div class="dib views-count">{{$ad->views_count}}</div>
                     <div class="dib comment">{{$ad->comments_count > 999  ?'999+' : $ad->comments_count}}</div>
                 </div>
-                <div class="media-type">
-                    <p class="dib fsb fs24 mt-title">{{trans('www.base.label.media_type')}}:</p>
-                    <div class="dib">
-                        <img src="{{$mediaType->getIcon()}}" alt="{{$mediaType->title}}" />
-                        <p class="dib fb fs24">{{$mediaType->title}}</p>
+                @if($mediaType != null)
+                    <div class="media-type">
+                        <p class="dib fsb fs24 mt-title">{{trans('www.base.label.media_type')}}:</p>
+                        <div class="dib">
+                            <img src="{{$mediaType->getIcon()}}" alt="{{$mediaType->title}}" />
+                            <p class="dib fb fs24">{{$mediaType->title}}</p>
+                        </div>
                     </div>
-                </div>
+                @endif
                 <div class="info-box">
                     <div class="brand-agency dib">
                         <div class="brand dib">
@@ -116,24 +123,42 @@ $similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('co
                                 <p class="dib fs18">{{$ad->country_ml->name}}</p>
                             </div>
                         @endif
-                        <div class="industry">
-                            <p class="fsb fs20 dib">{{trans('www.base.label.industry')}}:</p>
-                            <p class="dib fs18">{{$ad->industry_type_ml->title}}</p>
-                        </div>
+                        @if($ad->category_ml != null)
+                            <div class="industry">
+                                <p class="fsb fs20 dib">{{trans('www.base.label.industry')}}:</p>
+                                <p class="dib fs18">{{$ad->category_ml->title}}</p>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="description fs18 lh21">{{$ad->description}}</div>
 
-                @if(!$credits->isEmpty())
+                @if(!$credits->isEmpty() || !empty($ad->advertising))
                     <div class="credits">
                         <h2 class="fsb fs30">{{trans('www.base.label.credits')}}</h2>
                         <div id="credits-box">
+                            @if(!empty($ad->advertising))
+                                <div class="credit fs20">
+                                    <p class="fsb position">{{$ad->advertising}}:</p>
+                                    <?php $personsStr = ''; ?>
+                                    @foreach($ad->advertisings as $person)
+                                        <?php $personsStr .= '<a href="'.$person->link.'" class="underline" target="_blank">'.$person->name.'</a>, '; ?>
+                                    @endforeach
+                                    {!!mb_substr($personsStr, 0, -2)!!}
+                                </div>
+                            @endif
                             @foreach($credits as $value)
                                 <div class="credit fs20">
                                     <p class="fsb position">{{$value->position}}:</p>
                                     <?php $personsStr = ''; ?>
                                     @foreach($value->persons as $person)
-                                        <?php $personsStr .= '<a>'.$person->name.'</a>'.$person->separator.' '; ?>
+                                        <?php
+                                        if (empty($person->type_id)) {
+                                            $personsStr .= '<span>'.$person->name.'</span>'.$person->separator.' ';
+                                        } else {
+                                            $personsStr .= '<a href="'.url_with_lng('/creative/'.$person->alias.'/'.$person->id).'" class="underline">'.$person->name.'</a>'.$person->separator.' ';
+                                        }
+                                        ?>
                                     @endforeach
                                     {!!mb_substr($personsStr, 0, -2)!!}
                                 </div>
@@ -152,7 +177,7 @@ $similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('co
 
             @if(!$brandAds->isEmpty())
                 <div id="brand-ads">
-                    <h3 class="fsb fs30">{{trans('www.base.label.more_from').' '.$ad->title}}</h3>
+                    <h3 class="fsb fs30">{{trans('www.base.label.more_from').' '.$brand->title}}</h3>
                     @include('blocks.items', ['items' => $brandAds, 'ad' => true])
                 </div>
             @endif

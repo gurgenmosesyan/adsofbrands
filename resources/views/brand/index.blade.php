@@ -4,6 +4,7 @@ $title = $brand->title;
 $fbSDK = true;
 
 $url = $brand->getLink();
+$pageMenu = 'brands';
 ?>
 @extends('layout')
 

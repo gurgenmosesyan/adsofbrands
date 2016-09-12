@@ -2,6 +2,7 @@
 $title = trans('www.agencies.title');
 
 $fbSDK = true;
+$pageMenu = 'agencies';
 ?>
 @extends('layout')
 
@@ -28,7 +29,7 @@ $fbSDK = true;
                 </div>
             </div>
 
-            <div id="list" class="tc">
+            <div id="list">
                 <?php
                 foreach($topAgencies as $key => $value) { ?><a href="{{$value->getLink()}}" class="item db top top-item-{{$key}}">
                 <span class="item-box db">

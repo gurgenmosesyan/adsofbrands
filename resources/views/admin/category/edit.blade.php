@@ -1,13 +1,13 @@
 <?php
 
 $head->appendScript('/admin/category/category.js');
-$pageTitle = trans('admin.category.form.title');
+$pageTitle = trans('admin.industry_type.form.title');
 $pageMenu = 'category';
 if ($saveMode == 'add') {
-    $pageSubTitle = trans('admin.category.form.add.sub_title');
+    $pageSubTitle = trans('admin.industry_type.form.add.sub_title');
     $url = route('admin_category_store');
 } else {
-    $pageSubTitle = trans('admin.category.form.edit.sub_title', ['id' => $category->id]);
+    $pageSubTitle = trans('admin.industry_type.form.edit.sub_title', ['id' => $category->id]);
     $url = route('admin_category_update', $category->id);
 }
 $mls = $category->ml->keyBy('lng_id');

@@ -5,6 +5,7 @@ $head->appendScript('/js/jquery-ui.min.js');
 $title = trans('www.commercials.title');
 
 $fbSDK = true;
+$pageMenu = 'ads';
 ?>
 @extends('layout')
 
@@ -46,20 +47,11 @@ $fbSDK = true;
                             <option value="{{$value->id}}"{{$value->id == $countryId ? ' selected="selected"' : ''}}>{{$value->name}}</option>
                         @endforeach
                     </select>
-                </div><div class="category select-box">
-                    <div class="select-arrow"></div>
-                    <div class="select-title fs18"></div>
-                    <select name="category">
-                        <option value="">{{trans('www.base.label.category')}}</option>
-                        @foreach($categories as $value)
-                            <option value="{{$value->id}}"{{$value->id == $categoryId ? ' selected="selected"' : ''}}>{{$value->title}}</option>
-                        @endforeach
-                    </select>
                 </div><input class="bib fsb date fs18{{empty($date) ? '' : ' big'}}" type="text" value="{{empty($date) ? trans('www.base.label.date') : date('d/m/Y', strtotime($date))}}" />
                 <input type="hidden" id="alt-date" value="{{$date}}" />
             </div>
 
-            <div id="list" class="tc">
+            <div id="list">
                 <?php
                 foreach($featuredAds as $key => $value) { ?><a href="{{$value->getLink()}}" class="item db top top-item-{{$key}}">
                     <span class="item-box db">

@@ -778,7 +778,7 @@ body .page {
     width: 100%;
 }
 #main-left .logo-box {
-    margin: -60px 0 0 12px;
+    margin: -70px 0 0 12px;
     position: relative;
 }
 #main-left .logo {
@@ -786,6 +786,7 @@ body .page {
     border: 1px solid #D3D3D3;
     border-radius: 3px;
     height: 150px;
+    padding: 8px;
     width: 150px;
 }
 #main-left .main-title {
@@ -1078,6 +1079,9 @@ textarea:focus {
     color: #7f7f7f;
     cursor: default;
 }
+#paging {
+    margin-top: 18px;
+}
 #paging li {
     border-radius: 30px;
     display: inline-block;
@@ -1259,14 +1263,10 @@ textarea:focus {
     width: 54%;
 }
 #ad-left .print-image {
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
     height: 100%;
     width: 100%;
 }
 #ad-left .ad-media {
-    height: 488px;
     margin-bottom: 15px;
 }
 #ad-left .prev,

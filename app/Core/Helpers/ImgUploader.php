@@ -7,7 +7,7 @@ class ImgUploader
 	protected static $includedHeadData = false;
 	protected static $includedCropper = false;
 
-	public static function uploader($module, $imageKey, $name, $value)
+	public static function uploader($module, $imageKey, $name, $value, $imgSrc = null)
 	{
 		$config = config($module.'.images');
 		$imageConf = $config[$imageKey];
@@ -24,7 +24,7 @@ class ImgUploader
 			$src = '/core/images/img-default.png';
 			$imgValue = '';
 		} else {
-			$src = $config['path'] . '/' . $value;
+			$src = $imgSrc === null ? $config['path'].'/'.$value : $imgSrc.'/'.$value;
 			$imgValue = 'same';
 		}
 		$helpText = self::getHelpTexts($module, $imageKey);

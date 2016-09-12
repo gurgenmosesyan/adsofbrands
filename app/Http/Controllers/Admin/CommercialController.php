@@ -15,7 +15,6 @@ use App\Core\Language\Language;
 use App\Models\Category\Category;
 use App\Models\Country\Country;
 use App\Models\Creative\CreativeMl;
-use App\Models\IndustryType\IndustryType;
 use App\Models\MediaType\MediaType;
 use Illuminate\Http\Request;
 use Auth;
@@ -44,7 +43,6 @@ class CommercialController extends BaseController
     {
         $commercial = new Commercial();
         $mediaTypes = MediaType::joinMl()->get();
-        $industryTypes = IndustryType::joinMl()->get();
         $countries = Country::joinMl()->get();
         $categories = Category::joinMl()->get();
         $languages = Language::all();
@@ -75,7 +73,6 @@ class CommercialController extends BaseController
         return view('admin.commercial.edit')->with([
             'commercial' => $commercial,
             'mediaTypes' => $mediaTypes,
-            'industryTypes' => $industryTypes,
             'brands' => [],
             'agencies' => [],
             'countries' => $countries,
@@ -116,7 +113,6 @@ class CommercialController extends BaseController
         $commercial = $query->firstOrFail();
 
         $mediaTypes = MediaType::joinMl()->get();
-        $industryTypes = IndustryType::joinMl()->get();
         $brands = $commercial->brands()->select('brands.id', 'ml.title')->joinMl()->get();
         $agencies = $commercial->agencies()->select('agencies.id', 'ml.title')->joinMl()->get();
         $countries = Country::joinMl()->get();
@@ -142,7 +138,6 @@ class CommercialController extends BaseController
         return view('admin.commercial.edit')->with([
             'commercial' => $commercial,
             'mediaTypes' => $mediaTypes,
-            'industryTypes' => $industryTypes,
             'brands' => $brands,
             'agencies' => $agencies,
             'countries' => $countries,

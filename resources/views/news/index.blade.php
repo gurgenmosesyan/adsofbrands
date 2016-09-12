@@ -2,6 +2,7 @@
 $title = $news->title;
 
 $fbSDK = true;
+$pageMenu = 'news';
 ?>
 @extends('layout')
 

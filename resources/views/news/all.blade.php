@@ -2,6 +2,7 @@
 $title = trans('www.news.list.title');
 
 $fbSDK = true;
+$pageMenu = 'news';
 ?>
 @extends('layout')
 

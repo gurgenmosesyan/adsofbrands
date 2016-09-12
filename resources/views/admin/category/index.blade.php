@@ -1,6 +1,6 @@
 <?php
 $head->appendScript('/admin/category/category.js');
-$pageTitle = $pageSubTitle = trans('admin.category.form.title');
+$pageTitle = $pageSubTitle = trans('admin.industry_type.form.title');
 $pageMenu = 'category';
 ?>
 @extends('core.layout')

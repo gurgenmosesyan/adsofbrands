@@ -13,7 +13,6 @@ class CommercialRequest extends Request
     {
         $rules = [
             'media_type_id' => 'required|integer|exists:media_types,id',
-            'industry_type_id' => 'required|integer|exists:industry_types,id',
             'country_id' => 'integer|exists:countries,id',
             'category_id' => 'integer|exists:categories,id',
             'alias' => 'required|max:255',

@@ -94,19 +94,6 @@ $jsTrans->addTrans([
             </div>
         </div>
 
-        <div class="form-group">
-            <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.industry_type')}}</label>
-            <div class="col-sm-9">
-                <select name="industry_type_id" class="form-control">
-                    <option value="">{{trans('admin.base.label.select')}}</option>
-                    @foreach($industryTypes as $value)
-                        <option value="{{$value->id}}"{{$value->id == $commercial->industry_type_id ? ' selected="selected"' : ''}}>{{$value->title}}</option>
-                    @endforeach
-                </select>
-                <div id="form-error-industry_type_id" class="form-error"></div>
-            </div>
-        </div>
-
         @if(Auth::guard('brand')->guest())
             <div class="form-group">
                 <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.brands')}}</label>
@@ -143,7 +130,7 @@ $jsTrans->addTrans([
         </div>
 
         <div class="form-group">
-            <label class="col-sm-3 control-label">{{trans('admin.base.label.category')}}</label>
+            <label class="col-sm-3 control-label">{{trans('admin.base.label.industry_type')}}</label>
             <div class="col-sm-9">
                 <select name="category_id" class="form-control">
                     <option value="">{{trans('admin.base.label.select')}}</option>
@@ -232,7 +219,7 @@ $jsTrans->addTrans([
         <div id="print-block" class="form-group dn">
             <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.print_image')}}</label>
             <div class="col-sm-9">
-                <?php ImgUploader::uploader('commercial', 'image_print', 'image_print', $commercial->image_print); ?>
+                <?php ImgUploader::uploader('commercial', 'image_print', 'image_print', $commercial->image_print, '/images/commercial_big'); ?>
             </div>
         </div>
 

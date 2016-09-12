@@ -6,7 +6,7 @@ use App\Core\Model;
 use App\Models\Agency\Agency;
 use App\Models\Brand\Brand;
 use App\Models\Country\CountryMl;
-use App\Models\IndustryType\IndustryTypeMl;
+use App\Models\Category\CategoryMl;
 use App\Models\MediaType\MediaType;
 
 class Commercial extends Model
@@ -25,7 +25,6 @@ class Commercial extends Model
 
     protected $fillable = [
         'media_type_id',
-        'industry_type_id',
         'country_id',
         'category_id',
         'alias',
@@ -90,7 +89,7 @@ class Commercial extends Model
 
     public function getPrintImage()
     {
-        return url('/'.self::IMAGES_PATH.'/'.$this->image_print);
+        return url('/images/commercial_big/'.$this->image_print);
     }
 
     public function getLink()
@@ -133,9 +132,9 @@ class Commercial extends Model
         return $this->belongsTo(MediaType::class, 'media_type_id', 'id');
     }
 
-    public function industry_type_ml()
+    public function category_ml()
     {
-        return $this->belongsTo(IndustryTypeMl::class, 'industry_type_id', 'id')->current();
+        return $this->belongsTo(CategoryMl::class, 'category_id', 'id')->current();
     }
 
     public function country_ml()

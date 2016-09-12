@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Agency\AgencyMl;
-use App\Models\Brand\BrandMl;
+use App\Models\Agency\Agency;
+use App\Models\Brand\Brand;
 use App\Models\Category\CategoryMl;
 use App\Models\Commercial\Commercial;
 use App\Models\Country\CountryMl;
-use App\Models\Creative\CreativeMl;
-use App\Models\IndustryType\IndustryTypeMl;
+use App\Models\Creative\Creative;
 use App\Models\MediaType\MediaTypeMl;
 use Illuminate\Http\Request;
 
@@ -17,14 +16,12 @@ class CommercialController extends Controller
     public function all(Request $request)
     {
         $mediaTypes = MediaTypeMl::current()->get();
-        $industryTypes = IndustryTypeMl::current()->get();
+        $industryTypes = CategoryMl::current()->get();
         $countries = CountryMl::current()->get();
-        $categories = CategoryMl::current()->get();
 
         $mediaTypeId = $request->input('media');
         $industryTypeId = $request->input('industry');
         $countryId = $request->input('country');
-        $categoryId = $request->input('category');
         $date = $request->input('date');
 
         $featuredAds = Commercial::joinMl()->where('featured', Commercial::FEATURED)->latest()->take(7)->get();
@@ -37,13 +34,10 @@ class CommercialController extends Controller
             $query->where('commercials.media_type_id', $mediaTypeId);
         }
         if (!empty($industryTypeId)) {
-            $query->where('commercials.industry_type_id', $industryTypeId);
+            $query->where('commercials.category_id', $industryTypeId);
         }
         if (!empty($countryId)) {
             $query->where('commercials.country_id', $countryId);
-        }
-        if (!empty($categoryId)) {
-            $query->where('commercials.category_id', $categoryId);
         }
         if (!empty($date)) {
             $query->where('commercials.published_date', $date);
@@ -54,11 +48,9 @@ class CommercialController extends Controller
             'mediaTypes' => $mediaTypes,
             'industryTypes' => $industryTypes,
             'countries' => $countries,
-            'categories' => $categories,
             'mediaTypeId' => $mediaTypeId,
             'industryTypeId' => $industryTypeId,
             'countryId' => $countryId,
-            'categoryId' => $categoryId,
             'date' => $date,
             'featuredAds' => $featuredAds,
             'commercials' => $commercials
@@ -82,13 +74,21 @@ class CommercialController extends Controller
             foreach ($value->persons as $person) {
                 if ($person->type_id != 0) {
                     if ($person->type == 'brand') {
-                        $item = BrandMl::where('id', $person->type_id)->first();
+                        $item = Brand::joinMl()->where('brands.id', $person->type_id)->first();
                     } else if ($person->type == 'agency') {
-                        $item = AgencyMl::where('id', $person->type_id)->first();
+                        $item = Agency::joinMl()->where('agencies.id', $person->type_id)->first();
                     } else {
-                        $item = CreativeMl::where('id', $person->type_id)->first();
+                        $item = Creative::joinMl()->where('creatives.id', $person->type_id)->first();
                     }
-                    $person->name = $item == null ? '' : $item->title;
+                    if ($item != null) {
+                        $person->id = $item->id;
+                        $person->alias = $item->alias;
+                        $person->name = $item->title;
+                    } else {
+                        $person->id = '';
+                        $person->alias = '';
+                        $person->name = '';
+                    }
                 }
             }
         }
