@@ -45,17 +45,17 @@ class EmailManager
 
 	public function sendEmail(Email $email)
 	{
-        try {
-            Mail::send(['email.default_html', 'email.default'], ['email' => $email], function($message) use($email) {
+        //try {
+            Mail::send(['emails.default_html', 'emails.default'], ['email' => $email], function($message) use($email) {
                 $message->from($email->from, $email->from_name);
                 $message->to($email->to, $email->to_name);
                 $message->replyTo($email->reply_to);
                 $message->subject($email->subject);
             });
             $email->status = Email::STATUS_SENT;
-        } catch (Exception $e) {
-            $email->status = Email::STATUS_FAILED;
-        }
+        //} catch (Exception $e) {
+        //    $email->status = Email::STATUS_FAILED;
+        //}
 		$email->save();
 	}
 }
