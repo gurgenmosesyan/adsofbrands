@@ -2,6 +2,7 @@
 use App\Models\FooterMenu\FooterMenu;
 
 $head->appendScript('/assets/plugins/ckeditor/ckeditor.js');
+$head->appendScript('/assets/plugins/ckfinder/ckfinder.js');
 $head->appendScript('/admin/footer_menu/footer_menu.js');
 $pageTitle = trans('admin.footer_menu.form.title');
 $pageMenu = 'footer_menu';

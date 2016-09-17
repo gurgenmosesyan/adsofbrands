@@ -3,6 +3,7 @@ use App\Models\Agency\Agency;
 use App\Core\Helpers\ImgUploader;
 
 $head->appendScript('/assets/plugins/ckeditor/ckeditor.js');
+$head->appendScript('/assets/plugins/ckfinder/ckfinder.js');
 $head->appendScript('/admin/agency/agency.js');
 
 $pageTitle = trans('admin.agency.form.title');

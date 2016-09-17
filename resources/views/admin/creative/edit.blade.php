@@ -3,6 +3,7 @@ use App\Models\Creative\Creative;
 use App\Core\Helpers\ImgUploader;
 
 $head->appendScript('/assets/plugins/ckeditor/ckeditor.js');
+$head->appendScript('/assets/plugins/ckfinder/ckfinder.js');
 $head->appendScript('/admin/creative/creative.js');
 
 $pageTitle = trans('admin.creative.form.title');

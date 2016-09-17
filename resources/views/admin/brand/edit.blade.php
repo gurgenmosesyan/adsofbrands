@@ -3,6 +3,7 @@ use App\Models\Brand\Brand;
 use App\Core\Helpers\ImgUploader;
 
 $head->appendScript('/assets/plugins/ckeditor/ckeditor.js');
+$head->appendScript('/assets/plugins/ckfinder/ckfinder.js');
 $head->appendScript('/admin/brand/brand.js');
 
 $pageTitle = trans('admin.brand.form.title');

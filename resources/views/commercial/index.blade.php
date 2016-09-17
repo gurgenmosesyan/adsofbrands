@@ -8,6 +8,7 @@ $head->appendStyle('/css/jquery.mCustomScrollbar.css');
 $title = $ad->title;
 
 $fbSDK = true;
+$shareBox = true;
 $pageMenu = 'ads';
 
 $mediaType = $ad->media_type()->joinMl()->first();
@@ -42,7 +43,7 @@ $similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('co
 
         <div id="main-left" class="fl">
 
-            <div id="ad-left" class="fl">
+            <div id="com-left" class="fl">
                 <div class="ad-media">
                     @if($ad->isVideo())
                         @if($ad->isYoutube())
@@ -52,7 +53,7 @@ $similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('co
                             <?php $videoData = json_decode($ad->video_data); ?>
                                 <iframe src="https://player.vimeo.com/video/{{$videoData->id}}" width="100%" height="450" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                         @elseif($ad->isFb())
-                            <iframe src="https://www.facebook.com/plugins/video.php?href={{$ad->video_data}}" width="100%" height="450" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
+                            <iframe src="https://www.facebook.com/plugins/video.php?href={{$ad->video_data}}" width="100%" height="400" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
                         @else
                             {!!$ad->video_data!!}
                         @endif
@@ -91,8 +92,13 @@ $similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('co
                     @endif
                     <div class="cb"></div>
                 </div>
+
+                <div id="share-box">
+                    <div class="addthis_native_toolbox"></div>
+                </div>
+
             </div>
-            <div id="ad-right" class="fr">
+            <div id="com-right" class="fr">
                 <h1 class="fsb fs36">{{$ad->title}}</h1>
                 <div class="view-comment fb fs24">
                     <div class="dib views-count">{{$ad->views_count}}</div>

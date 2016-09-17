@@ -7,7 +7,7 @@ $banner = BannerManager::getBanners(Banner::KEY_RIGHT_BLOCK);
 
 $topNews = News::joinMl()->top()->latest()->take(2)->get();
 ?>
-<div class="right-ad">
+<div class="right-com">
     {!!$banner->getBanner()!!}
 </div>
 <div class="fb-like-box">

@@ -176,5 +176,8 @@ $footerMenu = FooterMenuManager::get();
     </div>
 </div>
 
+@if(isset($shareBox))
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-55390ccd2ae53cd5"></script>
+@endif
 </body>
 </html>

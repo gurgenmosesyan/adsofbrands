@@ -4,6 +4,7 @@ use App\Core\Helpers\ImgUploader;
 
 $head->appendStyle('/admin/news/news.css');
 $head->appendScript('/assets/plugins/ckeditor/ckeditor.js');
+$head->appendScript('/assets/plugins/ckfinder/ckfinder.js');
 $head->appendScript('/admin/news/news.js');
 
 $pageTitle = trans('admin.news.form.title');

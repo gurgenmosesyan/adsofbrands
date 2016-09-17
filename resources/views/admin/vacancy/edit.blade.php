@@ -2,6 +2,7 @@
 use App\Models\Vacancy\Vacancy;
 
 $head->appendScript('/assets/plugins/ckeditor/ckeditor.js');
+$head->appendScript('/assets/plugins/ckfinder/ckfinder.js');
 $head->appendScript('/admin/vacancy/vacancy.js');
 
 $pageTitle = trans('admin.vacancy.form.title');

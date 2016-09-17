@@ -192,6 +192,10 @@ $main.init = function() {
         $.fn.removeLoading = function() {
             $(this).removeClass('loading');
         };
+
+        if (typeof CKFinder != 'undefined') {
+            CKFinder.setupCKEditor();
+        }
     });
 };
 
