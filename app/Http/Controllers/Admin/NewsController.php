@@ -20,11 +20,6 @@ class NewsController extends BaseController
 
     public function table()
     {
-        /*if ($_SERVER['REMOTE_ADDR'] == '46.71.203.83') {
-            //$this->import_countries();
-            die('OK');
-        }*/
-
         return view('admin.news.index');
     }
 
@@ -83,6 +78,16 @@ class NewsController extends BaseController
     {
         $this->manager->delete($id);
         return $this->api('OK');
+    }
+
+    protected function set_hash()
+    {
+        $accountManager = new \App\Models\Account\AccountManager();
+        $brands = \DB::table('creatives')->get();
+        foreach ($brands as $brand) {
+            $hash = $accountManager->generateRandomUniqueHash();
+            \DB::table('creatives')->where('id', $brand->id)->update(['hash' => $hash]);
+        }
     }
 
     protected function import_ads_details()
@@ -221,7 +226,6 @@ class NewsController extends BaseController
                 'linkedin' => '',
                 'vimeo' => '',
                 'hash' => '',
-                'reg_type' => \App\Models\Brand\Brand::REG_TYPE_ADMIN,
                 'status' => '',
                 'active' => '1',
                 'created_at' => date('Y-m-d H:i:s'),
@@ -275,7 +279,6 @@ class NewsController extends BaseController
                 'linkedin' => '',
                 'vimeo' => '',
                 'hash' => '',
-                'reg_type' => \App\Models\Agency\Agency::REG_TYPE_ADMIN,
                 'status' => '',
                 'active' => '1',
                 'created_at' => date('Y-m-d H:i:s'),
@@ -327,7 +330,6 @@ class NewsController extends BaseController
                 'linkedin' => '',
                 'vimeo' => '',
                 'hash' => '',
-                'reg_type' => \App\Models\Agency\Agency::REG_TYPE_ADMIN,
                 'status' => '',
                 'active' => '1',
                 'created_at' => date('Y-m-d H:i:s'),

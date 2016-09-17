@@ -15,7 +15,6 @@ class AgencyMl extends Model
         'lng_id',
         'title',
         'sub_title',
-        'about',
-        'address'
+        'about'
     ];
 }

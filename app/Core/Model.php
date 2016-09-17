@@ -18,6 +18,14 @@ class Model extends EloquentModel
         });
     }
 
+    public function scopeLeftJoinMl($query)
+    {
+        $table = $this->getTable();
+        return $query->leftJoin($table.'_ml as ml', function($query) use($table) {
+            $query->on('ml.id', '=', $table.'.id')->where('ml.lng_id', '=', cLng('id'));
+        });
+    }
+
     public function scopeActive($query)
     {
         return $query->where($this->getTable().'.show_status', self::STATUS_ACTIVE);

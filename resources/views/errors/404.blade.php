@@ -1,12 +1,16 @@
 <?php
-
-$title = '404';
+$title = trans('www.404.title');
 $page = null;
-$bookingPage = true;
-$errorPage = true;
 ?>
 @extends('layout')
 
 @section('content')
+
+<div class="page">
+    <div id="error" class="tc">
+        <h1 class="fs40 fb">{{$title}}</h1>
+        <p class="fs24">{{trans('www.404.text')}}</p>
+    </div>
+</div>
 
 @stop

@@ -32,7 +32,6 @@ class CreateCreativesTable extends Migration
             $table->string('vimeo');
             $table->string('hash');
             $table->rememberToken();
-            $table->enum('reg_type', [Creative::REG_TYPE_ADMIN, Creative::REG_TYPE_REGISTERED]);
             $table->enum('status', ['', Creative::STATUS_PENDING, Creative::STATUS_CONFIRMED]);
             $table->enum('active', [Creative::ACTIVE, Creative::NOT_ACTIVE]);
             $table->timestamps();

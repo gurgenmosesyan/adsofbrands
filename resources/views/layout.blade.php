@@ -81,7 +81,7 @@ $footerMenu = FooterMenuManager::get();
         <div class="fr search">
             <a href="#" id="search-icon" class="db"></a>
             <form id="search-form" action="{{url_with_lng('/search')}}" method="get"{!!empty($q) ? ' class="dn"' : ''!!} autocomplete="off">
-                <input type="text" name="q" class="fs18" value="{{$q or ''}}" /><input type="submit" value="" />
+                <input type="text" name="q" class="fs16" value="{{$q or ''}}" /><input type="submit" value="" />
             </form>
         </div>
         <ul class="top-menu clearfix fr">
@@ -171,7 +171,7 @@ $footerMenu = FooterMenuManager::get();
         <div class="page">
             <p class="fl fs14">{{trans('www.copyright.text')}}</p>
             <p class="fr fs14 privacy"><a href="{{url_with_lng('/privacy-policy')}}" class="underline">{{trans('www.base.label.privacy_policy')}}</a></p>
-            <p class="fr fs14"><a href="{{url_with_lng('/terms-of-use')}}" class="underline">{{trans('www.base.label.terms_of_use')}}</a></p>
+            <p class="fr fs14"><a href="{{url_with_lng('/page/terms-of-use')}}" class="underline">{{trans('www.base.label.terms_of_use')}}</a></p>
         </div>
     </div>
 </div>

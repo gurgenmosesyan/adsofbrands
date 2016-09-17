@@ -1,7 +1,4 @@
 <?php
-$head->appendStyle('/css/jquery-ui.css');
-$head->appendScript('/js/jquery-ui.min.js');
-
 $title = trans('www.commercials.title');
 
 $fbSDK = true;
@@ -47,42 +44,30 @@ $pageMenu = 'ads';
                             <option value="{{$value->id}}"{{$value->id == $countryId ? ' selected="selected"' : ''}}>{{$value->name}}</option>
                         @endforeach
                     </select>
-                </div><input class="bib fsb date fs18{{empty($date) ? '' : ' big'}}" type="text" value="{{empty($date) ? trans('www.base.label.date') : date('d/m/Y', strtotime($date))}}" />
-                <input type="hidden" id="alt-date" value="{{$date}}" />
+                </div><div class="month select-box">
+                    <div class="select-arrow"></div>
+                    <div class="select-title fs18"></div>
+                    <select name="month" class="date">
+                        <option value="">{{trans('www.base.label.month')}}</option>
+                        @for($i = 1; $i < 13; $i++)
+                            <?php $date = date('2016-'.$i.'-01'); ?>
+                            <option value="{{$i}}"{{$i == $month ? ' selected="selected"' : ''}}>{{strftime('%b', strtotime($date))}}</option>
+                        @endfor
+                    </select>
+                </div><div class="year select-box">
+                    <div class="select-arrow"></div>
+                    <div class="select-title fs18"></div>
+                    <select name="year" class="date">
+                        <option value="">{{trans('www.base.label.year')}}</option>
+                        @for($i = date('Y'); $i > 1904; $i--)
+                            <option value="{{$i}}"{{$i == $year ? ' selected="selected"' : ''}}>{{$i}}</option>
+                        @endfor
+                    </select>
+                </div>
             </div>
 
             <div id="list">
-                <?php
-                foreach($featuredAds as $key => $value) { ?><a href="{{$value->getLink()}}" class="item db top top-item-{{$key}}">
-                    <span class="item-box db">
-                        <span class="img db">
-                            <img src="{{$value->getImage()}}" />
-                            <span class="rating db fb fs18">{{number_format($value->rating, 1)}}</span>
-                        </span>
-                        <span class="title db fb fs14">{{$value->title}}</span>
-                        <span class="db bottom clearfix">
-                            <span class="views-count fl fb">{{$value->views_count}}</span>
-                            <span class="comment fr fb">
-                                {{$value->comments_count > 999  ?'999+' : $value->comments_count}}
-                            </span>
-                        </span>
-                    </span>
-                </a><?php } foreach($commercials as $key => $value) { ?><a href="{{$value->getLink()}}" class="item db item-{{$key}}">
-                    <span class="item-box db">
-                        <span class="img db">
-                            <img src="{{$value->getImage()}}" />
-                            <span class="rating db fb fs18">{{number_format($value->rating, 1)}}</span>
-                        </span>
-                        <span class="title db fb fs14">{{$value->title}}</span>
-                        <span class="db bottom clearfix">
-                            <span class="views-count fl fb">{{$value->views_count}}</span>
-                            <span class="comment fr fb">
-                                {{$value->comments_count > 999  ?'999+' : $value->comments_count}}
-                            </span>
-                        </span>
-                    </span>
-                </a><?php } ?>
-
+                @include('blocks.items', ['items' => $commercials, 'ad' => true])
             </div>
 
             <?php
@@ -98,8 +83,9 @@ $pageMenu = 'ads';
             if (!empty($categoryId)) {
                 $commercials->appends('category', $categoryId);
             }
-            if (!empty($date)) {
-                $commercials->appends('date', $date);
+            if (!empty($month)) {
+                $commercials->appends('month', $month);
+                $commercials->appends('year', $year);
             }
             ?>
             @include('pagination.default', ['pagination' => $commercials])
@@ -115,7 +101,6 @@ $pageMenu = 'ads';
 </div>
 <script type="text/javascript">
     $main.filterUrl = '{{url_with_lng('/ads')}}';
-    $main.initFilterDate();
 </script>
 
 @stop

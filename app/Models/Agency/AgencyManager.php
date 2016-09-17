@@ -2,6 +2,7 @@
 
 namespace App\Models\Agency;
 
+use App\Models\Account\AccountManager;
 use App\Core\Image\SaveImage;
 use DB;
 
@@ -11,7 +12,8 @@ class AgencyManager
     {
         $data = $this->processSave($data);
         $agency = new Agency($data);
-        $agency->reg_type = Agency::REG_TYPE_ADMIN;
+        $accountManager = new AccountManager();
+        $agency->hash = $accountManager->generateRandomUniqueHash();
         $agency->status = '';
         SaveImage::save($data['image'], $agency);
         SaveImage::save($data['cover'], $agency, 'cover');

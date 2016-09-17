@@ -17,8 +17,6 @@ class Brand extends Model implements AuthenticatableContract
     use Authenticatable;
 
     const IMAGES_PATH = 'images/brand';
-    const REG_TYPE_ADMIN = 'admin';
-    const REG_TYPE_REGISTERED = 'registered';
     const STATUS_PENDING = 'pending';
     const STATUS_CONFIRMED = 'confirmed';
     const TOP = '1';

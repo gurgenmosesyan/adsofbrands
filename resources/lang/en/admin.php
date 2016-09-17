@@ -156,4 +156,11 @@ return array (
   'admin_menu.options' => 'Options',
   'creative.commercial.me_required' => 'You have to take part in this commercial',
   'base.label.static' => 'Static',
+  'subscribe.form.title' => 'Subscribes',
+  'base.label.export' => 'Export',
+  'banner.form.title' => 'Banners',
+  'banner.key.1' => 'Homepage first',
+  'banner.key.2' => 'Homepage second',
+  'banner.key.3' => 'Homepage right',
+  'banner.key.4' => 'Right block',
 );

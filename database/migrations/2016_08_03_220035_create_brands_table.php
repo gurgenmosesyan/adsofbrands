@@ -33,7 +33,6 @@ class CreateBrandsTable extends Migration
             $table->string('vimeo');
             $table->string('hash');
             $table->rememberToken();
-            $table->enum('reg_type', [Brand::REG_TYPE_ADMIN, Brand::REG_TYPE_REGISTERED]);
             $table->enum('status', ['', Brand::STATUS_PENDING, Brand::STATUS_CONFIRMED]);
             $table->enum('active', [Brand::ACTIVE, Brand::NOT_ACTIVE]);
             $table->timestamps();

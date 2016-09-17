@@ -27,12 +27,12 @@ class AccountController extends Controller
 
     public function activation($lngCode, $hash)
     {
-        $user = Creative::where('hash', $hash)->where('reg_type', Account::REG_TYPE_REGISTERED)->where('status', Account::STATUS_PENDING)->first();
+        $user = Creative::where('hash', $hash)->where('status', Account::STATUS_PENDING)->first();
         if ($user == null) {
-            $user = Brand::where('hash', $hash)->where('reg_type', Account::REG_TYPE_REGISTERED)->where('status', Account::STATUS_PENDING)->first();
+            $user = Brand::where('hash', $hash)->where('status', Account::STATUS_PENDING)->first();
         }
         if ($user == null) {
-            $user = Agency::where('hash', $hash)->where('reg_type', Account::REG_TYPE_REGISTERED)->where('status', Account::STATUS_PENDING)->first();
+            $user = Agency::where('hash', $hash)->where('status', Account::STATUS_PENDING)->first();
         }
         $wrong = false;
         if ($user == null) {

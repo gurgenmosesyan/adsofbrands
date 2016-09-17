@@ -15,8 +15,6 @@ class Creative extends Model implements AuthenticatableContract
     const TYPE_PERSONAL = 'personal';
     const TYPE_BRAND = 'brand';
     const TYPE_AGENCY = 'agency';
-    const REG_TYPE_ADMIN = 'admin';
-    const REG_TYPE_REGISTERED = 'registered';
     const STATUS_PENDING = 'pending';
     const STATUS_CONFIRMED = 'confirmed';
     const ACTIVE = '1';

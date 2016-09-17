@@ -16,37 +16,33 @@ class AgencyController extends Controller
 
         $categoryId = $request->input('category');
 
-        $topAgencies = Agency::joinMl()->where('top', Agency::TOP)->latest()->take(7)->get();
-        $skipIds = [];
-        foreach ($topAgencies as $value) {
-            $skipIds[] = $value->id;
-        }
-        $query = Agency::joinMl()->whereNotIn('agencies.id', $skipIds);
+        $query = Agency::joinMl();
         if (!empty($categoryId)) {
             $query->where('agencies.category_id', $categoryId);
         }
-        $agencies = $query->latest()->paginate(35);
+        $agencies = $query->latest()->paginate(42);
 
         return view('agency.all')->with([
             'categories' => $categories,
             'categoryId' => $categoryId,
-            'topAgencies' => $topAgencies,
             'agencies' => $agencies
         ]);
     }
 
-    public function index($lngCode, $alias, $id)
+    public function index($lngCode, $alias, $id, Request $request)
     {
         $agency = Agency::joinMl()->where('agencies.id', $id)->firstOrFail();
         if ($agency->alias != $alias) {
             return redirect(url_with_lng('/agencies/'.$agency->alias.'/'.$agency->id));
         }
         $alias = 'work';
-        $items = $agency->commercials()->select('commercials.id','commercials.alias','commercials.image','commercials.rating','commercials.comments_count','commercials.views_count','ml.title')->joinMl()->get();
+        $scroll = $request->input('work');
+        $items = $agency->commercials()->select('commercials.id','commercials.alias','commercials.image','commercials.rating','commercials.comments_count','commercials.views_count','ml.title')->joinMl()->latest()->paginate(42);
         return view('agency.index')->with([
             'agency' => $agency,
             'alias' => $alias,
-            'items' => $items
+            'items' => $items,
+            'scroll' => $scroll
         ]);
     }
 
@@ -57,11 +53,12 @@ class AgencyController extends Controller
             return redirect(url_with_lng('/agencies/'.$agency->alias.'/'.$agency->id));
         }
         $alias = 'creatives';
-        $items = $agency->creatives()->joinMl()->get();
+        $items = $agency->creatives()->joinMl()->latest()->paginate(42);
         return view('agency.index')->with([
             'agency' => $agency,
             'alias' => $alias,
-            'items' => $items
+            'items' => $items,
+            'scroll' => true
         ]);
     }
 
@@ -76,7 +73,8 @@ class AgencyController extends Controller
         return view('agency.index')->with([
             'agency' => $agency,
             'alias' => $alias,
-            'awards' => $awards
+            'awards' => $awards,
+            'scroll' => true
         ]);
     }
 
@@ -91,7 +89,8 @@ class AgencyController extends Controller
         return view('agency.index')->with([
             'agency' => $agency,
             'alias' => $alias,
-            'vacancies' => $vacancies
+            'vacancies' => $vacancies,
+            'scroll' => true
         ]);
     }
 
@@ -102,11 +101,12 @@ class AgencyController extends Controller
             return redirect(url_with_lng('/agencies/'.$agency->alias.'/'.$agency->id));
         }
         $alias = 'news';
-        $news = $agency->news()->select('news.id','news.alias','news.image','ml.title','ml.description')->joinMl()->paginate(12);
+        $news = $agency->news()->select('news.id','news.alias','news.image','ml.title','ml.description')->joinMl()->latest()->paginate(12);
         return view('agency.index')->with([
             'agency' => $agency,
             'alias' => $alias,
-            'news' => $news
+            'news' => $news,
+            'scroll' => true
         ]);
     }
 
@@ -120,11 +120,12 @@ class AgencyController extends Controller
         $brandIds = DB::table('commercial_agencies')->join('commercial_brands', function($query) {
             $query->on('commercial_brands.commercial_id', '=', 'commercial_agencies.commercial_id');
         })->where('commercial_agencies.agency_id', $agency->id)->lists('commercial_brands.brand_id');
-        $items = Brand::joinMl()->whereIn('brands.id', $brandIds)->get();
+        $items = Brand::joinMl()->whereIn('brands.id', $brandIds)->latest()->paginate(42);
         return view('agency.index')->with([
             'agency' => $agency,
             'alias' => $alias,
-            'items' => $items
+            'items' => $items,
+            'scroll' => true
         ]);
     }
 
@@ -137,7 +138,8 @@ class AgencyController extends Controller
         $alias = 'about';
         return view('agency.index')->with([
             'agency' => $agency,
-            'alias' => $alias
+            'alias' => $alias,
+            'scroll' => true
         ]);
     }
 
@@ -152,7 +154,8 @@ class AgencyController extends Controller
         return view('agency.index')->with([
             'agency' => $agency,
             'alias' => $alias,
-            'branches' => $branches
+            'branches' => $branches,
+            'scroll' => true
         ]);
     }
 }

@@ -27,7 +27,7 @@ class AgencySearch extends DataTable
 
     protected function constructQuery()
     {
-        $query = Agency::joinMl();
+        $query = Agency::select('agencies.id', 'ml.title')->leftJoinMl();
 
         if ($this->search != null) {
             $query->where('ml.title', 'LIKE', '%'.$this->search.'%');

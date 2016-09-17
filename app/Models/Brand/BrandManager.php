@@ -2,6 +2,7 @@
 
 namespace App\Models\Brand;
 
+use App\Models\Account\AccountManager;
 use App\Core\Image\SaveImage;
 use DB;
 
@@ -11,7 +12,8 @@ class BrandManager
     {
         $data = $this->processSave($data);
         $brand = new Brand($data);
-        $brand->reg_type = Brand::REG_TYPE_ADMIN;
+        $accountManager = new AccountManager();
+        $brand->hash = $accountManager->generateRandomUniqueHash();
         $brand->status = '';
         SaveImage::save($data['image'], $brand);
         SaveImage::save($data['cover'], $brand, 'cover');

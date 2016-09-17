@@ -27,7 +27,7 @@ class AccountApiController extends Controller
         $rememberMe = false;
 
         $auth = auth()->guard('brand');
-        $result = $auth->attempt(['email' => $data['email'], 'password' => $data['password'], 'reg_type' => Brand::REG_TYPE_REGISTERED], false, false);
+        $result = $auth->attempt(['email' => $data['email'], 'password' => $data['password']], false, false);
         if ($result) {
             $brand = Brand::where('email', $data['email'])->first();
             if ($brand->status == Brand::STATUS_PENDING) {
@@ -38,7 +38,7 @@ class AccountApiController extends Controller
         }
 
         $auth = auth()->guard('agency');
-        $result = $auth->attempt(['email' => $data['email'], 'password' => $data['password'], 'reg_type' => Agency::REG_TYPE_REGISTERED], false, false);
+        $result = $auth->attempt(['email' => $data['email'], 'password' => $data['password']], false, false);
         if ($result) {
             $agency = Agency::where('email', $data['email'])->first();
             if ($agency->status == Brand::STATUS_PENDING) {
@@ -49,7 +49,7 @@ class AccountApiController extends Controller
         }
 
         $auth = auth()->guard('creative');
-        $result = $auth->attempt(['email' => $data['email'], 'password' => $data['password'], 'reg_type' => Creative::REG_TYPE_REGISTERED], false, false);
+        $result = $auth->attempt(['email' => $data['email'], 'password' => $data['password']], false, false);
         if ($result) {
             $creative = Creative::where('email', $data['email'])->first();
             if ($creative->status == Brand::STATUS_PENDING) {

@@ -12,6 +12,12 @@ class CommercialManager
     {
         $data = $this->processSave($data);
         $commercial = new Commercial($data);
+        if (Auth::guard('admin')->guest()) {
+            $commercial->featured = Commercial::NOT_FEATURED;
+            $commercial->top = Commercial::NOT_TOP;
+            $commercial->rating = 0;
+            $commercial->qt = 0;
+        }
         SaveImage::save($data['image'], $commercial);
         SaveImage::savePrintImage($data['image_print'], $commercial, 'image_print');
 
@@ -48,6 +54,12 @@ class CommercialManager
         }
         $commercial = $query->firstOrFail();
         $data = $this->processSave($data);
+        if (Auth::guard('admin')->guest()) {
+            $data['featured'] = $commercial->featured;
+            $data['top'] = $commercial->top;
+            $data['rating'] = $commercial->rating;
+            $data['qt'] = $commercial->qt;
+        }
         SaveImage::save($data['image'], $commercial);
         SaveImage::savePrintImage($data['image_print'], $commercial, 'image_print');
 
@@ -85,6 +97,12 @@ class CommercialManager
         } else {
             $data['video_type'] = '';
             $data['video_data'] = '';
+        }
+
+        if (empty($data['month'])) {
+            $data['published_date'] = '0000-00-00';
+        } else {
+            $data['published_date'] = date('Y-m-d', strtotime($data['year'].'-'.$data['month'].'-01'));
         }
 
         if (!isset($data['featured'])) {

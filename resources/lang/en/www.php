@@ -104,4 +104,11 @@ return array (
   'base.label.credits' => 'Credits',
   'base.label.more_from' => 'More from',
   'base.label.similar_ads' => 'Similar Ads',
+  'base.label.month' => 'Month',
+  'base.label.year' => 'Year',
+  '404.title' => '404',
+  '404.text' => 'Page not found',
+  'search.title' => 'Search',
+  'team.title' => 'Team',
+  'search.min_chars' => 'Please enter at least 2 characters.',
 );

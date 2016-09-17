@@ -70,6 +70,16 @@ Route::group($params, function () {
         Route::post('/footerMenu/update/{id}', ['uses' => 'FooterMenuController@update', 'as' => 'admin_footer_menu_update']);
         Route::post('/footerMenu/delete/{id}', ['uses' => 'FooterMenuController@delete', 'as' => 'admin_footer_menu_delete']);
 
+        Route::get('/banner', ['uses' => 'BannerController@table', 'as' => 'admin_banner_table']);
+        Route::get('/banner/edit/{id}', ['uses' => 'BannerController@edit', 'as' => 'admin_banner_edit']);
+        Route::post('/banner', ['uses' => 'BannerController@index', 'as' => 'admin_banner_index']);
+        Route::post('/banner/update/{id}', ['uses' => 'BannerController@update', 'as' => 'admin_banner_update']);
+
+        Route::get('/subscribe', ['uses' => 'SubscribeController@table', 'as' => 'admin_subscribe_table']);
+        Route::post('/subscribe', ['uses' => 'SubscribeController@index', 'as' => 'admin_subscribe_index']);
+        Route::post('/subscribe/delete/{id}', ['uses' => 'SubscribeController@delete', 'as' => 'admin_subscribe_delete']);
+        Route::get('/subscribe/export', ['uses' => 'SubscribeController@export', 'as' => 'admin_subscribe_export']);
+
         Route::get('/brand', ['uses' => 'BrandController@table', 'as' => 'admin_brand_table']);
         Route::get('/brand/create', ['uses' => 'BrandController@create', 'as' => 'admin_brand_create']);
         Route::post('/brand/store', ['uses' => 'BrandController@store', 'as' => 'admin_brand_store']);

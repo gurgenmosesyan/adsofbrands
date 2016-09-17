@@ -204,54 +204,27 @@ $main.initMap = function(abPin) {
     });
 };
 
-$main.initFilterDate = function() {
-    var filter = $('#filter');
-    var media = filter.find('.media-type').find('select'),
-        industry = filter.find('.industry-type').find('select'),
-        country = filter.find('.country').find('select'),
-        category = filter.find('.category').find('select'),
-        date = $('#alt-date'),
-        url = '';
-    filter.find('.date').datepicker({
-        altField: '#alt-date',
-        altFormat: 'yy-mm-dd',
-        dateFormat: 'dd/mm/yy',
-        onSelect: function(selectedDate, dateObj) {
-            $(this).change();
-        }
-    }).on('change', function (e) {
-        if (!$(this).val()) {
-            date.val('');
-        }
-        if (media.val()) {
-            url += '&media='+media.val();
-        }
-        if (industry.val()) {
-            url += '&industry='+industry.val();
-        }
-        if (country.val()) {
-            url += '&country='+country.val();
-        }
-        if (category.val()) {
-            url += '&category='+category.val();
-        }
-        if (date.val()) {
-            url += '&date='+date.val();
-        }
-        url = url ? '?'+url.substr(1) : '';
-        document.location.href = $main.filterUrl+url;
-    });
-};
-
 $main.initFilter = function() {
     var filter = $('#filter');
     var media = filter.find('.media-type').find('select'),
         industry = filter.find('.industry-type').find('select'),
         country = filter.find('.country').find('select'),
         category = filter.find('.category').find('select'),
-        date = $('#alt-date'),
+        month = filter.find('.month').find('select'),
+        year = filter.find('.year').find('select'),
         url = '';
     filter.find('select').change(function() {
+        if ($(this).hasClass('date')) {
+            if ((month.val() && !year.val()) || (!month.val() && year.val())) {
+                return false;
+            }
+            if (!month.val() && !year.val()) {
+                var href = document.location.href;
+                if (href.indexOf('month') == -1) {
+                    return false;
+                }
+            }
+        }
         if (media.val()) {
             url += '&media='+media.val();
         }
@@ -264,8 +237,8 @@ $main.initFilter = function() {
         if (category.val()) {
             url += '&category='+category.val();
         }
-        if (date.val()) {
-            url += '&date='+date.val();
+        if (month.val() && year.val()) {
+            url += '&month='+month.val()+'&year='+year.val();
         }
         url = url ? '?'+url.substr(1) : '';
         document.location.href = $main.filterUrl+url;

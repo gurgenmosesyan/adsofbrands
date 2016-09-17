@@ -2,6 +2,7 @@
 
 namespace App\Models\Creative;
 
+use App\Models\Account\AccountManager;
 use App\Core\Image\SaveImage;
 use Auth;
 use DB;
@@ -20,7 +21,8 @@ class CreativeManager
             $creative->type = Creative::TYPE_AGENCY;
             $creative->type_id = $agency->id;
         }
-        $creative->reg_type = Creative::REG_TYPE_ADMIN;
+        $accountManager = new AccountManager();
+        $creative->hash = $accountManager->generateRandomUniqueHash();
         $creative->status = '';
         $creative->active = Creative::ACTIVE;
         SaveImage::save($data['image'], $creative);

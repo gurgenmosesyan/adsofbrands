@@ -1,5 +1,6 @@
 <?php
 use App\Image\Image;
+use App\Models\Banner\Banner;
 
 $head->appendStyle('/css/owl.carousel.css');
 $head->appendScript('/js/owl.carousel.min.js');
@@ -32,7 +33,7 @@ $title = trans('www.homepage.title');
                 <p class="fb info fs20">{{trans('www.home.main.text2')}}</p>
                 <p class="fb info fs20">{{trans('www.home.main.text3')}}</p>
                 <div class="btn-box">
-                    <a href="" class="btn-black">{{trans('www.btn.see_all_ads')}}</a>
+                    <a href="{{url_with_lng('/ads', true)}}" class="btn-black">{{trans('www.btn.see_all_ads')}}</a>
                 </div>
                 <div class="social-box">
                     <div class="fl social-title fs20">{{trans('www.home.main.social.title')}}</div>
@@ -67,7 +68,7 @@ $title = trans('www.homepage.title');
     ])
 </div>
 <div id="home-ad1" class="tc">
-    <a href="#"><img src="{{url('/imgs/temp/ad1.jpg')}}" /></a>
+    {!!$banners[Banner::KEY_HOMEPAGE_1]->getBanner()!!}
 </div>
 <div id="top-rated-agencies">
     @include('blocks.carousel', [
@@ -88,13 +89,13 @@ $title = trans('www.homepage.title');
     ])
 </div>
 <div id="home-ad2" class="tc">
-    <a href="#"><img src="{{url('/imgs/temp/ad2.jpg')}}" /></a>
+    {!!$banners[Banner::KEY_HOMEPAGE_2]->getBanner()!!}
 </div>
 
 <div id="news-box">
     <div class="page">
         <div class="news-right fr">
-            <a href="#"><img src="{{url('/imgs/temp/ad3.jpg')}}" /></a>
+            {!!$banners[Banner::KEY_HOMEPAGE_RIGHT]->getBanner()!!}
         </div>
         <div class="news-left">
             <div class="title-box">

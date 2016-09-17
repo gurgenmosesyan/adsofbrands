@@ -18,31 +18,38 @@ $title = trans('www.search.title');
             @endif
 
             @if(!$brands->isEmpty())
-                <div>
+                <div class="search-box">
+                    <h3 class="fsb fs20">{{trans('www.base.label.brands').' ('.$brands->count().')'}}</h3>
                     @include('blocks.items', ['items' => $brands, 'ad' => false])
                 </div>
             @endif
 
             @if(!$agencies->isEmpty())
-                <div>
+                <div class="search-box">
+                    <h3 class="fsb fs20">{{trans('www.base.label.agencies').' ('.$agencies->count().')'}}</h3>
                     @include('blocks.items', ['items' => $agencies, 'ad' => false])
                 </div>
             @endif
 
             @if(!$creatives->isEmpty())
-                <div>
+                <div class="search-box">
+                    <h3 class="fsb fs20">{{trans('www.base.label.creatives').' ('.$creatives->count().')'}}</h3>
                     @include('blocks.items', ['items' => $creatives, 'ad' => false])
                 </div>
             @endif
 
             @if(!$ads->isEmpty())
-                <div>
+                <div class="search-box">
+                    <h3 class="fsb fs20">{{trans('www.base.label.ads').' ('.$ads->count().')'}}</h3>
                     @include('blocks.items', ['items' => $ads, 'ad' => true])
                 </div>
             @endif
 
             @if(!$news->isEmpty())
-                @include('blocks.news', ['news' => $news, 'notPaginate' => true])
+                <div class="search-box">
+                    <h3 class="fsb fs20">{{trans('www.base.label.news').' ('.$news->count().')'}}</h3>
+                    @include('blocks.news', ['news' => $news, 'notPaginate' => true])
+                </div>
             @endif
 
         </div>

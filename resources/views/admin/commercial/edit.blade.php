@@ -1,7 +1,6 @@
 <?php
 use App\Models\Commercial\Commercial;
 use App\Core\Helpers\ImgUploader;
-use App\Core\Helpers\Calendar;
 
 $head->appendStyle('/admin/commercial/commercial.css');
 $head->appendScript('/admin/commercial/commercial.js');
@@ -32,6 +31,12 @@ if ($saveMode == 'add') {
     }
 }
 $mls = $commercial->ml->keyBy('lng_id');
+
+$month = $year = null;
+if (!empty($commercial->published_date) && $commercial->published_date != '0000-00-00') {
+    $month = date('n', strtotime($commercial->published_date));
+    $year = date('Y', strtotime($commercial->published_date));
+}
 
 $jsTrans->addTrans([
     'admin.base.label.position',
@@ -65,7 +70,7 @@ $jsTrans->addTrans([
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.short_description').' ('.$lng->code.')'}}</label>
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.short_description').' ('.$lng->code.')'}}</label>
                 <div class="col-sm-9">
                     <textarea name="ml[{{$lng->id}}][description]" class="form-control">{{isset($mls[$lng->id]) ? $mls[$lng->id]->description : ''}}</textarea>
                     <div id="form-error-ml_{{$lng->id}}_description" class="form-error"></div>
@@ -250,21 +255,23 @@ $jsTrans->addTrans([
             </div>
         </div>
 
-        <div class="form-group">
-            <label class="col-sm-3 control-label">{{trans('admin.base.label.featured')}}</label>
-            <div class="col-sm-9">
-                <input type="checkbox" name="featured" class="minimal-checkbox" value="{{Commercial::FEATURED}}"{{$commercial->isFeatured() ? ' checked="checked"' : ''}}>
-                <div id="form-error-featured" class="form-error"></div>
+        @if(Auth::guard('admin')->check())
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.featured')}}</label>
+                <div class="col-sm-9">
+                    <input type="checkbox" name="featured" class="minimal-checkbox" value="{{Commercial::FEATURED}}"{{$commercial->isFeatured() ? ' checked="checked"' : ''}}>
+                    <div id="form-error-featured" class="form-error"></div>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label class="col-sm-3 control-label">{{trans('admin.base.label.top')}}</label>
-            <div class="col-sm-9">
-                <input type="checkbox" name="top" class="minimal-checkbox" value="{{Commercial::TOP}}"{{$commercial->isTop() ? ' checked="checked"' : ''}}>
-                <div id="form-error-top" class="form-error"></div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.top')}}</label>
+                <div class="col-sm-9">
+                    <input type="checkbox" name="top" class="minimal-checkbox" value="{{Commercial::TOP}}"{{$commercial->isTop() ? ' checked="checked"' : ''}}>
+                    <div id="form-error-top" class="form-error"></div>
+                </div>
             </div>
-        </div>
+        @endif
 
         <div class="form-group">
             <label class="col-sm-3 control-label">{{trans('admin.base.label.tags')}}</label>
@@ -277,27 +284,44 @@ $jsTrans->addTrans([
 
         <div class="form-group">
             <label class="col-sm-3 control-label">{{trans('admin.base.label.published_date')}}</label>
-            <div class="col-sm-4">
-                <?php Calendar::render('published_date', $commercial->published_date); ?>
-                <div id="form-error-published_date" class="form-error"></div>
+            <div class="col-sm-2">
+                <select name="month" class="form-control">
+                    <option value="">{{trans('admin.base.label.select')}}</option>
+                    @for($i = 1; $i < 13; $i++)
+                        <?php $date = date('2016-'.$i.'-01'); ?>
+                        <option value="{{$i}}"{{$i == $month ? ' selected="selected"' : ''}}>{{strftime('%b', strtotime($date))}}</option>
+                    @endfor
+                </select>
+                <div id="form-error-month" class="form-error"></div>
+            </div>
+            <div class="col-sm-2">
+                <select name="year" class="form-control">
+                    <option value="">{{trans('admin.base.label.select')}}</option>
+                    @for($i = date('Y'); $i > 1904; $i--)
+                        <option value="{{$i}}"{{$i == $year ? ' selected="selected"' : ''}}>{{$i}}</option>
+                    @endfor
+                </select>
+                <div id="form-error-year" class="form-error"></div>
             </div>
         </div>
 
-        <div class="form-group">
-            <label class="col-sm-3 control-label">{{trans('admin.base.label.rating')}}</label>
-            <div class="col-sm-4">
-                <input type="text" name="rating" class="form-control" value="{{$commercial->rating}}">
-                <div id="form-error-rating" class="form-error"></div>
+        @if(Auth::guard('admin')->check())
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.rating')}}</label>
+                <div class="col-sm-4">
+                    <input type="text" name="rating" class="form-control" value="{{$commercial->rating}}">
+                    <div id="form-error-rating" class="form-error"></div>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label class="col-sm-3 control-label">{{trans('admin.base.label.quantity_vote')}}</label>
-            <div class="col-sm-4">
-                <input type="text" name="qt" class="form-control" value="{{$commercial->qt}}">
-                <div id="form-error-qt" class="form-error"></div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.quantity_vote')}}</label>
+                <div class="col-sm-4">
+                    <input type="text" name="qt" class="form-control" value="{{$commercial->qt}}">
+                    <div id="form-error-qt" class="form-error"></div>
+                </div>
             </div>
-        </div>
+        @endif
 
         {{csrf_field()}}
     </div>

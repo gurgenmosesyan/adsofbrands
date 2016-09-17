@@ -22,14 +22,10 @@ class CommercialController extends Controller
         $mediaTypeId = $request->input('media');
         $industryTypeId = $request->input('industry');
         $countryId = $request->input('country');
-        $date = $request->input('date');
+        $month = $request->input('month');
+        $year = $request->input('year');
 
-        $featuredAds = Commercial::joinMl()->where('featured', Commercial::FEATURED)->latest()->take(7)->get();
-        $skipIds = [];
-        foreach ($featuredAds as $value) {
-            $skipIds[] = $value->id;
-        }
-        $query = Commercial::joinMl()->whereNotIn('commercials.id', $skipIds);
+        $query = Commercial::joinMl();
         if (!empty($mediaTypeId)) {
             $query->where('commercials.media_type_id', $mediaTypeId);
         }
@@ -39,10 +35,11 @@ class CommercialController extends Controller
         if (!empty($countryId)) {
             $query->where('commercials.country_id', $countryId);
         }
-        if (!empty($date)) {
+        if (!empty($month) && !empty($year)) {
+            $date = date('Y-m-01', strtotime($year.'-'.$month.'-01'));
             $query->where('commercials.published_date', $date);
         }
-        $commercials = $query->orderBy('commercials.published_date', 'desc')->latest()->paginate(35);
+        $commercials = $query->latest()->paginate(42);
 
         return view('commercial.all')->with([
             'mediaTypes' => $mediaTypes,
@@ -51,8 +48,8 @@ class CommercialController extends Controller
             'mediaTypeId' => $mediaTypeId,
             'industryTypeId' => $industryTypeId,
             'countryId' => $countryId,
-            'date' => $date,
-            'featuredAds' => $featuredAds,
+            'month' => $month,
+            'year' => $year,
             'commercials' => $commercials
         ]);
     }

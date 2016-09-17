@@ -48,7 +48,7 @@ class CreativeSearch extends DataTable
     protected function constructQuery()
     {
         $cLngId = cLng('id');
-        $query = Creative::joinMl();
+        $query = Creative::leftJoinMl();
         if (Auth::guard('admin')->check()) {
             $query->select('creatives.id', 'creatives.type', 'ml.title', 'brand.title as brand_title', 'agency.title as agency_title')
                 ->leftJoin('brands_ml as brand', function($query) use($cLngId) {

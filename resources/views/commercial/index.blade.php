@@ -16,9 +16,13 @@ $brand = $ad->brands()->select('brands.id','brands.alias','brands.image','ml.tit
 })->first();
 $agency = $ad->agencies()->first();
 
-$brandAds = Commercial::joinMl()->join('commercial_brands as c_brands', function($query) use($brand) {
-    $query->on('c_brands.commercial_id', '=', 'commercials.id')->where('c_brands.brand_id', '=', $brand->id);
-})->latest()->take(7)->get();
+if ($brand != null) {
+    $brandAds = Commercial::joinMl()->join('commercial_brands as c_brands', function($query) use($brand) {
+        $query->on('c_brands.commercial_id', '=', 'commercials.id')->where('c_brands.brand_id', '=', $brand->id);
+    })->where('commercials.id', '!=', $ad->id)->latest()->take(7)->get();
+} else {
+    $brandAds = collect();
+}
 
 $query = CommercialTag::getProcessor();
 foreach ($ad->tags as $value) {
@@ -54,7 +58,9 @@ $similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('co
                         @endif
                     @else
                         <div class="print-image">
-                            <img src="{{$ad->getPrintImage()}}" alt="{{$ad->title}}" />
+                            <a href="{{$ad->getOriginalImage()}}" target="_blank">
+                                <img src="{{$ad->getPrintImage()}}" alt="{{$ad->title}}" />
+                            </a>
                         </div>
                     @endif
                 </div>
@@ -102,38 +108,44 @@ $similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('co
                     </div>
                 @endif
                 <div class="info-box">
-                    <div class="brand-agency dib">
-                        <div class="brand dib">
-                            <p class="fsb fs24">{{trans('www.base.label.brand')}}</p>
-                            <a href="{{$brand->getLink()}}" class="db">
-                                <img src="{{$brand->getImage()}}" alt="brand" width="81" />
-                            </a>
+                    @if($brand != null || $agency != null)
+                        <div class="brand-agency dib">
+                            @if($brand != null)
+                                <div class="brand dib">
+                                    <p class="fsb fs24">{{trans('www.base.label.brand')}}</p>
+                                    <a href="{{$brand->getLink()}}" class="db">
+                                        <img src="{{$brand->getImage()}}" alt="brand" width="81" />
+                                    </a>
+                                </div>
+                            @endif
+                            @if($agency != null)
+                                <div class="agency dib">
+                                    <p class="fsb fs24">{{trans('www.base.label.agency')}}</p>
+                                    <a href="{{$agency->getLink()}}" class="db">
+                                        <img src="{{$agency->getImage()}}" alt="agency" width="81" />
+                                    </a>
+                                </div>
+                            @endif
                         </div>
-                        <div class="agency dib">
-                            <p class="fsb fs24">{{trans('www.base.label.agency')}}</p>
-                            <a href="{{$agency->getLink()}}" class="db">
-                                <img src="{{$agency->getImage()}}" alt="agency" width="81" />
-                            </a>
-                        </div>
-                    </div>
+                    @endif
                     <div class="country-ind dib">
                         @if(!empty($ad->country_id))
                             <div class="country">
                                 <p class="fsb fs20 dib">{{trans('www.base.label.country')}}:</p>
-                                <p class="dib fs18">{{$ad->country_ml->name}}</p>
+                                <p class="dib fs18"><a href="{{url_with_lng('/ads?country='.$ad->country_ml->id)}}" class="underline">{{$ad->country_ml->name}}</a></p>
                             </div>
                         @endif
                         @if($ad->category_ml != null)
                             <div class="industry">
                                 <p class="fsb fs20 dib">{{trans('www.base.label.industry')}}:</p>
-                                <p class="dib fs18">{{$ad->category_ml->title}}</p>
+                                <p class="dib fs18"><a href="{{url_with_lng('/ads?industry='.$ad->category_ml->id)}}" class="underline">{{$ad->category_ml->title}}</a></p>
                             </div>
                         @endif
                     </div>
                 </div>
                 <div class="description fs18 lh21">{{$ad->description}}</div>
 
-                @if(!$credits->isEmpty() || !empty($ad->advertising))
+                @if(!$credits->isEmpty() || !empty($ad->advertising) || (!empty($ad->published_date) && $ad->published_date != '0000-00-00'))
                     <div class="credits">
                         <h2 class="fsb fs30">{{trans('www.base.label.credits')}}</h2>
                         <div id="credits-box">
@@ -163,13 +175,19 @@ $similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('co
                                     {!!mb_substr($personsStr, 0, -2)!!}
                                 </div>
                             @endforeach
+                            @if(!empty($ad->published_date) && $ad->published_date != '0000-00-00')
+                                <div class="credit fs20">
+                                    <p class="fsb position">{{trans('www.base.label.date')}}:</p>
+                                    <span>{{strftime('%B, %Y', strtotime($ad->published_date))}}</span>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 @endif
 
                 <div class="tags">
                     @foreach($ad->tags as $value)
-                        <div class="dib tag fb">#{{$value->tag}}</div>
+                        <a href="{{url_with_lng('/search?q='.$value->tag)}}" class="dib tag fb">#{{$value->tag}}</a>
                     @endforeach
                 </div>
             </div>

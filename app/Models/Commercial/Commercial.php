@@ -92,9 +92,19 @@ class Commercial extends Model
         return url('/images/commercial_big/'.$this->image_print);
     }
 
+    public function getOriginalImage()
+    {
+        return url('/images/commercial_origin/'.$this->image_print);
+    }
+
     public function getLink()
     {
         return url_with_lng('/ads/'.$this->alias.'/'.$this->id);
+    }
+
+    public function scopeLatest($query)
+    {
+        return $query->orderBy('commercials.published_date', 'desc')->orderBy('commercials.id', 'desc');
     }
 
     public function ml()

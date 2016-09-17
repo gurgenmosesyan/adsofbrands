@@ -23,7 +23,7 @@ class CreativeRequest extends Request
             'cover' => 'core_image',
             'email' => 'email|max:255|unique:creatives,email'.$creativeId.'|unique:adm_users,email|unique:brands,email|unique:agencies,email',
             'phone' => 'max:255',
-            'link' => 'required|url|max:255',
+            'link' => 'url|max:255',
             'fb' => 'url|max:255',
             'twitter' => 'url|max:255',
             'google' => 'url|max:255',

@@ -18,7 +18,6 @@ class CreateBrandsMlTable extends Migration
             $table->string('title');
             $table->string('sub_title');
             $table->text('about');
-            $table->string('address');
             $table->primary(['id', 'lng_id']);
         });
     }

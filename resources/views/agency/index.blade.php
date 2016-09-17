@@ -19,16 +19,18 @@ $pageMenu = 'agencies';
             @include('blocks.main_top', ['model' => $agency])
 
             <ul class="menu">
-                <li class="first{{$alias == 'work' ? ' active' : ''}}"><a href="{{$url}}" class="fsb fs18">{{trans('www.base.label.work')}}</a></li><li{!!$alias == 'creatives' ? ' class="active"' : ''!!}><a href="{{$url.'/creatives'}}" class="fsb fs18">{{trans('www.base.label.creatives')}}</a></li><li{!!$alias == 'awards' ? ' class="active"' : ''!!}><a href="{{$url.'/awards'}}" class="fsb fs18">{{trans('www.base.label.awards')}}</a></li><li{!!$alias == 'vacancies' ? ' class="active"' : ''!!}><a href="{{$url.'/vacancies'}}" class="fsb fs18">{{trans('www.base.label.vacancies')}}</a></li><li{!!$alias == 'news' ? ' class="active"' : ''!!}><a href="{{$url.'/news'}}" class="fsb fs18">{{trans('www.base.label.news')}}</a></li><li{!!$alias == 'brands' ? ' class="active"' : ''!!}><a href="{{$url.'/clients'}}" class="fsb fs18">{{trans('www.base.label.clients')}}</a></li><li{!!$alias == 'about' ? ' class="active"' : ''!!}><a href="{{$url.'/about'}}" class="fsb fs18">{{trans('www.base.label.about')}}</a></li><li class="last{{$alias == 'contacts' ? ' active' : ''}}"><a href="{{$url.'/contacts'}}" class="fsb fs18">{{trans('www.base.label.contacts')}}</a></li>
+                <li class="first{{$alias == 'work' ? ' active' : ''}}"><a href="{{$url.'?work=1'}}" class="fsb fs18">{{trans('www.base.label.work')}}</a></li><li{!!$alias == 'creatives' ? ' class="active"' : ''!!}><a href="{{$url.'/creatives'}}" class="fsb fs18">{{trans('www.base.label.creatives')}}</a></li><li{!!$alias == 'awards' ? ' class="active"' : ''!!}><a href="{{$url.'/awards'}}" class="fsb fs18">{{trans('www.base.label.awards')}}</a></li><li{!!$alias == 'vacancies' ? ' class="active"' : ''!!}><a href="{{$url.'/vacancies'}}" class="fsb fs18">{{trans('www.base.label.vacancies')}}</a></li><li{!!$alias == 'news' ? ' class="active"' : ''!!}><a href="{{$url.'/news'}}" class="fsb fs18">{{trans('www.base.label.news')}}</a></li><li{!!$alias == 'brands' ? ' class="active"' : ''!!}><a href="{{$url.'/clients'}}" class="fsb fs18">{{trans('www.base.label.clients')}}</a></li><li{!!$alias == 'about' ? ' class="active"' : ''!!}><a href="{{$url.'/about'}}" class="fsb fs18">{{trans('www.base.label.about')}}</a></li><li class="last{{$alias == 'contacts' ? ' active' : ''}}"><a href="{{$url.'/contacts'}}" class="fsb fs18">{{trans('www.base.label.contacts')}}</a></li>
             </ul>
 
             @if($alias == 'work')
                 <div id="items">
                     @include('blocks.items', ['items' => $items, 'ad' => true])
+                    @include('pagination.default', ['pagination' => $items])
                 </div>
             @elseif($alias == 'creatives' || $alias == 'brands')
                 <div id="items">
                     @include('blocks.items', ['items' => $items, 'ad' => false])
+                    @include('pagination.default', ['pagination' => $items])
                 </div>
             @elseif($alias == 'awards')
                 @include('blocks.awards', ['awards' => $awards])
@@ -51,5 +53,14 @@ $pageMenu = 'agencies';
     </div>
 
 </div>
+@if($scroll)
+    <script type="text/javascript">
+        $(window).load(function() {
+            $('html, body').animate({
+                scrollTop: 565
+            }, 400);
+        });
+    </script>
+@endif
 
 @stop

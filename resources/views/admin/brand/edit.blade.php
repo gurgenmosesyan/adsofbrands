@@ -30,7 +30,7 @@ $mls = $brand->ml->keyBy('lng_id');
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.sub_title').' ('.$lng->code.')'}}</label>
+                    <label class="col-sm-3 control-label">{{trans('admin.base.label.sub_title').' ('.$lng->code.')'}}</label>
                     <div class="col-sm-9">
                         <input type="text" name="ml[{{$lng->id}}][sub_title]" class="title form-control" value="{{isset($mls[$lng->id]) ? $mls[$lng->id]->sub_title : ''}}">
                         <div id="form-error-ml_{{$lng->id}}_sub_title" class="form-error"></div>
@@ -94,14 +94,6 @@ $mls = $brand->ml->keyBy('lng_id');
                         <div id="form-error-ml_{{$lng->id}}_about" class="form-error"></div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">{{trans('admin.base.label.address').' ('.$lng->code.')'}}</label>
-                    <div class="col-sm-9">
-                        <input type="text" name="ml[{{$lng->id}}][address]" class="form-control" value="{{isset($mls[$lng->id]) ? $mls[$lng->id]->address : ''}}">
-                        <div id="form-error-ml_{{$lng->id}}_address" class="form-error"></div>
-                    </div>
-                </div>
             @endforeach
 
             <div class="form-group">
@@ -111,24 +103,20 @@ $mls = $brand->ml->keyBy('lng_id');
                     <div id="form-error-email" class="form-error"></div>
                 </div>
             </div>
-
-            @if(Auth::guard('brand')->check())
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">{{trans('admin.base.label.password')}}</label>
-                    <div class="col-sm-9">
-                        <input type="password" name="password" class="form-control" value="">
-                        <div id="form-error-password" class="form-error"></div>
-                    </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.password')}}</label>
+                <div class="col-sm-9">
+                    <input type="password" name="password" class="form-control" value="">
+                    <div id="form-error-password" class="form-error"></div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">{{trans('admin.base.label.re_password')}}</label>
-                    <div class="col-sm-9">
-                        <input type="password" name="re_password" class="form-control" value="">
-                        <div id="form-error-re_password" class="form-error"></div>
-                    </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.re_password')}}</label>
+                <div class="col-sm-9">
+                    <input type="password" name="re_password" class="form-control" value="">
+                    <div id="form-error-re_password" class="form-error"></div>
                 </div>
-            @endif
-
+            </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">{{trans('admin.base.label.phone')}}</label>
                 <div class="col-sm-9">

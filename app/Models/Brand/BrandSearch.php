@@ -27,7 +27,7 @@ class BrandSearch extends DataTable
 
     protected function constructQuery()
     {
-        $query = Brand::joinMl();
+        $query = Brand::select('brands.id', 'ml.title')->leftJoinMl();
 
         if ($this->search != null) {
             $query->where('ml.title', 'LIKE', '%'.$this->search.'%')

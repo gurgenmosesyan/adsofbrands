@@ -39,23 +39,7 @@ $pageMenu = 'brands';
             </div>
 
             <div id="list">
-                <?php
-                foreach($topBrands as $key => $value) { ?><a href="{{$value->getLink()}}" class="item db top top-item-{{$key}}">
-                <span class="item-box db">
-                    <span class="img db">
-                        <img src="{{$value->getImage()}}" />
-                    </span>
-                    <span class="title db fb fs14">{{$value->title}}</span>
-                </span>
-                </a><?php } foreach($brands as $key => $value) { ?><a href="{{$value->getLink()}}" class="item db item-{{$key}}">
-                <span class="item-box db">
-                    <span class="img db">
-                        <img src="{{$value->getImage()}}" />
-                    </span>
-                    <span class="title db fb fs14">{{$value->title}}</span>
-                </span>
-                </a><?php } ?>
-
+                @include('blocks.items', ['items' => $brands, 'ad' => false])
             </div>
 
             <?php

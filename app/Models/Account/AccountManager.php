@@ -37,7 +37,6 @@ class AccountManager
         $user->email = $data['email'];
         $user->password = bcrypt($data['password']);
         $user->hash = self::generateRandomUniqueHash();
-        $user->reg_type = Account::REG_TYPE_REGISTERED;
         $user->status = Account::STATUS_PENDING;
         $user->active = Account::NOT_ACTIVE;
         $user->save();
@@ -100,8 +99,8 @@ class AccountManager
     {
         $threeDay = date('Y-m-d H:i:s', time() - 86400*2);
 
-        Brand::active()->where('reg_type', Account::REG_TYPE_REGISTERED)->where('status', Account::STATUS_PENDING)->where('created_at', '<', $threeDay)->delete();
-        Agency::active()->where('reg_type', Account::REG_TYPE_REGISTERED)->where('status', Account::STATUS_PENDING)->where('created_at', '<', $threeDay)->delete();
-        Creative::active()->where('reg_type', Account::REG_TYPE_REGISTERED)->where('status', Account::STATUS_PENDING)->where('created_at', '<', $threeDay)->delete();
+        Brand::active()->where('status', Account::STATUS_PENDING)->where('created_at', '<', $threeDay)->delete();
+        Agency::active()->where('status', Account::STATUS_PENDING)->where('created_at', '<', $threeDay)->delete();
+        Creative::active()->where('status', Account::STATUS_PENDING)->where('created_at', '<', $threeDay)->delete();
     }
 }

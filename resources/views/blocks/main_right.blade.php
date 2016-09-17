@@ -1,13 +1,17 @@
 <?php
 use App\Models\News\News;
+use App\Models\Banner\Banner;
+use App\Models\Banner\BannerManager;
+
+$banner = BannerManager::getBanners(Banner::KEY_RIGHT_BLOCK);
 
 $topNews = News::joinMl()->top()->latest()->take(2)->get();
 ?>
 <div class="right-ad">
-    <a href="#"><img src="{{url('/imgs/temp/ad4.jpg')}}" alt="ad" /></a>
+    {!!$banner->getBanner()!!}
 </div>
 <div class="fb-like-box">
-    <div class="fb-page" data-href="https://web.facebook.com/aobpage" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"></div>
+    <div class="fb-page" data-href="https://facebook.com/aobpage" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"></div>
 </div>
 @if(isset($includeTopAds))
     <div class="right-top-ads">

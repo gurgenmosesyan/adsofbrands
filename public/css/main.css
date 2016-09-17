@@ -245,16 +245,19 @@ body .page {
     position: absolute;
     top: 0;
     left: -380px;
-    height: 30px;
+    height: 34px;
     width: 406px;
 }
 #search-form input[type="text"] {
     background: none !important;
+    border: 1px solid #ffffff;
+    border-radius: 17px;
     color: #ffffff;
-    height: 100%;
-    padding-right: 17px;
+    height: 30px;
+    margin: -2px 17px 0 0;
+    padding: 1px 17px;
     vertical-align: top;
-    width: 363px;
+    width: 327px;
 }
 #search-form input[type="submit"] {
     background: url('../imgs/search.png') no-repeat;
@@ -456,20 +459,11 @@ body .page {
     display: inline-block;
     margin: 0 10px 10px 0;
 }
-#main-left .item-0,
-#main-left .item-7,
-#main-left .item-14,
-#main-left .item-21,
-#main-left .item-28 {
-    margin-left: 10px;
+#main-left .search-box {
+    margin-bottom: 10px;
 }
-#main-left .top {
-    background-color: #FFC001;
-    margin: 0 0 10px 0;
-    padding: 10px 10px 10px 0;
-}
-#main-left .top-item-0 {
-    padding-left: 10px;
+#main-left .search-box h3 {
+    margin-bottom: 7px;
 }
 .item .img {
     height: 150px;
@@ -1173,6 +1167,7 @@ textarea:focus {
 }
 #team .team {
     margin: 0 1% 2%;
+    vertical-align: top;
     width: 182px;
 }
 #team .team-img {
@@ -1187,6 +1182,9 @@ textarea:focus {
 }
 #filter {
     margin-bottom: 41px;
+}
+#filter .first-filter {
+    vertical-align: top;
 }
 #filter .filter-icon {
     background: #EEEEEE url('../imgs/filter.png') no-repeat 10px center;
@@ -1242,33 +1240,6 @@ textarea:focus {
 }
 #filter .first .select-title {
     border-left: none;
-}
-/*#filter .media-type {
-    width: 182px;
-}
-#filter .country,
-#filter .category {
-    width: 153px;
-}
-#filter .industry-type {
-    width: 207px;
-}*/
-#filter .date {
-    background: #EEEEEE url('../imgs/date.png') no-repeat 29px center;
-    border: 1px solid #D3D3D3;
-    border-radius: 0 3px 3px 0;
-    cursor: pointer;
-    height: 42px;
-    margin-left: -1px;
-    padding: 0 28px 0 55px;
-    vertical-align: top;
-    width: 38px;
-}
-#filter .date.big {
-    width: 100px;
-}
-#filter .date:focus {
-    background-color: #eeeeee !important;
 }
 #main-right .right-top-ads {
     background-color: #FFC001;
@@ -1385,6 +1356,13 @@ textarea:focus {
 #ad-right .brand-agency p {
     margin-bottom: 6px;
 }
+#ad-right .brand-agency a {
+    border: 1px solid #dedede;
+}
+#ad-right .brand-agency a,
+#ad-right .brand-agency img {
+    border-radius: 2px;
+}
 #ad-right .brand {
     margin-right: 23px;
 }
@@ -1439,5 +1417,11 @@ textarea:focus {
 }
 #brand-ads h3,
 #similar-ads h3 {
+    margin-bottom: 20px;
+}
+#error {
+    margin: 100px 0;
+}
+#error h1 {
     margin-bottom: 20px;
 }

@@ -127,7 +127,7 @@ $jsTrans->addTrans([
         </div>
 
         <div class="form-group">
-            <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.link')}}</label>
+            <label class="col-sm-3 control-label">{{trans('admin.base.label.link')}}</label>
             <div class="col-sm-9">
                 <input type="text" name="link" class="form-control" value="{{$creative->link or ''}}">
                 <div id="form-error-link" class="form-error"></div>
