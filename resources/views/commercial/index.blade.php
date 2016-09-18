@@ -93,7 +93,7 @@ $similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('co
                     <div class="cb"></div>
                 </div>
 
-                <div id="share-box">
+                <div id="pod-box">
                     <div class="addthis_native_toolbox"></div>
                 </div>
 
