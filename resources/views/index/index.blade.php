@@ -67,7 +67,7 @@ $title = trans('www.homepage.title');
         'link' => url_with_lng('/ads', true)
     ])
 </div>
-<div id="home-ad1" class="tc">
+<div id="home-gov1" class="tc">
     {!!$banners[Banner::KEY_HOMEPAGE_1]->getBanner()!!}
 </div>
 <div id="top-rated-agencies">
@@ -88,7 +88,7 @@ $title = trans('www.homepage.title');
         'link' => url_with_lng('/brands', true)
     ])
 </div>
-<div id="home-ad2" class="tc">
+<div id="home-gov2" class="tc">
     {!!$banners[Banner::KEY_HOMEPAGE_2]->getBanner()!!}
 </div>
 

@@ -111,4 +111,6 @@ return array (
   'search.title' => 'Search',
   'team.title' => 'Team',
   'search.min_chars' => 'Please enter at least 2 characters.',
+  'brands.title' => 'Brands',
+  'agencies.title' => 'Agencies',
 );
