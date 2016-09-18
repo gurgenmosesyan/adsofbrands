@@ -163,4 +163,5 @@ return array (
   'banner.key.2' => 'Homepage second',
   'banner.key.3' => 'Homepage right',
   'banner.key.4' => 'Right block',
+  'base.label.views_count' => 'Views count',
 );

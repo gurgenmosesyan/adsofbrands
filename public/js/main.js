@@ -245,6 +245,18 @@ $main.initFilter = function() {
     });
 };
 
+$main.initAdViews = function(id) {
+    $.ajax({
+        type: 'post',
+        url: $main.basePath('/ads/st'),
+        data: {
+            id: id,
+            _token: $main.token
+        },
+        dataType: 'json'
+    });
+};
+
 $(document).ready(function() {
 
     $main.initSearch();

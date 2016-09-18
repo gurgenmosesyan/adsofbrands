@@ -17,6 +17,7 @@ class CommercialManager
             $commercial->top = Commercial::NOT_TOP;
             $commercial->rating = 0;
             $commercial->qt = 0;
+            $commercial->views_count = 0;
         }
         SaveImage::save($data['image'], $commercial);
         SaveImage::savePrintImage($data['image_print'], $commercial, 'image_print');
@@ -59,6 +60,7 @@ class CommercialManager
             $data['top'] = $commercial->top;
             $data['rating'] = $commercial->rating;
             $data['qt'] = $commercial->qt;
+            $data['views_count'] = $commercial->views_count;
         }
         SaveImage::save($data['image'], $commercial);
         SaveImage::savePrintImage($data['image_print'], $commercial, 'image_print');

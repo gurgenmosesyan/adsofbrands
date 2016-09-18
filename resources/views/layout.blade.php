@@ -42,6 +42,7 @@ $footerMenu = FooterMenuManager::get();
 @endif
 <script type="text/javascript">
     $main.baseUrl = '{{url_with_lng('')}}';
+    $main.token = '{{csrf_token()}}';
     var $locSettings = {"trans": <?php echo json_encode($jsTrans->getTrans()); ?>};
 </script>
 

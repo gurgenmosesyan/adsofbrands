@@ -225,6 +225,9 @@ $similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('co
 </div>
 <script type="text/javascript">
     $('#credits-box').mCustomScrollbar();
+    setTimeout(function() {
+        $main.initAdViews({{$ad->id}});
+    }, 2000);
 </script>
 
 @stop

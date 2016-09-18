@@ -98,4 +98,11 @@ class CommercialController extends Controller
             'credits' => $credits
         ]);
     }
+
+    public function views(Request $request)
+    {
+        $id = $request->input('id');
+        Commercial::where('id', $id)->increment('views_count');
+        die();
+    }
 }

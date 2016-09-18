@@ -309,16 +309,22 @@ $jsTrans->addTrans([
             <div class="form-group">
                 <label class="col-sm-3 control-label">{{trans('admin.base.label.rating')}}</label>
                 <div class="col-sm-4">
-                    <input type="text" name="rating" class="form-control" value="{{$commercial->rating}}">
+                    <input type="text" name="rating" class="form-control" value="{{$commercial->rating or ''}}">
                     <div id="form-error-rating" class="form-error"></div>
                 </div>
             </div>
-
             <div class="form-group">
                 <label class="col-sm-3 control-label">{{trans('admin.base.label.quantity_vote')}}</label>
                 <div class="col-sm-4">
-                    <input type="text" name="qt" class="form-control" value="{{$commercial->qt}}">
+                    <input type="text" name="qt" class="form-control" value="{{$commercial->qt or ''}}">
                     <div id="form-error-qt" class="form-error"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.views_count')}}</label>
+                <div class="col-sm-4">
+                    <input type="text" name="views_count" class="form-control" value="{{$commercial->views_count or ''}}">
+                    <div id="form-error-views_count" class="form-error"></div>
                 </div>
             </div>
         @endif

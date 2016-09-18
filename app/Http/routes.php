@@ -30,6 +30,7 @@ Route::group(['middleware' => ['web', 'front']], function() {
 
         Route::get('/ads', 'CommercialController@all');
         Route::get('/ads/{alias}/{id}', 'CommercialController@index');
+        Route::post('/ads/st', 'CommercialController@views');
 
         Route::get('/brands', 'BrandController@all');
         Route::get('/brands/{alias}/{id}', 'BrandController@index');
