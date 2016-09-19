@@ -35,6 +35,7 @@ class CommercialRequest extends Request
             'tags' => 'array',
             'tags.*.tag' => 'required|max:255',
             'credits' => 'array',
+            'clone_id' => 'integer|exists:commercials,id',
         ];
 
         $creative = null;

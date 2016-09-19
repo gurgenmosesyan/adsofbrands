@@ -88,6 +88,9 @@ class CommercialSearch extends DataTable
             case 'title':
                 $orderCol = 'ml.title';
                 break;
+            case 'published_date':
+                $orderCol = 'commercials.published_date';
+                break;
             default:
                 $orderCol = 'commercials.id';
         }

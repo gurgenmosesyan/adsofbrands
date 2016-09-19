@@ -17,7 +17,8 @@ class Banner extends Model
 
     protected $fillable = [
         'type',
-        'embed'
+        'embed',
+        'link'
     ];
 
     protected $table = 'banners';
@@ -25,7 +26,11 @@ class Banner extends Model
     public function getBanner()
     {
         if ($this->type == self::TYPE_IMAGE) {
-            return '<img src="'.url(self::IMAGES_PATH.'/'.$this->image).'" />';
+            $img = '<img src="'.url(self::IMAGES_PATH.'/'.$this->image).'" />';
+            if (empty($this->link)) {
+                return $img;
+            }
+            return '<a href="'.$this->link.'" target="_blank">'.$img.'</a>';
         }
         return $this->embed;
     }

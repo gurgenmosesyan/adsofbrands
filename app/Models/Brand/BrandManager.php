@@ -4,6 +4,7 @@ namespace App\Models\Brand;
 
 use App\Models\Account\AccountManager;
 use App\Core\Image\SaveImage;
+use Auth;
 use DB;
 
 class BrandManager
@@ -12,6 +13,9 @@ class BrandManager
     {
         $data = $this->processSave($data);
         $brand = new Brand($data);
+        if (Auth::guard('admin')->guest()) {
+            $brand->top = Brand::NOT_TOP;
+        }
         $accountManager = new AccountManager();
         $brand->hash = $accountManager->generateRandomUniqueHash();
         $brand->status = '';
@@ -30,6 +34,9 @@ class BrandManager
         $data = $this->processSave($data);
         if (!empty($data['password'])) {
             $brand->password = bcrypt($data['password']);
+        }
+        if (Auth::guard('admin')->guest()) {
+            $data['top'] = $brand->top;
         }
         SaveImage::save($data['image'], $brand);
         SaveImage::save($data['cover'], $brand, 'cover');

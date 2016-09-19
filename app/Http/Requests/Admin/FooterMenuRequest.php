@@ -24,6 +24,7 @@ class FooterMenuRequest extends Request
 
         return [
             'alias' => 'required|max:255|unique:footer_menu,alias'.$menuId,
+            'hidden' => 'in:'.FooterMenu::HIDDEN.','.FooterMenu::NOT_HIDDEN,
             'sort_order' => 'integer',
             'ml' => 'ml',
             'ml.*.title' => 'required|max:255',

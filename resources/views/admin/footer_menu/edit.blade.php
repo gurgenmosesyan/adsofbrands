@@ -46,6 +46,14 @@ $mls = $menu->ml->keyBy('lng_id');
                 </div>
             </div>
 
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.hidden')}}</label>
+                <div class="col-sm-9">
+                    <input type="checkbox" name="hidden" class="minimal-checkbox" value="{{FooterMenu::HIDDEN}}"{{$menu->isHidden() ? ' checked="checked"' : ''}}>
+                    <div id="form-error-hidden" class="form-error"></div>
+                </div>
+            </div>
+
             @foreach($languages as $lng)
                 <div class="form-group">
                     <label class="col-sm-3 control-label text-label data-req">{{trans('admin.base.label.text').' ('.$lng->code.')'}}</label>

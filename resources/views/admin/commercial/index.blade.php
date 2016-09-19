@@ -14,6 +14,7 @@ $pageMenu = 'commercial';
         <tr>
             <th>{{trans('admin.base.label.id')}}</th>
             <th>{{trans('admin.base.label.title')}}</th>
+            <th>{{trans('admin.base.label.published_date')}}</th>
             <th class="th-actions"></th>
         </tr>
         </thead>

@@ -37,6 +37,9 @@ class FooterMenuManager
         if (!isset($data['static'])) {
             $data['static'] = FooterMenu::IS_NOT_STATIC;
         }
+        if (!isset($data['hidden'])) {
+            $data['hidden'] = FooterMenu::NOT_HIDDEN;
+        }
         return $data;
     }
 
@@ -80,7 +83,7 @@ class FooterMenuManager
         $cacheKey = 'footer_menu_'.cLng('id');
         $menu = Cache::get($cacheKey);
         if ($menu == null) {
-            $menu = FooterMenu::joinMl()->ordered()->get();
+            $menu = FooterMenu::joinMl()->visible()->ordered()->get();
             Cache::forever($cacheKey, $menu);
         }
         return $menu;

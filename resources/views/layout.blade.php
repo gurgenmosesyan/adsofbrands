@@ -171,7 +171,7 @@ $footerMenu = FooterMenuManager::get();
     <div class="footer-bottom">
         <div class="page">
             <p class="fl fs14">{{trans('www.copyright.text')}}</p>
-            <p class="fr fs14 privacy"><a href="{{url_with_lng('/privacy-policy')}}" class="underline">{{trans('www.base.label.privacy_policy')}}</a></p>
+            <p class="fr fs14 privacy"><a href="{{url_with_lng('/page/privacy-policy')}}" class="underline">{{trans('www.base.label.privacy_policy')}}</a></p>
             <p class="fr fs14"><a href="{{url_with_lng('/page/terms-of-use')}}" class="underline">{{trans('www.base.label.terms_of_use')}}</a></p>
         </div>
     </div>

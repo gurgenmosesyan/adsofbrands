@@ -5,7 +5,11 @@ use App\Models\Banner\BannerManager;
 
 $banner = BannerManager::getBanners(Banner::KEY_RIGHT_BLOCK);
 
-$topNews = News::joinMl()->top()->latest()->take(2)->get();
+$query = News::joinMl()->top();
+if (isset($newsSkipId)) {
+    $query->where('news.id', '!=', $newsSkipId);
+}
+$topNews = $query->latest()->take(2)->get();
 ?>
 <div class="right-com">
     {!!$banner->getBanner()!!}

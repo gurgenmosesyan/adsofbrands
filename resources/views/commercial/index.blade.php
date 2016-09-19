@@ -97,6 +97,10 @@ $similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('co
                     <div class="addthis_native_toolbox"></div>
                 </div>
 
+                <div id="comment-box" style="margin-top: 30px;">
+                    <div class="fb-comments" data-href="{{$ad->getLink()}}" data-numposts="3"></div>
+                </div>
+
             </div>
             <div id="com-right" class="fr">
                 <h1 class="fsb fs36">{{$ad->title}}</h1>
@@ -107,10 +111,10 @@ $similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('co
                 @if($mediaType != null)
                     <div class="media-type">
                         <p class="dib fsb fs24 mt-title">{{trans('www.base.label.media_type')}}:</p>
-                        <div class="dib">
+                        <a href="{{url_with_lng('/ads?media='.$mediaType->id)}}" class="dib">
                             <img src="{{$mediaType->getIcon()}}" alt="{{$mediaType->title}}" />
-                            <p class="dib fb fs24">{{$mediaType->title}}</p>
-                        </div>
+                            <span class="dib fb fs24">{{$mediaType->title}}</span>
+                        </a>
                     </div>
                 @endif
                 <div class="info-box">
@@ -174,7 +178,7 @@ $similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('co
                                         if (empty($person->type_id)) {
                                             $personsStr .= '<span>'.$person->name.'</span>'.$person->separator.' ';
                                         } else {
-                                            $personsStr .= '<a href="'.url_with_lng('/creative/'.$person->alias.'/'.$person->id).'" class="underline">'.$person->name.'</a>'.$person->separator.' ';
+                                            $personsStr .= '<a href="'.url_with_lng($person->link.'/'.$person->alias.'/'.$person->id).'" class="underline">'.$person->name.'</a>'.$person->separator.' ';
                                         }
                                         ?>
                                     @endforeach

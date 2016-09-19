@@ -7,7 +7,8 @@ $commercial.advertisingIndex = 0;
 $commercial.initSearchPage = function() {
     $commercial.listColumns = [
         {data: 'id'},
-        {data: 'title'}
+        {data: 'title'},
+        {data: 'published_date'}
     ];
     $commercial.initSearch();
 };

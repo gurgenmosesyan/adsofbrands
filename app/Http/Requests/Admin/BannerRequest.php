@@ -13,6 +13,7 @@ class BannerRequest extends Request
             'type' => 'required|in:'.Banner::TYPE_IMAGE.','.Banner::TYPE_EMBED,
             'image' => 'required_if:type,'.Banner::TYPE_IMAGE.'|core_image',
             'embed' => 'required_if:type,'.Banner::TYPE_EMBED.'|max:65000',
+            'link' => 'url|max:255'
         ];
     }
 }

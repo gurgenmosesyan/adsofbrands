@@ -121,13 +121,15 @@ $mls = $agency->ml->keyBy('lng_id');
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="col-sm-3 control-label">{{trans('admin.base.label.top')}}</label>
-                <div class="col-sm-9">
-                    <input type="checkbox" name="top" class="minimal-checkbox" value="{{Agency::TOP}}"{{$agency->isTop() ? ' checked="checked"' : ''}}>
-                    <div id="form-error-top" class="form-error"></div>
+            @if(Auth::guard('admin')->check())
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">{{trans('admin.base.label.top')}}</label>
+                    <div class="col-sm-9">
+                        <input type="checkbox" name="top" class="minimal-checkbox" value="{{Agency::TOP}}"{{$agency->isTop() ? ' checked="checked"' : ''}}>
+                        <div id="form-error-top" class="form-error"></div>
+                    </div>
                 </div>
-            </div>
+            @endif
 
             <h4 class="col-sm-offset-3 col-sm-9">{{trans('admin.base.label.social_pages')}}</h4>
 

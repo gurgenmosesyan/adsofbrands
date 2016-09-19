@@ -8,10 +8,13 @@ class FooterMenu extends Model
 {
     const IS_STATIC = '1';
     const IS_NOT_STATIC = '0';
+    const HIDDEN = '1';
+    const NOT_HIDDEN = '0';
 
     protected $fillable = [
         'alias',
         'static',
+        'hidden',
         'sort_order'
     ];
 
@@ -20,6 +23,16 @@ class FooterMenu extends Model
     public function isStatic()
     {
         return $this->static == self::IS_STATIC;
+    }
+
+    public function isHidden()
+    {
+        return $this->attributes['hidden'] == self::HIDDEN;
+    }
+
+    public function scopeVisible($query)
+    {
+        return $query->where('footer_menu.hidden', self::NOT_HIDDEN);
     }
 
     public function ml()

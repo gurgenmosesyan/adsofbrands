@@ -164,4 +164,6 @@ return array (
   'banner.key.3' => 'Homepage right',
   'banner.key.4' => 'Right block',
   'base.label.views_count' => 'Views count',
+  'base.label.hidden' => 'Hidden',
+  'base.label.clone_ad_id' => 'Clone Ad ID',
 );

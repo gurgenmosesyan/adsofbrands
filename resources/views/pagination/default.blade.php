@@ -4,7 +4,7 @@ $link_limit = 6;
 if ($pagination->lastPage() > 1) {
 ?>
 <div id="paging">
-    <ul class="fr">
+    <ul>
         <li class="prev{{$pagination->currentPage() == 1 ? ' disabled' : ''}}">
             <a class="fb" href="{{$pagination->url($pagination->currentPage() - 1)}}"></a>
         </li>

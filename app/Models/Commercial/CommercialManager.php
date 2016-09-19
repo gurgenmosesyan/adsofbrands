@@ -29,7 +29,11 @@ class CommercialManager
             $this->updateAgencies($data['agencies'], $commercial);
             $this->updateTags($data['tags'], $commercial);
             $this->updateAdvertising($data['advertisings'], $commercial);
-            $this->storeCredits($data['credits'], $commercial);
+            if (empty($data['clone_id'])) {
+                $this->storeCredits($data['credits'], $commercial);
+            } else {
+                $this->cloneCredits($data['clone_id'], $commercial);
+            }
         });
     }
 
@@ -72,7 +76,11 @@ class CommercialManager
             $this->updateAgencies($data['agencies'], $commercial, true);
             $this->updateTags($data['tags'], $commercial, true);
             $this->updateAdvertising($data['advertisings'], $commercial, true);
-            $this->updateCredits($data['credits'], $commercial, true);
+            if (empty($data['clone_id'])) {
+                $this->updateCredits($data['credits'], $commercial, true);
+            } else {
+                $this->cloneCredits($data['clone_id'], $commercial);
+            }
         });
     }
 
@@ -251,6 +259,29 @@ class CommercialManager
 
         if (!empty($data)) {
             $this->storeCredits($data, $commercial);
+        }
+    }
+
+    protected function cloneCredits($cloneId, Commercial $commercial)
+    {
+        if ($cloneId == $commercial->id) {
+            return;
+        }
+        $creditIds = CommercialCredit::where('commercial_id', $commercial->id)->lists('id')->toArray();
+        CommercialCredit::where('commercial_id', $commercial->id)->delete();
+        CommercialCreditPerson::whereIn('credit_id', $creditIds)->delete();
+
+        $credits = CommercialCredit::where('commercial_id', $cloneId)->with('persons')->get()->toArray();
+        foreach ($credits as $value) {
+            $credit = new CommercialCredit($value);
+            $credit->commercial_id = $commercial->id;
+            $credit->save();
+
+            $persons = [];
+            foreach ($value['persons'] as $person) {
+                $persons[] = new CommercialCreditPerson($person);
+            }
+            $credit->persons()->saveMany($persons);
         }
     }
 

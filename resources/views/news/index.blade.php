@@ -35,7 +35,7 @@ $pageMenu = 'news';
 
             </div>
             <div id="main-right" class="fr">
-                @include('blocks.main_right')
+                @include('blocks.main_right', ['newsSkipId' => $news->id])
             </div>
             <div class="cb"></div>
 

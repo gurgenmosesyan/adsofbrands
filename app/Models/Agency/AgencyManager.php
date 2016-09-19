@@ -4,6 +4,7 @@ namespace App\Models\Agency;
 
 use App\Models\Account\AccountManager;
 use App\Core\Image\SaveImage;
+use Auth;
 use DB;
 
 class AgencyManager
@@ -12,6 +13,9 @@ class AgencyManager
     {
         $data = $this->processSave($data);
         $agency = new Agency($data);
+        if (Auth::guard('admin')->guest()) {
+            $agency->top = Agency::NOT_TOP;
+        }
         $accountManager = new AccountManager();
         $agency->hash = $accountManager->generateRandomUniqueHash();
         $agency->status = '';
@@ -30,6 +34,9 @@ class AgencyManager
         $data = $this->processSave($data);
         if (!empty($data['password'])) {
             $agency->password = bcrypt($data['password']);
+        }
+        if (Auth::guard('admin')->guest()) {
+            $data['top'] = $agency->top;
         }
         SaveImage::save($data['image'], $agency);
         SaveImage::save($data['cover'], $agency, 'cover');

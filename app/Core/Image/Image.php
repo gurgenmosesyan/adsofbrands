@@ -37,6 +37,7 @@ class Image
 		'jpeg' => 'image/jpeg',
 		'jpg'  => 'image/jpeg',
 		'png'  => 'image/png',
+        'gif'  => 'image/gif',
 	];
 
     /**

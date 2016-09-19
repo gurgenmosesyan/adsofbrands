@@ -72,13 +72,17 @@ class CommercialController extends Controller
                 if ($person->type_id != 0) {
                     if ($person->type == 'brand') {
                         $item = Brand::joinMl()->where('brands.id', $person->type_id)->first();
+                        $link = 'brands';
                     } else if ($person->type == 'agency') {
                         $item = Agency::joinMl()->where('agencies.id', $person->type_id)->first();
+                        $link = 'agencies';
                     } else {
                         $item = Creative::joinMl()->where('creatives.id', $person->type_id)->first();
+                        $link = 'creative';
                     }
                     if ($item != null) {
                         $person->id = $item->id;
+                        $person->link = $link;
                         $person->alias = $item->alias;
                         $person->name = $item->title;
                     } else {

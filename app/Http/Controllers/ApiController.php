@@ -16,8 +16,10 @@ class ApiController extends Controller
 
         $emailManager = new EmailManager();
         $emailManager->storeEmail([
-            'to' => $data['email'],
-            'to_name' => $data['name'],
+            'to' => trans('www.contacts.email.to.email'),
+            'to_name' => trans('www.contacts.email.to.name'),
+            'from' => $data['email'],
+            'from_name' => $data['name'],
             'subject' => $data['subject'],
             'body' => $data['message']
         ]);

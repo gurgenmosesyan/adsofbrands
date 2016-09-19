@@ -170,6 +170,9 @@ body * {
     font-family: 'Comfortaa-Light', 'tahoma', 'arial', 'helvetica', sans-serif;
 }
 
+#page {
+    min-width: 910px;
+}
 body .page {
     margin: 0 auto;
     max-width: 1592px;
@@ -1038,6 +1041,12 @@ body .page {
 .html a:hover {
     text-decoration: none;
 }
+.html strong, .html b {
+    font-family: 'Khula-Bold', tahoma, verdana, sans-serif;
+}
+.html em, .html i {
+    font-style: italic;
+}
 #contact-left {
     margin-right: 3%;
     width: 43%;
@@ -1110,9 +1119,11 @@ textarea:focus {
 }
 #paging .prev {
     margin-left: 0;
+    padding-left: 0;
 }
 #paging .next {
     margin-right: 0;
+    padding-right: 0;
 }
 #paging .prev a,
 #paging .next a {
@@ -1337,11 +1348,14 @@ textarea:focus {
 }
 #com-right .media-type {
     border-bottom: 1px solid #BBBBBB;
-    padding: 14px 0 5px;
+    padding: 14px 0 9px;
 }
 #com-right .media-type .dib {
     vertical-align: top;
     line-height: 40px;
+}
+#com-right .media-type a {
+    height: 35px;
 }
 #com-right .media-type .mt-title {
     margin-right: 12px;

@@ -248,6 +248,12 @@ $jsTrans->addTrans([
         <div class="form-group">
             <label class="col-sm-3 control-label{{Auth::guard('creative')->check() ? ' data-req' : ''}}">{{trans('admin.base.label.credits')}}</label>
             <div class="col-sm-9">
+                <div class="row">
+                    <div class="col-sm-3" style="margin-bottom: 10px;">
+                        <input type="text" name="clone_id" class="form-control" placeholder="{{trans('admin.base.label.clone_ad_id')}}">
+                        <div id="form-error-clone_id" class="form-error"></div>
+                    </div>
+                </div>
                 <div id="credits"></div>
                 <a href="#" id="add-credit" class="btn btn-default"><i class="fa fa-plus"></i></a>
                 <div id="form-error-credits" class="form-error"></div>

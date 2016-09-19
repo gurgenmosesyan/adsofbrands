@@ -24,6 +24,7 @@ class CreateBannersTable extends Migration
             $table->enum('type', [Banner::TYPE_IMAGE, Banner::TYPE_EMBED]);
             $table->string('image');
             $table->text('embed');
+            $table->string('link');
             $table->timestamps();
         });
     }
