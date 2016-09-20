@@ -19,6 +19,8 @@ class Creative extends Model implements AuthenticatableContract
     const STATUS_CONFIRMED = 'confirmed';
     const ACTIVE = '1';
     const NOT_ACTIVE = '0';
+    const NOT_BLOCKED = '0';
+    const BLOCKED = '1';
 
     protected $fillable = [
         'type',
@@ -33,7 +35,8 @@ class Creative extends Model implements AuthenticatableContract
         'youtube',
         'linkedin',
         'vimeo',
-        'active'
+        'active',
+        'blocked'
     ];
 
     protected $table = 'creatives';

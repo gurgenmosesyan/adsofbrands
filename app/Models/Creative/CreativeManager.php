@@ -11,6 +11,7 @@ class CreativeManager
 {
     public function store($data)
     {
+        $data = $this->processSave($data);
         $creative = new Creative($data);
         if (Auth::guard('brand')->check()) {
             $brand = Auth::guard('brand')->user();
@@ -49,6 +50,7 @@ class CreativeManager
             $data['type_id'] = $agency->id;
         }
         $creative = $query->firstOrFail();
+        $data = $this->processSave($data);
         if (!empty($data['password'])) {
             $creative->password = bcrypt($data['password']);
         }
@@ -60,6 +62,14 @@ class CreativeManager
             $creative->update($data);
             $this->updateMl($data['ml'], $creative);
         });
+    }
+
+    protected function processSave($data)
+    {
+        if (!isset($data['blocked'])) {
+            $data['blocked'] = Creative::NOT_BLOCKED;
+        }
+        return $data;
     }
 
     protected function storeMl($data, Creative $creative)

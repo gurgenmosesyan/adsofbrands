@@ -34,6 +34,7 @@ class CreateAgenciesTable extends Migration
             $table->rememberToken();
             $table->enum('status', ['', Agency::STATUS_PENDING, Agency::STATUS_CONFIRMED]);
             $table->enum('active', [Agency::ACTIVE, Agency::NOT_ACTIVE]);
+            $table->enum('blocked', [Agency::NOT_BLOCKED, Agency::BLOCKED]);
             $table->timestamps();
         });
     }

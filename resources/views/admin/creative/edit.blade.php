@@ -102,22 +102,27 @@ $jsTrans->addTrans([
             </div>
         </div>
 
-        @if(Auth::guard('creative')->check())
-            <div class="form-group">
-                <label class="col-sm-3 control-label">{{trans('admin.base.label.password')}}</label>
-                <div class="col-sm-9">
-                    <input type="password" name="password" class="form-control" value="">
-                    <div id="form-error-password" class="form-error"></div>
-                </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{trans('admin.base.label.password')}}</label>
+            <div class="col-sm-9">
+                <input type="password" name="password" class="form-control" value="">
+                <div id="form-error-password" class="form-error"></div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">{{trans('admin.base.label.re_password')}}</label>
-                <div class="col-sm-9">
-                    <input type="password" name="re_password" class="form-control" value="">
-                    <div id="form-error-re_password" class="form-error"></div>
-                </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{trans('admin.base.label.re_password')}}</label>
+            <div class="col-sm-9">
+                <input type="password" name="re_password" class="form-control" value="">
+                <div id="form-error-re_password" class="form-error"></div>
             </div>
-        @endif
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{trans('admin.base.label.block')}}</label>
+            <div class="col-sm-9">
+                <input type="checkbox" name="blocked" class="minimal-checkbox" value="{{Creative::BLOCKED}}"{{$creative->blocked == Creative::BLOCKED ? ' checked="checked"' : ''}}>
+                <div id="form-error-blocked" class="form-error"></div>
+            </div>
+        </div>
 
         <div class="form-group">
             <label class="col-sm-3 control-label">{{trans('admin.base.label.phone')}}</label>

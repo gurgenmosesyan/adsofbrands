@@ -15,6 +15,7 @@ class BrandManager
         $brand = new Brand($data);
         if (Auth::guard('admin')->guest()) {
             $brand->top = Brand::NOT_TOP;
+            $brand->blocked = Brand::NOT_BLOCKED;
         }
         $accountManager = new AccountManager();
         $brand->hash = $accountManager->generateRandomUniqueHash();
@@ -37,6 +38,7 @@ class BrandManager
         }
         if (Auth::guard('admin')->guest()) {
             $data['top'] = $brand->top;
+            $data['blocked'] = $brand->blocked;
         }
         SaveImage::save($data['image'], $brand);
         SaveImage::save($data['cover'], $brand, 'cover');
@@ -51,6 +53,9 @@ class BrandManager
     {
         if (!isset($data['top'])) {
             $data['top'] = Brand::NOT_TOP;
+        }
+        if (!isset($data['blocked'])) {
+            $data['blocked'] = Brand::NOT_BLOCKED;
         }
         $data['active'] = Brand::ACTIVE;
         return $data;

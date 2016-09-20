@@ -15,6 +15,7 @@ class AgencyManager
         $agency = new Agency($data);
         if (Auth::guard('admin')->guest()) {
             $agency->top = Agency::NOT_TOP;
+            $agency->blocked = Agency::NOT_BLOCKED;
         }
         $accountManager = new AccountManager();
         $agency->hash = $accountManager->generateRandomUniqueHash();
@@ -37,6 +38,7 @@ class AgencyManager
         }
         if (Auth::guard('admin')->guest()) {
             $data['top'] = $agency->top;
+            $data['blocked'] = $agency->blocked;
         }
         SaveImage::save($data['image'], $agency);
         SaveImage::save($data['cover'], $agency, 'cover');
@@ -51,6 +53,9 @@ class AgencyManager
     {
         if (!isset($data['top'])) {
             $data['top'] = Agency::NOT_TOP;
+        }
+        if (!isset($data['blocked'])) {
+            $data['blocked'] = Agency::NOT_BLOCKED;
         }
         $data['active'] = Agency::ACTIVE;
         return $data;

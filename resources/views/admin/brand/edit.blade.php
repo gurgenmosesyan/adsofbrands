@@ -118,6 +118,15 @@ $mls = $brand->ml->keyBy('lng_id');
                     <div id="form-error-re_password" class="form-error"></div>
                 </div>
             </div>
+            @if(Auth::guard('admin')->check())
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">{{trans('admin.base.label.block')}}</label>
+                    <div class="col-sm-9">
+                        <input type="checkbox" name="blocked" class="minimal-checkbox" value="{{Brand::BLOCKED}}"{{$brand->blocked == Brand::BLOCKED ? ' checked="checked"' : ''}}>
+                        <div id="form-error-blocked" class="form-error"></div>
+                    </div>
+                </div>
+            @endif
             <div class="form-group">
                 <label class="col-sm-3 control-label">{{trans('admin.base.label.phone')}}</label>
                 <div class="col-sm-9">

@@ -53,7 +53,7 @@ return array (
   'sign_in.title' => 'Sign in',
   'account.forgot_password' => 'Forgot password?',
   'base.label.reset' => 'Reset',
-  'login.not_confirmed' => 'Your account not confirmed',
+  'login.not_confirmed' => 'Your account blocked',
   'login.invalid_credentials' => 'Email or password is wrong',
   'reset_password.title' => 'Reset password',
   'email_not_exist' => 'Email not exist',
@@ -115,4 +115,5 @@ return array (
   'agencies.title' => 'Agencies',
   'contacts.email.to.email' => 'contact@adsofbrands.com',
   'contacts.email.to.name' => 'Adsofbrands team',
+  'login.blocked' => 'Your account blocked',
 );

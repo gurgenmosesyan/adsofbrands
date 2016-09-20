@@ -36,7 +36,7 @@ $pageSubTitle = trans('admin.banner.key.'.$banner->key);
         <div id="embed" class="form-group">
             <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.embed_code')}}</label>
             <div class="col-sm-9">
-                <textarea class="form-control" rows="5">{{$banner->embed or ''}}</textarea>
+                <textarea name="embed" class="form-control" rows="5">{{$banner->embed or ''}}</textarea>
                 <div id="form-error-embed" class="form-error"></div>
             </div>
         </div>

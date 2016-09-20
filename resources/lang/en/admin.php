@@ -166,4 +166,5 @@ return array (
   'base.label.views_count' => 'Views count',
   'base.label.hidden' => 'Hidden',
   'base.label.clone_ad_id' => 'Clone Ad ID',
+  'base.label.block' => 'Block',
 );

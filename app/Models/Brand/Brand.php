@@ -23,6 +23,8 @@ class Brand extends Model implements AuthenticatableContract
     const NOT_TOP = '0';
     const ACTIVE = '1';
     const NOT_ACTIVE = '0';
+    const NOT_BLOCKED = '0';
+    const BLOCKED = '1';
 
     protected $fillable = [
         'country_id',
@@ -38,7 +40,8 @@ class Brand extends Model implements AuthenticatableContract
         'youtube',
         'linkedin',
         'vimeo',
-        'active'
+        'active',
+        'blocked'
     ];
 
     protected $table = 'brands';

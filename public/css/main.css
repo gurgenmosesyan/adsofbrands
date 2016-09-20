@@ -1432,6 +1432,9 @@ textarea:focus {
 #pod-box {
     margin-top: 25px;
 }
+#comment-box {
+    margin-top: 30px;
+}
 #error {
     margin: 100px 0;
 }

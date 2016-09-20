@@ -34,6 +34,7 @@ class CreateCreativesTable extends Migration
             $table->rememberToken();
             $table->enum('status', ['', Creative::STATUS_PENDING, Creative::STATUS_CONFIRMED]);
             $table->enum('active', [Creative::ACTIVE, Creative::NOT_ACTIVE]);
+            $table->enum('blocked', [Creative::NOT_BLOCKED, Creative::BLOCKED]);
             $table->timestamps();
         });
     }

@@ -29,6 +29,7 @@ class BrandRequest extends Request
             'phone' => 'max:255',
             'link' => 'required|url|max:255',
             'top' => 'in:'.Brand::NOT_TOP.','.Brand::TOP,
+            'blocked' => 'in:'.Brand::BLOCKED.','.Brand::NOT_BLOCKED,
             'fb' => 'url|max:255',
             'twitter' => 'url|max:255',
             'google' => 'url|max:255',

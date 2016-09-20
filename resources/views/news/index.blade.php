@@ -2,6 +2,7 @@
 $title = $news->title;
 
 $fbSDK = true;
+$shareBox = true;
 $pageMenu = 'news';
 ?>
 @extends('layout')
@@ -24,6 +25,14 @@ $pageMenu = 'news';
                         {!!$news->text!!}
                         <div class="cb"></div>
                     </div>
+                </div>
+
+                <div id="pod-box">
+                    <div class="addthis_native_toolbox"></div>
+                </div>
+
+                <div id="comment-box">
+                    <div class="fb-comments" data-href="{{$news->getLink()}}" data-numposts="3"></div>
                 </div>
 
                 @if(!$relNews->isEmpty())

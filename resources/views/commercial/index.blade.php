@@ -97,7 +97,7 @@ $similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('co
                     <div class="addthis_native_toolbox"></div>
                 </div>
 
-                <div id="comment-box" style="margin-top: 30px;">
+                <div id="comment-box">
                     <div class="fb-comments" data-href="{{$ad->getLink()}}" data-numposts="3"></div>
                 </div>
 

@@ -23,6 +23,8 @@ class Agency extends Model implements AuthenticatableContract
     const NOT_ACTIVE = '0';
     const TOP = '1';
     const NOT_TOP = '0';
+    const NOT_BLOCKED = '0';
+    const BLOCKED = '1';
 
     protected $fillable = [
         'category_id',
@@ -37,7 +39,8 @@ class Agency extends Model implements AuthenticatableContract
         'youtube',
         'linkedin',
         'vimeo',
-        'active'
+        'active',
+        'blocked'
     ];
 
     protected $table = 'agencies';

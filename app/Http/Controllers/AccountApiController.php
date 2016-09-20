@@ -30,6 +30,9 @@ class AccountApiController extends Controller
         $result = $auth->attempt(['email' => $data['email'], 'password' => $data['password']], false, false);
         if ($result) {
             $brand = Brand::where('email', $data['email'])->first();
+            if ($brand->blocked == Brand::BLOCKED) {
+                return $this->api('INVALID_DATA', null, ['email' => [trans('www.login.blocked')]]);
+            }
             if ($brand->status == Brand::STATUS_PENDING) {
                 return $this->api('INVALID_DATA', null, ['email' => [trans('www.login.not_confirmed')]]);
             }
@@ -41,7 +44,10 @@ class AccountApiController extends Controller
         $result = $auth->attempt(['email' => $data['email'], 'password' => $data['password']], false, false);
         if ($result) {
             $agency = Agency::where('email', $data['email'])->first();
-            if ($agency->status == Brand::STATUS_PENDING) {
+            if ($agency->blocked == Agency::BLOCKED) {
+                return $this->api('INVALID_DATA', null, ['email' => [trans('www.login.blocked')]]);
+            }
+            if ($agency->status == Agency::STATUS_PENDING) {
                 return $this->api('INVALID_DATA', null, ['email' => [trans('www.login.not_confirmed')]]);
             }
             $auth->login($agency, $rememberMe);
@@ -52,7 +58,10 @@ class AccountApiController extends Controller
         $result = $auth->attempt(['email' => $data['email'], 'password' => $data['password']], false, false);
         if ($result) {
             $creative = Creative::where('email', $data['email'])->first();
-            if ($creative->status == Brand::STATUS_PENDING) {
+            if ($creative->blocked == Creative::BLOCKED) {
+                return $this->api('INVALID_DATA', null, ['email' => [trans('www.login.blocked')]]);
+            }
+            if ($creative->status == Creative::STATUS_PENDING) {
                 return $this->api('INVALID_DATA', null, ['email' => [trans('www.login.not_confirmed')]]);
             }
             $auth->login($creative, $rememberMe);

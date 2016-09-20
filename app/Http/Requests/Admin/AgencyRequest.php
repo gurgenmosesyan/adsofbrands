@@ -29,6 +29,7 @@ class AgencyRequest extends Request
             'phone' => 'max:255',
             'link' => 'required|url|max:255',
             'top' => 'in:'.Agency::TOP.','.Agency::NOT_TOP,
+            'blocked' => 'in:'.Agency::BLOCKED.','.Agency::NOT_BLOCKED,
             'fb' => 'url|max:255',
             'twitter' => 'url|max:255',
             'google' => 'url|max:255',

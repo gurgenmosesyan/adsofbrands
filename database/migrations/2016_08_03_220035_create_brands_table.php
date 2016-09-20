@@ -35,6 +35,7 @@ class CreateBrandsTable extends Migration
             $table->rememberToken();
             $table->enum('status', ['', Brand::STATUS_PENDING, Brand::STATUS_CONFIRMED]);
             $table->enum('active', [Brand::ACTIVE, Brand::NOT_ACTIVE]);
+            $table->enum('blocked', [Brand::NOT_BLOCKED, Brand::BLOCKED]);
             $table->timestamps();
         });
     }
