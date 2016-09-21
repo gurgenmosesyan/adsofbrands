@@ -1,5 +1,12 @@
 <?php
-$title = trans('www.commercials.title');
+
+$meta->title(trans('www.ads.title'));
+$meta->description(trans('www.ads.list.description'));
+$meta->keywords(trans('www.homepage.keywords'));
+$meta->ogTitle(trans('www.ads.title'));
+$meta->ogDescription(trans('www.ads.list.description'));
+$meta->ogImage(url('/imgs/og-logo.jpg'));
+$meta->ogUrl(url_with_lng('/ads'));
 
 $fbSDK = true;
 $pageMenu = 'ads';

@@ -1,6 +1,11 @@
 <?php
+
 $title = trans('www.404.title');
+
+$meta->title($title);
+
 $page = null;
+
 ?>
 @extends('layout')
 

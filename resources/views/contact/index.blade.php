@@ -1,5 +1,12 @@
 <?php
-$title = trans('www.contacts.head_title');
+
+$meta->title(trans('www.contacts.head_title'));
+$meta->description(trans('www.contacts.description'));
+$meta->keywords(trans('www.homepage.keywords'));
+$meta->ogTitle(trans('www.contacts.head_title'));
+$meta->ogDescription(trans('www.contacts.description'));
+$meta->ogImage(url('/imgs/og-logo.jpg'));
+$meta->ogUrl(url_with_lng('/contacts'));
 
 $fbSDK = true;
 ?>

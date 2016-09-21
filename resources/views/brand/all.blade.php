@@ -1,5 +1,12 @@
 <?php
-$title = trans('www.brands.title');
+
+$meta->title(trans('www.brands.title'));
+$meta->description(trans('www.brands.list.description'));
+$meta->keywords(trans('www.homepage.keywords'));
+$meta->ogTitle(trans('www.brands.title'));
+$meta->ogDescription(trans('www.brands.list.description'));
+$meta->ogImage(url('/imgs/og-logo.jpg'));
+$meta->ogUrl(url_with_lng('/brands'));
 
 $fbSDK = true;
 $pageMenu = 'brands';

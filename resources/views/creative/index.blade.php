@@ -1,5 +1,15 @@
 <?php
-$title = $creative->title;
+
+$description = mb_substr(trim(strip_tags($creative->about)), 0, 250);
+
+$meta->title($creative->title);
+$meta->description($description);
+$meta->keywords(trans('www.homepage.keywords'));
+$meta->ogTitle($creative->title);
+$meta->ogDescription($description);
+$image = empty($creative->cover) ? $creative->getImage() : $creative->getCover();
+$meta->ogImage($image);
+$meta->ogUrl($creative->getLink());
 
 $fbSDK = true;
 
@@ -48,7 +58,7 @@ $url = $creative->getLink();
 </div>
 @if($scroll)
     <script type="text/javascript">
-        $(window).load(function() {
+        $(document).ready(function() {
             $('html, body').animate({
                 scrollTop: 565
             }, 400);

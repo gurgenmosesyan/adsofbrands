@@ -32,7 +32,7 @@
     }
     #main-left .main-title,
     #main-left .phone-box {
-        margin-right: 7%;
+        margin-right: 6%;
     }
     #main-left .menu li a {
         padding:  0 25px;
@@ -51,6 +51,21 @@
     }
     #footer .menu-col {
         padding-right: 12%;
+    }
+}
+@media screen and (max-width: 1355px) {
+    #home-main .info-box {
+        padding-top: 45px;
+    }
+    #home-main .social-box div,
+    #home-main .social-box span {
+        float: none;
+    }
+    #home-main .social-box .facebook {
+        margin-left: 0;
+    }
+    #home-main .btn-box {
+        margin-bottom: 15px;
     }
 }
 @media screen and (max-width: 1300px) {
@@ -72,7 +87,7 @@
     }
     #main-left .main-title,
     #main-left .phone-box {
-        margin-right: 4%;
+        margin-right: 3%;
     }
     #news-inner .news-img {
         float: none;

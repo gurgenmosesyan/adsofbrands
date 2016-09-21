@@ -1,5 +1,14 @@
 <?php
-$title = $page->title;
+
+$description = mb_substr(trim(strip_tags($page->text)), 0, 250);
+
+$meta->title($page->title);
+$meta->description($description);
+$meta->keywords(trans('www.homepage.keywords'));
+$meta->ogTitle($page->title);
+$meta->ogDescription($description);
+$meta->ogImage(url('/imgs/og-logo.jpg'));
+$meta->ogUrl(url_with_lng('/page/'.$page->alias));
 
 $fbSDK = true;
 ?>

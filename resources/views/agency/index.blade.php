@@ -1,6 +1,17 @@
 <?php
 $title = $agency->title;
 
+$description = mb_substr(trim(strip_tags($agency->about)), 0, 250);
+
+$meta->title($agency->title);
+$meta->description($description);
+$meta->keywords(trans('www.homepage.keywords'));
+$meta->ogTitle($agency->title);
+$meta->ogDescription($description);
+$image = empty($agency->cover) ? $agency->getImage() : $agency->getCover();
+$meta->ogImage($image);
+$meta->ogUrl($agency->getLink());
+
 $fbSDK = true;
 
 $url = $agency->getLink();
@@ -55,7 +66,7 @@ $pageMenu = 'agencies';
 </div>
 @if($scroll)
     <script type="text/javascript">
-        $(window).load(function() {
+        $(document).ready(function() {
             $('html, body').animate({
                 scrollTop: 565
             }, 400);

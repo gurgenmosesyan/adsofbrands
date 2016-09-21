@@ -2,6 +2,11 @@
 use App\Models\Account\Account;
 
 $title = trans('www.activation.title');
+
+$meta->title($title);
+$meta->ogTitle($title);
+$meta->ogImage(url('/imgs/og-logo.jpg'));
+
 ?>
 @extends('layout')
 

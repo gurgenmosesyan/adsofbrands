@@ -5,11 +5,33 @@ use App\Models\Commercial\CommercialTag;
 $head->appendScript('/js/jquery.mCustomScrollbar.concat.min.js');
 $head->appendStyle('/css/jquery.mCustomScrollbar.css');
 
-$title = $ad->title;
+$meta->title($ad->title);
+$meta->description($ad->description);
+$meta->keywords(trans('www.homepage.keywords'));
+$meta->ogTitle($ad->title);
+$meta->ogDescription($ad->description);
+if ($ad->isPrint()) {
+    $image = $ad->isPrint();
+} else if ($ad->isYoutube()) {
+    $videoData = json_decode($ad->video_data);
+    $image = 'http://img.youtube.com/vi/'.$videoData->id.'/sddefault.jpg';
+} else {
+    $image = $ad->getImage();
+}
+$meta->ogImage($image);
+$meta->ogUrl($ad->getLink());
 
 $fbSDK = true;
 $shareBox = true;
 $pageMenu = 'ads';
+
+$rated = false;
+if (isset($_COOKIE['rate'])) {
+    $ratedData = json_decode($_COOKIE['rate'], true);
+    if (isset($ratedData[$ad->id])) {
+        $rated = $ratedData[$ad->id];
+    }
+}
 
 $mediaType = $ad->media_type()->joinMl()->first();
 $brand = $ad->brands()->select('brands.id','brands.alias','brands.image','ml.title')->join('brands_ml as ml', function($query) {
@@ -44,10 +66,9 @@ $similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('co
         <div id="main-left" class="fl">
 
             <div id="com-left" class="fl">
-                <div class="ad-media">
+                <div class="com-media">
                     @if($ad->isVideo())
                         @if($ad->isYoutube())
-                            <?php $videoData = json_decode($ad->video_data); ?>
                             <iframe width="100%" height="450" src="https://www.youtube.com/embed/{{$videoData->id}}" frameborder="0" allowfullscreen></iframe>
                         @elseif($ad->isVimeo())
                             <?php $videoData = json_decode($ad->video_data); ?>
@@ -107,6 +128,15 @@ $similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('co
                 <div class="view-comment fb fs24">
                     <div class="dib views-count">{{$ad->views_count}}</div>
                     <div class="dib comment">{{$ad->comments_count > 999  ?'999+' : $ad->comments_count}}</div>
+                </div>
+                <div class="rate-box{{$rated === false ? '' : ' rated'}}">
+                    <div class="dib rating fb fs26">{{number_format($ad->rating, 1)}}</div>
+                    <div class="dib stars">
+                        @for($i = 1; $i < 11; $i++)
+                            <?php $class = $rated !== false && $rated >= $i ? ' active' : ''; ?>
+                            <a href="#" class="rate rate-{{$i}} db fl{{$class}}" data-com="{{$ad->id}}" data-val="{{$i}}"></a>
+                        @endfor
+                    </div>
                 </div>
                 @if($mediaType != null)
                     <div class="media-type">
@@ -229,6 +259,7 @@ $similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('co
 </div>
 <script type="text/javascript">
     $('#credits-box').mCustomScrollbar();
+    $main.initRate();
     setTimeout(function() {
         $main.initAdViews({{$ad->id}});
     }, 2000);

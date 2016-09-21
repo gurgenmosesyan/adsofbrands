@@ -1,5 +1,15 @@
 <?php
-$title = $brand->title;
+
+$description = mb_substr(trim(strip_tags($brand->about)), 0, 250);
+
+$meta->title($brand->title);
+$meta->description($description);
+$meta->keywords(trans('www.homepage.keywords'));
+$meta->ogTitle($brand->title);
+$meta->ogDescription($description);
+$image = empty($brand->cover) ? $brand->getImage() : $brand->getCover();
+$meta->ogImage($image);
+$meta->ogUrl($brand->getLink());
 
 $fbSDK = true;
 
@@ -55,7 +65,7 @@ $pageMenu = 'brands';
 </div>
 @if($scroll)
     <script type="text/javascript">
-        $(window).load(function() {
+        $(document).ready(function() {
             $('html, body').animate({
                 scrollTop: 565
             }, 400);

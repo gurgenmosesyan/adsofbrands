@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Core\Helpers\Head;
 use App\Core\Helpers\JsTrans;
+use App\Core\Helpers\Meta;
 use App\Core\Language\Language;
 use App\Core\Image\Uploader;
 use Validator;
@@ -21,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
 	{
 		view()->share('head', Head::getInstance());
 		view()->share('jsTrans', new JsTrans());
+		view()->share('meta', new Meta());
 
         Validator::extend('ml', function($attribute, $value, $parameters, $validator) {
             if (!is_array($value)) {

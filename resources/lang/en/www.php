@@ -90,7 +90,6 @@ return array (
   'contact.email.success_text' => 'Contact email successfully sent.',
   'news.list.title' => 'News',
   'related_news.title' => 'Related News',
-  'commercials.title' => 'Ads',
   'base.label.media_type' => 'Media Type',
   'base.label.filters' => 'Filters',
   'base.label.industry_type' => 'Industry Types',
@@ -116,4 +115,8 @@ return array (
   'contacts.email.to.email' => 'contact@adsofbrands.com',
   'contacts.email.to.name' => 'Adsofbrands team',
   'login.blocked' => 'Your account blocked',
+  'head_title' => '{title} - adsofbrands.com',
+  'homepage.keywords' => 'brands, agencies, commercials, ads, creative, credits, advertising, advertisement, advertising agencies,  news',
+  'ads.title' => 'Ads',
+  'base.label.rate' => 'Rate',
 );

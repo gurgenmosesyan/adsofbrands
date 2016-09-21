@@ -257,6 +257,50 @@ $main.initAdViews = function(id) {
     });
 };
 
+$main.initRate = function() {
+    var rateBox = $('#com-right').find('.rate-box'),
+        self, i;
+    rateBox.find('.rate').on('mouseover', function() {
+        if (rateBox.hasClass('rated')) {
+            return false;
+        }
+        self = $(this);
+        for (i = self.data('val'); i > 0; i--) {
+            rateBox.find('.rate-'+i).addClass('active');
+        }
+    }).on('mouseout', function() {
+        if (rateBox.hasClass('rated')) {
+            return false;
+        }
+        rateBox.find('.rate').removeClass('active');
+    }).on('click', function() {
+        if (rateBox.hasClass('rated')) {
+            return false;
+        }
+        self = $(this);
+        $.ajax({
+            type: 'post',
+            url: $main.basePath('/api/rate'),
+            data: {
+                ad_id: self.data('com'),
+                val: self.data('val'),
+                _token: $main.token
+            },
+            dataType: 'json',
+            success: function(result) {
+                if (result.status == 'OK') {
+                    rateBox.find('.rating').text(result.data.rating);
+                    rateBox.addClass('rated');
+                    for (i = self.data('val'); i > 0; i--) {
+                        rateBox.find('.rate-'+i).addClass('active');
+                    }
+                }
+            }
+        });
+        return false;
+    });
+};
+
 $(document).ready(function() {
 
     $main.initSearch();

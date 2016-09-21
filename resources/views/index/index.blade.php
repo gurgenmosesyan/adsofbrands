@@ -5,7 +5,14 @@ use App\Models\Banner\Banner;
 $head->appendStyle('/css/owl.carousel.css');
 $head->appendScript('/js/owl.carousel.min.js');
 
-$title = trans('www.homepage.title');
+$meta->title(trans('www.homepage.title'), false);
+$meta->description(trans('www.home.top.sub_title'));
+$meta->keywords(trans('www.homepage.keywords'));
+$meta->ogTitle(trans('www.homepage.title'));
+$meta->ogDescription(trans('www.home.top.sub_title'));
+$meta->ogImage(url('/imgs/og-logo.jpg'));
+$meta->ogUrl(url_with_lng('/'));
+
 ?>
 @extends('layout')
 
@@ -37,10 +44,15 @@ $title = trans('www.homepage.title');
                 </div>
                 <div class="social-box">
                     <div class="fl social-title fs20">{{trans('www.home.main.social.title')}}</div>
-                    <a href="{{trans('www.social.link.fb')}}" class="facebook social db fl" target="_blank"></a>
-                    <a href="{{trans('www.social.link.twitter')}}" class="twitter social db fl" target="_blank"></a>
-                    <a href="{{trans('www.social.link.google')}}" class="google social db fl" target="_blank"></a>
-                    <a href="{{trans('www.social.link.youtube')}}" class="youtube social db fl" target="_blank"></a>
+                    <span class="db fl">
+                        <a href="{{trans('www.social.link.fb')}}" class="facebook social db fl" target="_blank"></a>
+                        <a href="{{trans('www.social.link.twitter')}}" class="twitter social db fl" target="_blank"></a>
+                        <a href="{{trans('www.social.link.google')}}" class="google social db fl" target="_blank"></a>
+                        <a href="{{trans('www.social.link.youtube')}}" class="youtube social db fl" target="_blank"></a>
+                        <a href="{{trans('www.social.link.instagram')}}" class="instagram social db fl" target="_blank"></a>
+                        <a href="{{trans('www.social.link.pinterest')}}" class="pinterest social db fl" target="_blank"></a>
+                        <span class="cb"></span>
+                    </span>
                     <div class="cb"></div>
                 </div>
             </div>

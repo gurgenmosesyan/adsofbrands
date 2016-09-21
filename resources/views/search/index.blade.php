@@ -1,5 +1,10 @@
 <?php
-$title = trans('www.search.title');
+
+$meta->title(trans('www.search.title'));
+$meta->keywords(trans('www.homepage.keywords'));
+$meta->ogTitle(trans('www.search.title'));
+$meta->ogImage(url('/imgs/og-logo.jpg'));
+
 ?>
 @extends('layout')
 

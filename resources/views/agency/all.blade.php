@@ -1,5 +1,12 @@
 <?php
-$title = trans('www.agencies.title');
+
+$meta->title(trans('www.agencies.title'));
+$meta->description(trans('www.agencies.list.description'));
+$meta->keywords(trans('www.homepage.keywords'));
+$meta->ogTitle(trans('www.agencies.title'));
+$meta->ogDescription(trans('www.agencies.list.description'));
+$meta->ogImage(url('/imgs/og-logo.jpg'));
+$meta->ogUrl(url_with_lng('/agencies'));
 
 $fbSDK = true;
 $pageMenu = 'agencies';

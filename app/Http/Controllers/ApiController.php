@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactRequest;
 use App\Http\Requests\SubscribeRequest;
+use App\Models\Commercial\Commercial;
+use Illuminate\Http\Request;
 use App\Email\EmailManager;
 use Mail;
 use DB;
@@ -40,5 +42,32 @@ class ApiController extends Controller
         } else {
             return $this->api('OK', trans('www.subscribe.already_subscribed'));
         }
+    }
+
+    public function rate(Request $request)
+    {
+        $adId = $request->input('ad_id');
+        $val = $request->input('val');
+
+        $ratedData = [];
+        if (isset($_COOKIE['rate'])) {
+            $ratedData = json_decode($_COOKIE['rate'], true);
+            if (isset($ratedData[$adId])) {
+                return null;
+            }
+        }
+
+        $ad = Commercial::where('id', $adId)->firstOrFail();
+        $value = ($ad->rating * $ad->qt) + $val;
+        $ad->qt++;
+        $ad->rating = $value / $ad->qt;
+        $ad->save();
+
+        $ratedData += [$adId => $val];
+        $ratedData = json_encode($ratedData);
+        setcookie('rate', $ratedData, time()+(60*60*24*365), '/');
+        $_COOKIE['rate'] = $ratedData;
+
+        return $this->api('OK', ['rating' => number_format($ad->rating, 1)]);
     }
 }

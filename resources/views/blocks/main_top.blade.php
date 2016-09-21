@@ -10,7 +10,7 @@
     <div class="cover" style="background-image: url('{{$model->getCover()}}');"></div>
 @endif
 <div class="logo-box fl">
-    <div class="logo"><img src="{{$model->getImage()}}" /></div>
+    <div class="logo"><img src="{{empty($model->image) ? url('/imgs/no-ava.png') : $model->getImage()}}" /></div>
 </div>
 <div class="main-title fl">
     <h1 class="fb fs32">{{$model->title}}</h1>
@@ -40,13 +40,12 @@
             @if(!empty($model->youtube))
                 <li><a href="{{$model->youtube}}" class="db youtube" target="_blank"></a></li>
             @endif
-            <?php /*
             @if(!empty($model->linkedin))
                 <li><a href="{{$model->linkedin}}" class="db linkedin" target="_blank"></a></li>
             @endif
             @if(!empty($model->vimeo))
                 <li><a href="{{$model->vimeo}}" class="db vimeo" target="_blank"></a></li>
-            @endif */ ?>
+            @endif
         </ul>
     </div>
 @endif

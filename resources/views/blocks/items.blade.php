@@ -1,7 +1,7 @@
 @foreach($items as $value)<a href="{{$value->getLink()}}" class="item db">
     <span class="item-box db">
         <span class="img db">
-            <img src="{{$value->getImage()}}" />
+            <img src="{{empty($value->image) ? url('/imgs/no-ava.png') : $value->getImage()}}" />
             @if($ad)
                 <span class="rating db fb fs18">{{number_format($value->rating, 1)}}</span>
             @endif

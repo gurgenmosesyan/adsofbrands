@@ -8,7 +8,16 @@ $footerMenu = FooterMenuManager::get();
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <title>{{$title.' - adsofbrands.com'}}</title>
+    <meta name="description" content="{{$meta->getDescription()}}" />
+    <meta name="keywords" content="{{$meta->getKeywords()}}" />
+    <meta property="og:title" content="{{$meta->getOgTitle()}}" />
+    <meta property="og:description" content="{{$meta->getOgDescription()}}" />
+    <meta property="og:image" content="{{$meta->getOgImage()}}" />
+    <meta property="og:url" content="{{$meta->getOgUrl()}}" />
+    <meta property="og:type" content="website" />
+    <meta property="fb:app_id" content="730560407092189" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>{{$meta->getTitle(trans('www.head_title'))}}</title>
     <link rel="icon" href="{{url('/favicon.png')}}" />
     <?php
     use App\Core\Helpers\UserAgent;
@@ -19,11 +28,11 @@ $footerMenu = FooterMenuManager::get();
     $head->appendMainScript('/js/jquery-2.1.4.min.js');
     $head->appendMainScript('/js/main.js');
 
-    $ua = new UserAgent();
+    /*$ua = new UserAgent();
     if ($ua->isIPhone() || $ua->isAndroidMobile() || $ua->isWinPhone()) {
         $head->appendMainStyle('/css/mobile.css');
         $head->appendMainScript('/js/mobile.js');
-    }
+    }*/
 
     $head->renderStyles();
     $head->renderScripts();
@@ -119,9 +128,14 @@ $footerMenu = FooterMenuManager::get();
                 </div>
                 <div class="social-box">
                     <a href="{{trans('www.social.link.fb')}}" class="facebook social db fl" target="_blank"></a>
-                    <a href="{{trans('www.social.link.twitter')}}" class="twitter social db fl" target="_blank"></a>
-                    <a href="{{trans('www.social.link.google')}}" class="google social db fl" target="_blank"></a>
-                    <a href="{{trans('www.social.link.youtube')}}" class="youtube social db fl" target="_blank"></a>
+                    <span class="db fl">
+                        <a href="{{trans('www.social.link.twitter')}}" class="twitter social db fl" target="_blank"></a>
+                        <a href="{{trans('www.social.link.google')}}" class="google social db fl" target="_blank"></a>
+                        <a href="{{trans('www.social.link.youtube')}}" class="youtube social db fl" target="_blank"></a>
+                        <a href="{{trans('www.social.link.instagram')}}" class="instagram social db fl" target="_blank"></a>
+                        <a href="{{trans('www.social.link.pinterest')}}" class="pinterest social db fl" target="_blank"></a>
+                        <span class="db fl"></span>
+                    </span>
                     <div class="cb"></div>
                 </div>
             </div>

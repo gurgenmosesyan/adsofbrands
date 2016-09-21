@@ -1,5 +1,12 @@
 <?php
-$title = trans('www.team.title');
+
+$meta->title(trans('www.team.title'));
+$meta->description(trans('www.team.description'));
+$meta->keywords(trans('www.homepage.keywords'));
+$meta->ogTitle(trans('www.team.title'));
+$meta->ogDescription(trans('www.team.description'));
+$meta->ogImage(url('/imgs/og-logo.jpg'));
+$meta->ogUrl(url_with_lng('/team'));
 
 $fbSDK = true;
 ?>
@@ -14,7 +21,7 @@ $fbSDK = true;
             <div id="main-left" class="fl">
 
                 <div id="team" class="tc">
-                    <h1 class="fb fs32">{{$title}}</h1>
+                    <h1 class="fb fs32">{{trans('www.team.title')}}</h1>
 
                     <?php
                     foreach($team as $value) {

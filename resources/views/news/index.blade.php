@@ -1,5 +1,12 @@
 <?php
-$title = $news->title;
+
+$meta->title($news->title);
+$meta->description($news->description);
+$meta->keywords(trans('www.homepage.keywords'));
+$meta->ogTitle($news->title);
+$meta->ogDescription($news->description);
+$meta->ogImage($news->getImage());
+$meta->ogUrl($news->getLink());
 
 $fbSDK = true;
 $shareBox = true;

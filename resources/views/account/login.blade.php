@@ -4,6 +4,11 @@ use App\Models\Account\Account;
 $head->appendScript('/js/account.js');
 
 $title = trans('www.sign_in.title');
+
+$meta->title($title);
+$meta->ogTitle($title);
+$meta->ogImage(url('/imgs/og-logo.jpg'));
+
 ?>
 @extends('layout')
 
