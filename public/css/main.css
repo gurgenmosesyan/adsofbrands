@@ -435,6 +435,10 @@ body .page {
 #home-gov1 {
     margin-bottom: 37px;
 }
+#home-gov1 .top-text {
+    color: #777777;
+    margin-bottom: 10px;
+}
 #top-rated-agencies {
     margin-bottom: 77px;
 }

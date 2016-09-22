@@ -80,6 +80,7 @@ $meta->ogUrl(url_with_lng('/'));
     ])
 </div>
 <div id="home-gov1" class="tc">
+    <p class="top-text">{{trans('www.banner.top_text')}}</p>
     {!!$banners[Banner::KEY_HOMEPAGE_1]->getBanner()!!}
 </div>
 <div id="top-rated-agencies">

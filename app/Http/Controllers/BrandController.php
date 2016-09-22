@@ -6,6 +6,7 @@ use App\Models\Agency\Agency;
 use App\Models\Brand\Brand;
 use App\Models\Category\CategoryMl;
 use App\Models\Country\CountryMl;
+use App\Models\Commercial\CommercialCreditPerson;
 use Illuminate\Http\Request;
 use DB;
 
@@ -45,7 +46,15 @@ class BrandController extends Controller
         }
         $alias = 'ads';
         $scroll = $request->input('ads');
-        $items = $brand->commercials()->select('commercials.id','commercials.alias','commercials.image','commercials.rating','commercials.comments_count','commercials.views_count','ml.title')->joinMl()->latest()->paginate(42);
+
+        $adIds = CommercialCreditPerson::select('credits.commercial_id')
+            ->join('commercial_credits as credits', function($query) {
+                $query->on('credits.id', '=', 'commercial_credit_persons.credit_id');
+            })
+            ->where('commercial_credit_persons.type', CommercialCreditPerson::TYPE_BRAND)
+            ->where('commercial_credit_persons.type_id', $brand->id)->lists('commercial_id')->toArray();
+
+        $items = $brand->commercials()->select('ml.title')->joinMl()->orWhereIn('commercials.id', $adIds)->latest()->paginate(42);
         return view('brand.index')->with([
             'brand' => $brand,
             'alias' => $alias,

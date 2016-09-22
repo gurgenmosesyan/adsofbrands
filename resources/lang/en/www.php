@@ -119,4 +119,5 @@ return array (
   'homepage.keywords' => 'brands, agencies, commercials, ads, creative, credits, advertising, advertisement, advertising agencies,  news',
   'ads.title' => 'Ads',
   'base.label.rate' => 'Rate',
+  'banner.top_text' => 'Advertisement  ',
 );
