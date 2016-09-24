@@ -23,9 +23,6 @@ $footerMenu = FooterMenuManager::get();
     use App\Core\Helpers\UserAgent;
 
     $head->appendMainStyle('/css/main.css');
-    $head->appendMainStyle('/css/media.css');
-
-    $head->appendMainScript('/js/jquery-2.1.4.min.js');
     $head->appendMainScript('/js/main.js');
 
     /*$ua = new UserAgent();

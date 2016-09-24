@@ -68,6 +68,7 @@ class ApiController extends Controller
         setcookie('rate', $ratedData, time()+(60*60*24*365), '/');
         $_COOKIE['rate'] = $ratedData;
 
-        return $this->api('OK', ['rating' => number_format($ad->rating, 1)]);
+        $rating = number_format($ad->rating, 1);
+        return $this->api('OK', ['rating' => $rating, 'percent' => $rating*10]);
     }
 }

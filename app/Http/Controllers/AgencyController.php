@@ -126,10 +126,22 @@ class AgencyController extends Controller
             return redirect(url_with_lng('/agencies/'.$agency->alias.'/'.$agency->id));
         }
         $alias = 'brands';
-        $brandIds = DB::table('commercial_agencies')->join('commercial_brands', function($query) {
-            $query->on('commercial_brands.commercial_id', '=', 'commercial_agencies.commercial_id');
-        })->where('commercial_agencies.agency_id', $agency->id)->lists('commercial_brands.brand_id');
+
+        $adIds = DB::table('commercial_agencies')->where('agency_id', $agency->id)->lists('commercial_id');
+
+        $creditAdIds = CommercialCreditPerson::select('credits.commercial_id')
+            ->join('commercial_credits as credits', function($query) {
+                $query->on('credits.id', '=', 'commercial_credit_persons.credit_id');
+            })
+            ->where('commercial_credit_persons.type', CommercialCreditPerson::TYPE_AGENCY)
+            ->where('commercial_credit_persons.type_id', $agency->id)->lists('commercial_id')->toArray();
+
+        $adIds = array_merge($adIds, $creditAdIds);
+
+        $brandIds = DB::table('commercial_brands')->whereIn('commercial_id', $adIds)->lists('brand_id');
+
         $items = Brand::joinMl()->whereIn('brands.id', $brandIds)->latest()->paginate(42);
+
         return view('agency.index')->with([
             'agency' => $agency,
             'alias' => $alias,

@@ -2,8 +2,8 @@
 use App\Models\Commercial\Commercial;
 use App\Models\Commercial\CommercialTag;
 
-$head->appendScript('/js/jquery.mCustomScrollbar.concat.min.js');
 $head->appendStyle('/css/jquery.mCustomScrollbar.css');
+$head->appendScript('/js/jquery.mCustomScrollbar.concat.min.js');
 
 $meta->title($ad->title);
 $meta->description($ad->description);
@@ -54,6 +54,8 @@ foreach ($ad->tags as $value) {
 $adIds = $query->lists('commercial_id');
 
 $similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('commercials.id', '!=', $ad->id)->paginate(27);
+
+$jsTrans->addTrans(['www.rate.already_rated']);
 ?>
 @extends('layout')
 
@@ -129,13 +131,22 @@ $similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('co
                     <div class="dib views-count">{{$ad->views_count}}</div>
                     <div class="dib comment">{{$ad->comments_count > 999  ?'999+' : $ad->comments_count}}</div>
                 </div>
-                <div class="rate-box{{$rated === false ? '' : ' rated'}}">
-                    <div class="dib rating fb fs26">{{number_format($ad->rating, 1)}}</div>
-                    <div class="dib stars">
-                        @for($i = 1; $i < 11; $i++)
-                            <?php $class = $rated !== false && $rated >= $i ? ' active' : ''; ?>
-                            <a href="#" class="rate rate-{{$i}} db fl{{$class}}" data-com="{{$ad->id}}" data-val="{{$i}}"></a>
-                        @endfor
+                <div class="rate-box{{$rated === false ? '' : ' rated-box'}}">
+                    <?php $rating = number_format($ad->rating, 1); ?>
+                    <div class="dib rating fb fs26">{{$rating}}</div>
+                    <div class="stars-box dib">
+                        @if(!$rated)
+                            <div class="stars dn">
+                                @for($i = 1; $i < 11; $i++)
+                                    <?php $class = $rated !== false && $rated >= $i ? ' active' : ''; ?>
+                                    <a href="#" class="rate rate-{{$i}} db fl{{$class}}" data-com="{{$ad->id}}" data-val="{{$i}}"></a>
+                                @endfor
+                                <span class="db cb"></span>
+                            </div>
+                        @endif
+                        <div class="rated"{!!$rated === false ? '' : ' title="'.trans('www.rate.already_rated').'"'!!}>
+                            <div style="width: {{$rating*10}}%;"></div>
+                        </div>
                     </div>
                 </div>
                 @if($mediaType != null)

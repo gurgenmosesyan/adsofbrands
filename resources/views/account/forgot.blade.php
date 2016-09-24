@@ -1,8 +1,6 @@
 <?php
 use App\Models\Account\Account;
 
-$head->appendScript('/js/account.js');
-
 $title = trans('www.reset_password.title');
 
 $meta->title($title);

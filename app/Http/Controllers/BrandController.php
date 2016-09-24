@@ -6,6 +6,7 @@ use App\Models\Agency\Agency;
 use App\Models\Brand\Brand;
 use App\Models\Category\CategoryMl;
 use App\Models\Country\CountryMl;
+use App\Models\Commercial\CommercialCredit;
 use App\Models\Commercial\CommercialCreditPerson;
 use Illuminate\Http\Request;
 use DB;
@@ -47,14 +48,7 @@ class BrandController extends Controller
         $alias = 'ads';
         $scroll = $request->input('ads');
 
-        $adIds = CommercialCreditPerson::select('credits.commercial_id')
-            ->join('commercial_credits as credits', function($query) {
-                $query->on('credits.id', '=', 'commercial_credit_persons.credit_id');
-            })
-            ->where('commercial_credit_persons.type', CommercialCreditPerson::TYPE_BRAND)
-            ->where('commercial_credit_persons.type_id', $brand->id)->lists('commercial_id')->toArray();
-
-        $items = $brand->commercials()->select('ml.title')->joinMl()->orWhereIn('commercials.id', $adIds)->latest()->paginate(42);
+        $items = $brand->commercials()->select('ml.title')->joinMl()->latest()->paginate(42);
         return view('brand.index')->with([
             'brand' => $brand,
             'alias' => $alias,
@@ -134,10 +128,21 @@ class BrandController extends Controller
             return redirect(url_with_lng('/brands/'.$brand->alias.'/'.$brand->id));
         }
         $alias = 'agencies';
-        $agencyIds = DB::table('commercial_brands')->join('commercial_agencies', function($query) {
-            $query->on('commercial_agencies.commercial_id', '=', 'commercial_brands.commercial_id');
-        })->where('commercial_brands.brand_id', $brand->id)->lists('commercial_agencies.agency_id');
+
+        $adIds = DB::table('commercial_brands')->where('brand_id', $brand->id)->lists('commercial_id');
+
+        $agencyIds = DB::table('commercial_agencies')->whereIn('commercial_id', $adIds)->lists('agency_id');
+
+        $creditAgencyIds = CommercialCredit::join('commercial_credit_persons as person', function($query) {
+                $query->on('person.credit_id', '=', 'commercial_credits.id')->where('person.type', '=', CommercialCreditPerson::TYPE_AGENCY);
+            })
+            ->whereIn('commercial_credits.commercial_id', $adIds)
+            ->lists('type_id')->toArray();
+
+        $agencyIds = array_merge($agencyIds, $creditAgencyIds);
+
         $items = Agency::joinMl()->whereIn('agencies.id', $agencyIds)->latest()->paginate(42);
+
         return view('brand.index')->with([
             'brand' => $brand,
             'alias' => $alias,
