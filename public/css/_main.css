@@ -1046,8 +1046,9 @@ body .page {
     margin: 25px 0;
 }
 .html ul li {
-    background: url('../imgs/list-dot.png') no-repeat 0 3px;
+    background: url('../imgs/list-dot.png') no-repeat 0 2px;
     font-size: 18px;
+    margin-bottom: 7px;
     min-height: 10px;
     padding-left: 24px;
 }
