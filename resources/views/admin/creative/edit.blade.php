@@ -116,13 +116,15 @@ $jsTrans->addTrans([
                 <div id="form-error-re_password" class="form-error"></div>
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label">{{trans('admin.base.label.block')}}</label>
-            <div class="col-sm-9">
-                <input type="checkbox" name="blocked" class="minimal-checkbox" value="{{Creative::BLOCKED}}"{{$creative->blocked == Creative::BLOCKED ? ' checked="checked"' : ''}}>
-                <div id="form-error-blocked" class="form-error"></div>
+        @if(Auth::guard('creative')->guest())
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.block')}}</label>
+                <div class="col-sm-9">
+                    <input type="checkbox" name="blocked" class="minimal-checkbox" value="{{Creative::BLOCKED}}"{{$creative->blocked == Creative::BLOCKED ? ' checked="checked"' : ''}}>
+                    <div id="form-error-blocked" class="form-error"></div>
+                </div>
             </div>
-        </div>
+        @endif
 
         <div class="form-group">
             <label class="col-sm-3 control-label">{{trans('admin.base.label.phone')}}</label>

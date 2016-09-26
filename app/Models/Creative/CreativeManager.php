@@ -54,6 +54,9 @@ class CreativeManager
         if (!empty($data['password'])) {
             $creative->password = bcrypt($data['password']);
         }
+        if (Auth::guard('creative')->check()) {
+            $data['blocked'] = $creative->blocked;
+        }
         $data['active'] = Creative::ACTIVE;
         SaveImage::save($data['image'], $creative);
         SaveImage::save($data['cover'], $creative, 'cover');
