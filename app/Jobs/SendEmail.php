@@ -14,15 +14,17 @@ class SendEmail extends Job implements SelfHandling, ShouldQueue
     use InteractsWithQueue, SerializesModels;
 
     private $email;
+    private $template;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Email $email)
+    public function __construct(Email $email, $template)
     {
         $this->email = $email;
+        $this->template = $template;
     }
 
     /**
@@ -32,6 +34,6 @@ class SendEmail extends Job implements SelfHandling, ShouldQueue
      */
     public function handle(EmailManager $emailSender)
     {
-        $emailSender->sendEmail($this->email);
+        $emailSender->sendEmail($this->email, $this->template);
     }
 }

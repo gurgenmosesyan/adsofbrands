@@ -39,7 +39,6 @@ class AccountManager
         $user->hash = self::generateRandomUniqueHash();
         $user->status = Account::STATUS_PENDING;
         $user->active = Account::NOT_ACTIVE;
-        $user->save();
 
         DB::transaction(function() use($user) {
             $user->save();
@@ -51,7 +50,8 @@ class AccountManager
                 'to' => $user->email,
                 'to_name' => '',
                 'subject' => trans('www.account.email.confirm.subject'),
-                'body' => $body
+                'body' => $body,
+                'template' => 'register'
             ]);
         });
     }

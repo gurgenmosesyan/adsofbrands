@@ -24,7 +24,8 @@ class EmailManager
 		$email = new Email($data);
 		$email->save();
 
-		$this->dispatch(new SendEmail($email));
+        $template = isset($data['template']) ? $data['template'] : null;
+		$this->dispatch(new SendEmail($email, $template));
 	}
 
 	/*public static function sendEmails()
@@ -43,10 +44,11 @@ class EmailManager
 		}
 	}*/
 
-	public function sendEmail(Email $email)
+	public function sendEmail(Email $email, $template)
 	{
+        $template = $template == null ? 'default' : $template;
         //try {
-            Mail::send(['emails.default_html', 'emails.default'], ['email' => $email], function($message) use($email) {
+            Mail::send(['emails.'.$template.'_html', 'emails.'.$template], ['email' => $email], function($message) use($email) {
                 $message->from($email->from, $email->from_name);
                 $message->to($email->to, $email->to_name);
                 $message->replyTo($email->reply_to);
