@@ -27,7 +27,7 @@ class FooterMenu extends Model
 
     public function isHidden()
     {
-        return $this->attributes['hidden'] == self::HIDDEN;
+        return isset($this->attributes['hidden']) && $this->attributes['hidden'] == self::HIDDEN;
     }
 
     public function scopeVisible($query)
