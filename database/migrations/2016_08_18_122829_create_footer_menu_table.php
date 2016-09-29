@@ -16,8 +16,8 @@ class CreateFooterMenuTable extends Migration
         Schema::create('footer_menu', function (Blueprint $table) {
             $table->increments('id');
             $table->string('alias');
-            $table->enum('static', FooterMenu::IS_NOT_STATIC, FooterMenu::IS_STATIC);
-            $table->enum('hidden', FooterMenu::NOT_HIDDEN, FooterMenu::HIDDEN);
+            $table->enum('static', [FooterMenu::IS_NOT_STATIC, FooterMenu::IS_STATIC]);
+            $table->enum('hidden', [FooterMenu::NOT_HIDDEN, FooterMenu::HIDDEN]);
             $table->integer('sort_order')->unsigned();
             $table->timestamps();
             $table->index('alias', 'alias');
