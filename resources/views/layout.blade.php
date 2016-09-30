@@ -22,14 +22,23 @@ $footerMenu = FooterMenuManager::get();
     <?php
     use App\Core\Helpers\UserAgent;
 
-    $head->appendMainStyle('/css/main.css');
-    $head->appendMainScript('/js/main.js');
+    //$head->appendMainStyle('/css/main.css');
+    //$head->appendMainScript('/js/main.js');
 
-    /*$ua = new UserAgent();
+    $head->appendMainStyle('/css/_main.css');
+    $head->appendMainStyle('/css/media.css');
+    $head->appendMainScript('/js/jquery-2.1.4.min.js');
+    $head->appendMainScript('/js/_main.js');
+    $head->appendMainScript('/js/account.js');
+
+    $ua = new UserAgent();
     if ($ua->isIPhone() || $ua->isAndroidMobile() || $ua->isWinPhone()) {
-        $head->appendMainStyle('/css/mobile.css');
-        $head->appendMainScript('/js/mobile.js');
-    }*/
+        if (!isset($_COOKIE['origin'])) {
+            $head->appendMainStyle('/css/mobile.css');
+            $head->appendMainScript('/js/mobile.js');
+            $jsTrans->addTrans(['www.desktop.version']);
+        }
+    }
 
     $head->renderStyles();
     $head->renderScripts();

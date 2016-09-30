@@ -100,7 +100,8 @@ $main.initItemsCar = function() {
         pagination: false,
         slideSpeed: 700,
         itemsCustom: [
-            [0, 2],
+            [0, 1],
+            [378, 2],
             [550, 3],
             [735, 4],
             [920, 5],
@@ -172,7 +173,7 @@ $main.includeGoogleMap = function() {
 };
 
 $main.initMap = function(abPin) {
-    var map = new google.maps.Map(document.getElementById('map'), {
+    $main.map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
         styles: [
             {"featureType":"poi","elementType":"geometry","stylers":[{"color":"#F2F2F2"},{"visibility":"on"}]},
@@ -191,15 +192,15 @@ $main.initMap = function(abPin) {
         bounds.extend(latLng);
         new google.maps.Marker({
             position: {lat: lat, lng: lng},
-            map: map,
+            map: $main.map,
             icon : abPin ? '/imgs/pin-ab.png' : '/imgs/pin.png'
         });
     }
-    map.setCenter(bounds.getCenter());
-    map.fitBounds(bounds);
-    google.maps.event.addListenerOnce(map, 'bounds_changed', function() {
-        if (map.getZoom() > 15) {
-            map.setZoom(15);
+    $main.map.setCenter(bounds.getCenter());
+    $main.map.fitBounds(bounds);
+    google.maps.event.addListenerOnce($main.map, 'bounds_changed', function() {
+        if ($main.map.getZoom() > 15) {
+            $main.map.setZoom(15);
         }
     });
 };

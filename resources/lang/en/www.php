@@ -121,4 +121,5 @@ return array (
   'base.label.rate' => 'Rate',
   'banner.top_text' => 'Advertisement  ',
   'rate.already_rated' => 'You have already rated',
+  'desktop.version' => 'Desktop version',
 );

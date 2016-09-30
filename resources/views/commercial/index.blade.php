@@ -53,7 +53,7 @@ foreach ($ad->tags as $value) {
 }
 $adIds = $query->lists('commercial_id');
 
-$similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('commercials.id', '!=', $ad->id)->paginate(27);
+$similarAds = Commercial::joinMl()->whereIn('commercials.id', $adIds)->where('commercials.id', '!=', $ad->id)->take(7)->get();
 
 $jsTrans->addTrans(['www.rate.already_rated']);
 ?>
@@ -121,7 +121,7 @@ $jsTrans->addTrans(['www.rate.already_rated']);
                 </div>
 
                 <div id="comment-box">
-                    <div class="fb-comments" data-href="{{$ad->getLink()}}" data-numposts="3"></div>
+                    <div class="fb-comments" data-href="{{$ad->getLink()}}" data-numposts="3" data-width="100%"></div>
                 </div>
 
             </div>
@@ -129,7 +129,9 @@ $jsTrans->addTrans(['www.rate.already_rated']);
                 <h1 class="fsb fs36">{{$ad->title}}</h1>
                 <div class="view-comment fb fs24">
                     <div class="dib views-count">{{$ad->views_count}}</div>
-                    <div class="dib comment">{{$ad->comments_count > 999  ?'999+' : $ad->comments_count}}</div>
+                    <?php /*
+                    {{--<div class="dib comment">{{$ad->comments_count > 999  ?'999+' : $ad->comments_count}}</div>--}}
+                    */?>
                 </div>
                 <div class="rate-box{{$rated === false ? '' : ' rated-box'}}">
                     <?php $rating = number_format($ad->rating, 1); ?>
@@ -256,7 +258,6 @@ $jsTrans->addTrans(['www.rate.already_rated']);
                     <h3 class="fsb fs30">{{trans('www.base.label.similar_ads')}}</h3>
                     @include('blocks.items', ['items' => $similarAds, 'ad' => true])
                 </div>
-                @include('pagination.default', ['pagination' => $similarAds])
             @endif
 
         </div>

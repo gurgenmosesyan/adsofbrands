@@ -480,7 +480,7 @@ body .page {
     margin-bottom: 8px;
     position: relative;
 }
-.item .rating {
+/*.item .rating {
     background: url('../imgs/star.png?v=5') no-repeat;
     color: #ffffff;
     height: 23px;
@@ -490,7 +490,7 @@ body .page {
     top: 6px;
     right: 7px;
     text-shadow: 0 0 2px #111111;
-}
+}*/
 .item .title {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -499,20 +499,20 @@ body .page {
 }
 .item .bottom {
     color: #474747;
-    margin-top: 15px;
+    margin-top: 12px;
 }
 .item .bottom span {
-    background-repeat: no-repeat;
-    height: 16px;
-    line-height: 18px;
+    height: 17px;
+    line-height: 22px;
 }
 .item .views-count {
-    background-image: url('../imgs/eye.png');
+    background: url('../imgs/eye.png') no-repeat left center;
     padding-left: 28px;
 }
 .item .comment {
-    background-image: url('../imgs/comment.png');
-    padding-left: 26px;
+    background: url('../imgs/star.png') no-repeat;
+    background-size: 20px;
+    padding-left: 24px;
 }
 
 /* latest news */
