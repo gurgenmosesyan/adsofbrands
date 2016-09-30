@@ -2,7 +2,6 @@
 
 namespace App\Models\Branch;
 
-use App\Models\Brand\BrandMl;
 use Auth;
 use DB;
 
@@ -79,7 +78,7 @@ class BranchManager
 
         DB::transaction(function() use($branch) {
             $branch->delete();
-            BrandMl::where('id', $branch->id)->delete();
+            BranchMl::where('id', $branch->id)->delete();
         });
     }
 }
