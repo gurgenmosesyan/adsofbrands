@@ -43,6 +43,13 @@ $footerMenu = FooterMenuManager::get();
     $head->renderStyles();
     $head->renderScripts();
     ?>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-7230951704373432",
+            enable_page_level_ads: true
+        });
+    </script>
 </head>
 <body>
 @if(isset($fbSDK))
