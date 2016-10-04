@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Agency\Agency;
 use App\Models\AgencyCategory\CategoryMl;
 use App\Models\Brand\Brand;
+use App\Models\Commercial\Commercial;
 use App\Models\Commercial\CommercialCreditPerson;
 use Illuminate\Http\Request;
 use DB;
@@ -46,7 +47,11 @@ class AgencyController extends Controller
             ->where('commercial_credit_persons.type', CommercialCreditPerson::TYPE_AGENCY)
             ->where('commercial_credit_persons.type_id', $agency->id)->lists('commercial_id')->toArray();
 
-        $items = $agency->commercials()->select('ml.title')->joinMl()->orWhereIn('commercials.id', $adIds)->latest()->paginate(42);
+        $agencyAdIds = DB::table('commercial_agencies')->where('agency_id', $agency->id)->lists('commercial_id');
+        $adIds = array_merge($adIds, $agencyAdIds);
+
+        $items = Commercial::joinMl()->whereIn('commercials.id', $adIds)->latest()->paginate(42);
+
         return view('agency.index')->with([
             'agency' => $agency,
             'alias' => $alias,
