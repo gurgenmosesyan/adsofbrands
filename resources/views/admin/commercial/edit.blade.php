@@ -101,7 +101,7 @@ $jsTrans->addTrans([
 
         @if(Auth::guard('brand')->guest())
             <div class="form-group">
-                <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.brands')}}</label>
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.brands')}}</label>
                 <div class="col-sm-9">
                     <input type="text" id="brand-input" class="form-control" value="">
                     <div id="brand-block" style="margin-top: 10px;"></div>
@@ -112,7 +112,7 @@ $jsTrans->addTrans([
 
         @if(Auth::guard('agency')->guest())
             <div class="form-group">
-                <label class="col-sm-3 control-label data-req">{{trans('admin.base.label.agencies')}}</label>
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.agencies')}}</label>
                 <div class="col-sm-9">
                     <input type="text" id="agency-input" class="form-control" value="">
                     <div id="agency-block" style="margin-top: 10px;"></div>

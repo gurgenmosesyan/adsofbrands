@@ -86,6 +86,9 @@ class CommercialManager
 
     protected function processSave($data)
     {
+        $data['brands'] = isset($data['brands']) ? $data['brands'] : [];
+        $data['agencies'] = isset($data['agencies']) ? $data['agencies'] : [];
+
         if (Auth::guard('brand')->check()) {
             $brand = Auth::guard('brand')->user();
             $data['brands'] = ['brand_id' => $brand->id];

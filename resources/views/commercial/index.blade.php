@@ -160,42 +160,46 @@ $jsTrans->addTrans(['www.rate.already_rated']);
                         </a>
                     </div>
                 @endif
-                <div class="info-box">
-                    @if($brand != null || $agency != null)
-                        <div class="brand-agency dib">
-                            @if($brand != null)
-                                <div class="brand dib">
-                                    <p class="fsb fs24">{{trans('www.base.label.brand')}}</p>
-                                    <a href="{{$brand->getLink()}}" class="db">
-                                        <img src="{{$brand->getImage()}}" alt="brand" width="81" />
-                                    </a>
-                                </div>
-                            @endif
-                            @if($agency != null)
-                                <div class="agency dib">
-                                    <p class="fsb fs24">{{trans('www.base.label.agency')}}</p>
-                                    <a href="{{$agency->getLink()}}" class="db">
-                                        <img src="{{$agency->getImage()}}" alt="agency" width="81" />
-                                    </a>
-                                </div>
-                            @endif
-                        </div>
-                    @endif
-                    <div class="country-ind dib">
-                        @if(!empty($ad->country_id))
-                            <div class="country">
-                                <p class="fsb fs20 dib">{{trans('www.base.label.country')}}:</p>
-                                <p class="dib fs18"><a href="{{url_with_lng('/ads?country='.$ad->country_ml->id)}}" class="underline">{{$ad->country_ml->name}}</a></p>
+                @if($brand != null || $agency != null || !empty($ad->country_id) || $ad->category_ml != null)
+                    <div class="info-box">
+                        @if($brand != null || $agency != null)
+                            <div class="brand-agency dib">
+                                @if($brand != null)
+                                    <div class="brand dib">
+                                        <p class="fsb fs24">{{trans('www.base.label.brand')}}</p>
+                                        <a href="{{$brand->getLink()}}" class="db">
+                                            <img src="{{$brand->getImage()}}" alt="brand" width="81" />
+                                        </a>
+                                    </div>
+                                @endif
+                                @if($agency != null)
+                                    <div class="agency dib">
+                                        <p class="fsb fs24">{{trans('www.base.label.agency')}}</p>
+                                        <a href="{{$agency->getLink()}}" class="db">
+                                            <img src="{{$agency->getImage()}}" alt="agency" width="81" />
+                                        </a>
+                                    </div>
+                                @endif
                             </div>
                         @endif
-                        @if($ad->category_ml != null)
-                            <div class="industry">
-                                <p class="fsb fs20 dib">{{trans('www.base.label.industry')}}:</p>
-                                <p class="dib fs18"><a href="{{url_with_lng('/ads?industry='.$ad->category_ml->id)}}" class="underline">{{$ad->category_ml->title}}</a></p>
+                        @if(!empty($ad->country_id) || $ad->category_ml != null)
+                            <div class="country-ind dib">
+                                @if(!empty($ad->country_id))
+                                    <div class="country">
+                                        <p class="fsb fs20 dib">{{trans('www.base.label.country')}}:</p>
+                                        <p class="dib fs18"><a href="{{url_with_lng('/ads?country='.$ad->country_ml->id)}}" class="underline">{{$ad->country_ml->name}}</a></p>
+                                    </div>
+                                @endif
+                                @if($ad->category_ml != null)
+                                    <div class="industry">
+                                        <p class="fsb fs20 dib">{{trans('www.base.label.industry')}}:</p>
+                                        <p class="dib fs18"><a href="{{url_with_lng('/ads?industry='.$ad->category_ml->id)}}" class="underline">{{$ad->category_ml->title}}</a></p>
+                                    </div>
+                                @endif
                             </div>
                         @endif
                     </div>
-                </div>
+                @endif
                 <div class="description fs18 lh21">{{$ad->description}}</div>
 
                 @if(!$credits->isEmpty() || !empty($ad->advertising) || (!empty($ad->published_date) && $ad->published_date != '0000-00-00'))
