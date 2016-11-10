@@ -128,7 +128,9 @@ $jsTrans->addTrans(['www.rate.already_rated']);
             <div id="com-right" class="fr">
                 <h1 class="fsb fs36">{{$ad->title}}</h1>
                 <div class="view-comment fb fs24">
-                    <div class="dib views-count">{{$ad->views_count}}</div>
+                    <?php /*
+                    {{--<div class="dib views-count">{{$ad->views_count}}</div>--}}
+                    */ ?>
                     <?php /*
                     {{--<div class="dib comment">{{$ad->comments_count > 999  ?'999+' : $ad->comments_count}}</div>--}}
                     */?>
