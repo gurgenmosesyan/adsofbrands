@@ -23,7 +23,7 @@ $footerMenu = FooterMenuManager::get();
     use App\Core\Helpers\UserAgent;
 
     $head->appendMainStyle('/css/main.css');
-    $head->appendMainScript('/js/main.js');
+    $head->appendMainScript('/js/main.js?v=1');
 
     /*$head->appendMainStyle('/css/_main.css');
     $head->appendMainStyle('/css/media.css');

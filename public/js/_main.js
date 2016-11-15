@@ -94,7 +94,7 @@ $main.initSearch = function() {
 
 $main.initItemsCar = function() {
     $('.items-car').owlCarousel({
-        autoPlay: true,
+        autoPlay: false,
         navigation: true,
         navigationText: ['',''],
         pagination: false,
