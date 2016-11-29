@@ -8,6 +8,8 @@ class Category extends Model
 {
     protected $fillable = [];
 
+    public $adminInfo = true;
+
     protected $table = 'categories';
 
     public function ml()

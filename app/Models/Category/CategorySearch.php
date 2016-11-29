@@ -27,7 +27,14 @@ class CategorySearch extends DataTable
 
     protected function constructQuery()
     {
-        $query = Category::joinMl();
+        $query = Category::select('categories.id', 'ml.title', 'admin1.email as created_by', 'admin2.email as updated_by')
+            ->joinMl()
+            ->leftJoin('adm_users as admin1', function($query) {
+                $query->on('admin1.id', '=', 'categories.add_admin_id');
+            })
+            ->leftJoin('adm_users as admin2', function($query) {
+                $query->on('admin2.id', '=', 'categories.update_admin_id');
+            });
 
         if ($this->search != null) {
             $query->where('ml.title', 'LIKE', '%'.$this->search.'%');

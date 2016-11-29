@@ -27,7 +27,13 @@ class Search extends DataTable
 
     protected function constructQuery()
     {
-        $query = Language::getProcessor();
+        $query = Language::select('languages.id', 'languages.name', 'languages.code', 'admin1.email as created_by', 'admin2.email as updated_by')
+            ->leftJoin('adm_users as admin1', function($query) {
+                $query->on('admin1.id', '=', 'languages.add_admin_id');
+            })
+            ->leftJoin('adm_users as admin2', function($query) {
+                $query->on('admin2.id', '=', 'languages.update_admin_id');
+            });
         if ($this->search != null) {
             $query->where('code', 'LIKE', '%'.$this->search.'%')
                 ->orWhere('name', 'LIKE', '%'.$this->search.'%');

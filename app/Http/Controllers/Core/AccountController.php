@@ -18,7 +18,15 @@ class AccountController extends BaseController
 
         $auth = auth()->guard('admin');
         if ($auth->attempt(['email' => $data['email'], 'password' => $data['password']])) {
-            return $this->api('OK', ['path' => route('admin_brand_table')]);
+            $admin = Auth::guard('admin')->user();
+            if (empty($admin->homepage)) {
+                $permissions = $admin->permissions;
+                $url = empty($permissions) ? 'brand' : key($permissions);
+            } else {
+                $url = $admin->homepage;
+            }
+            $url = url('admpanel/'.ltrim($url, '/'));
+            return $this->api('OK', ['path' => $url]);
         }
 
         return $this->api('INVALID_DATA', null, ['email' => [trans('admin.login.invalid_credentials')]]);

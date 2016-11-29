@@ -15,6 +15,18 @@ $branch.initSearchPage = function() {
         {data: 'title'},
         {data: 'address'}
     ]);
+    if ($main.showAdminInfo) {
+        $branch.listColumns.push(
+            {
+                data: 'created_by',
+                sortable: false
+            },
+            {
+                data: 'updated_by',
+                sortable: false
+            }
+        );
+    }
     $branch.initSearch();
 };
 

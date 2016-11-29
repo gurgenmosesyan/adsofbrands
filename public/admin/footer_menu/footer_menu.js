@@ -6,6 +6,18 @@ $menu.initSearchPage = function() {
         {data: 'id'},
         {data: 'title'}
     ];
+    if ($main.showAdminInfo) {
+        $menu.listColumns.push(
+            {
+                data: 'created_by',
+                sortable: false
+            },
+            {
+                data: 'updated_by',
+                sortable: false
+            }
+        );
+    }
     $menu.initSearch();
 };
 
@@ -48,7 +60,7 @@ $menu.initEditPage = function() {
         } else {
             $('.text-label').addClass('data-req');
         }
-    }).change();
+    }).trigger('ifChanged');
 
     CKEDITOR.config.height = 250;
 };

@@ -11,6 +11,10 @@ $pageMenu = 'banner';
         <tr>
             <th>{{trans('admin.base.label.key')}}</th>
             <th>{{trans('admin.base.label.type')}}</th>
+            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->isSuperAdmin())
+                <th>{{trans('admin.base.label.created_by')}}</th>
+                <th>{{trans('admin.base.label.updated_by')}}</th>
+            @endif
             <th class="th-actions"></th>
         </tr>
         </thead>

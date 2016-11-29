@@ -19,7 +19,15 @@ class RedirectIfAuthenticated
 	{
         if ($guard == 'all') {
             if (Auth::guard('admin')->check()) {
-                return redirect()->route('admin_brand_table');
+                $admin = Auth::guard('admin')->user();
+                if (empty($admin->homepage)) {
+                    $permissions = $admin->permissions;
+                    $url = empty($permissions) ? 'brand' : key($permissions);
+                } else {
+                    $url = $admin->homepage;
+                }
+                $url = url('admpanel/'.ltrim($url, '/'));
+                return redirect($url);
             } else if (Auth::guard('brand')->check()) {
                 $user = Auth::guard('brand')->user();
                 return redirect()->route('admin_brand_edit', $user->id);

@@ -14,6 +14,7 @@ $pageMenu = 'admin';
         <tr>
             <th>{{trans('admin.base.label.id')}}</th>
             <th>{{trans('admin.base.label.email')}}</th>
+            <th>{{trans('admin.base.label.super_admin')}}</th>
             <th class="th-actions"></th>
         </tr>
         </thead>

@@ -1,7 +1,7 @@
 <?php
 $head->appendScript('/admin/category/category.js');
 $pageTitle = $pageSubTitle = trans('admin.industry_type.form.title');
-$pageMenu = 'category';
+$pageMenu = 'industry_type';
 ?>
 @extends('core.layout')
 @section('navButtons')
@@ -14,6 +14,10 @@ $pageMenu = 'category';
         <tr>
             <th>{{trans('admin.base.label.id')}}</th>
             <th>{{trans('admin.base.label.title')}}</th>
+            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->isSuperAdmin())
+                <th>{{trans('admin.base.label.created_by')}}</th>
+                <th>{{trans('admin.base.label.updated_by')}}</th>
+            @endif
             <th class="th-actions"></th>
         </tr>
         </thead>

@@ -6,6 +6,18 @@ $banner.initSearchPage = function() {
         {data: 'key'},
         {data: 'type'}
     ];
+    if ($main.showAdminInfo) {
+        $banner.listColumns.push(
+            {
+                data: 'created_by',
+                sortable: false
+            },
+            {
+                data: 'updated_by',
+                sortable: false
+            }
+        );
+    }
     $banner.actions = {
         "data": null,
         "render": function(data) {

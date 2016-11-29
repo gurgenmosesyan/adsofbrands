@@ -10,6 +10,8 @@ class Language extends Model
     const NOT_DEFAULT_LNG = '0';
     const IMAGES_PATH = 'images/language';
 
+    public $adminInfo = true;
+
     protected $table = 'languages';
 
     protected $fillable = [

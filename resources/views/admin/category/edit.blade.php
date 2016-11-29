@@ -2,7 +2,7 @@
 
 $head->appendScript('/admin/category/category.js');
 $pageTitle = trans('admin.industry_type.form.title');
-$pageMenu = 'category';
+$pageMenu = 'industry_type';
 if ($saveMode == 'add') {
     $pageSubTitle = trans('admin.industry_type.form.add.sub_title');
     $url = route('admin_category_store');

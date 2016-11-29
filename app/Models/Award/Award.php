@@ -10,6 +10,8 @@ class Award extends Model
     const TYPE_AGENCY = 'agency';
     const TYPE_CREATIVE = 'creative';
 
+    public $adminInfo = true;
+
     protected $fillable = [
         'type',
         'type_id',

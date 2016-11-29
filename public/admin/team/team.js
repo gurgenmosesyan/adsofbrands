@@ -8,6 +8,18 @@ $team.initSearchPage = function() {
         {data: 'last_name'},
         {data: 'position'}
     ];
+    if ($main.showAdminInfo) {
+        $team.listColumns.push(
+            {
+                data: 'created_by',
+                sortable: false
+            },
+            {
+                data: 'updated_by',
+                sortable: false
+            }
+        );
+    }
     $team.initSearch();
 };
 

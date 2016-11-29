@@ -30,7 +30,13 @@ class BannerSearch extends DataTable
 
     protected function constructQuery()
     {
-        return Banner::getProcessor();
+        return Banner::select('banners.id', 'banners.key', 'banners.type', 'admin1.email as created_by', 'admin2.email as updated_by')
+            ->leftJoin('adm_users as admin1', function($query) {
+                $query->on('admin1.id', '=', 'banners.add_admin_id');
+            })
+            ->leftJoin('adm_users as admin2', function($query) {
+                $query->on('admin2.id', '=', 'banners.update_admin_id');
+            });
     }
 
     protected function constructOrder($query)

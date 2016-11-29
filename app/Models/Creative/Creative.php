@@ -22,6 +22,8 @@ class Creative extends Model implements AuthenticatableContract
     const NOT_BLOCKED = '0';
     const BLOCKED = '1';
 
+    public $adminInfo = true;
+
     protected $fillable = [
         'type',
         'type_id',

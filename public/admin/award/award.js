@@ -15,7 +15,18 @@ $award.initSearchPage = function() {
         {data: 'year'},
         {data: 'title'}
     ]);
-
+    if ($main.showAdminInfo) {
+        $award.listColumns.push(
+            {
+                data: 'created_by',
+                sortable: false
+            },
+            {
+                data: 'updated_by',
+                sortable: false
+            }
+        );
+    }
     $award.initSearch();
 };
 

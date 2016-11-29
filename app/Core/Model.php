@@ -3,12 +3,15 @@
 namespace App\Core;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
+use Auth;
 
 class Model extends EloquentModel
 {
     const STATUS_ACTIVE = '1';
     const STATUS_INACTIVE = '2';
     const STATUS_DELETED = '0';
+
+    public $adminInfo = false;
 
     public function scopeJoinMl($query)
     {
@@ -45,5 +48,26 @@ class Model extends EloquentModel
     public function scopeLatest($query)
     {
         return $query->orderBy($this->getTable().'.id', 'desc');
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function($model) {
+            if ($model->adminInfo === true) {
+                if (Auth::guard('admin')->check()) {
+                    $model->add_admin_id = Auth::guard('admin')->user()->id;
+                }
+            }
+        });
+
+        static::updating(function($model) {
+            if ($model->adminInfo === true) {
+                if (Auth::guard('admin')->check()) {
+                    $model->update_admin_id = Auth::guard('admin')->user()->id;
+                }
+            }
+        });
     }
 }

@@ -6,6 +6,18 @@ $brand.initSearchPage = function() {
         {data: 'id'},
         {data: 'title'}
     ];
+    if ($main.showAdminInfo) {
+        $brand.listColumns.push(
+            {
+                data: 'created_by',
+                sortable: false
+            },
+            {
+                data: 'updated_by',
+                sortable: false
+            }
+        );
+    }
     $brand.initSearch();
 };
 

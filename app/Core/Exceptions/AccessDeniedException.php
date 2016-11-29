@@ -1,6 +1,6 @@
 <?php
 
-namespace Helix\Core\Exceptions;
+namespace App\Core\Exceptions;
 
 use Symfony\Component\HttpKernel\Exception\HttpException;
 

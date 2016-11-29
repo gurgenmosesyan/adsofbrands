@@ -16,6 +16,10 @@ $pageMenu = 'team';
             <th>{{trans('admin.base.label.first_name')}}</th>
             <th>{{trans('admin.base.label.last_name')}}</th>
             <th>{{trans('admin.base.label.position')}}</th>
+            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->isSuperAdmin())
+                <th>{{trans('admin.base.label.created_by')}}</th>
+                <th>{{trans('admin.base.label.updated_by')}}</th>
+            @endif
             <th class="th-actions"></th>
         </tr>
         </thead>

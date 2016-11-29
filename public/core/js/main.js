@@ -8,8 +8,11 @@ $main.initSearch = function() {
     var actions = self.actions || {
         "data": null,
         "render": function(data) {
-            return '<div class="text-center"><a href="'+ self.getEditPath() +'/'+data.id+'"><i class="fa fa-pencil"></i></a>'+
-                '<a class="action-remove" href="#"><i class="fa fa-trash"></i></a></div>';
+            var html = '<div class="text-center"><a href="'+ self.getEditPath() +'/'+data.id+'"><i class="fa fa-pencil"></i></a>';
+            if ($main.showRemoveIcon) {
+                html += '<a class="action-remove" href="#"><i class="fa fa-trash"></i></a></div>';
+            }
+            return html;
         },
         "orderable": false
     };

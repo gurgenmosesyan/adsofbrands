@@ -65,6 +65,14 @@ class CommercialSearch extends DataTable
                 $query->on('person.credit_id', '=', 'commercial_credits.id')->where('person.type', '=', CommercialCreditPerson::TYPE_CREATIVE)->where('type_id', '=', $creative->id);
             })->lists('commercial_credits.commercial_id')->toArray();
             $query->whereIn('commercials.id', $commercialIds);
+        } else {
+            $query->select('commercials.id', 'commercials.published_date', 'ml.title', 'admin1.email as created_by', 'admin2.email as updated_by')
+                ->leftJoin('adm_users as admin1', function($query) {
+                    $query->on('admin1.id', '=', 'commercials.add_admin_id');
+                })
+                ->leftJoin('adm_users as admin2', function($query) {
+                    $query->on('admin2.id', '=', 'commercials.update_admin_id');
+                });
         }
 
         if ($this->search != null) {

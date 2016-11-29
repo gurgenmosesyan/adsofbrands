@@ -7,6 +7,18 @@ $news.initSearchPage = function() {
         {data: 'title'},
         {data: 'description'}
     ];
+    if ($main.showAdminInfo) {
+        $news.listColumns.push(
+            {
+                data: 'created_by',
+                sortable: false
+            },
+            {
+                data: 'updated_by',
+                sortable: false
+            }
+        );
+    }
     $news.initSearch();
 };
 

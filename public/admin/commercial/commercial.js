@@ -10,6 +10,18 @@ $commercial.initSearchPage = function() {
         {data: 'title'},
         {data: 'published_date'}
     ];
+    if ($main.showAdminInfo) {
+        $commercial.listColumns.push(
+            {
+                data: 'created_by',
+                sortable: false
+            },
+            {
+                data: 'updated_by',
+                sortable: false
+            }
+        );
+    }
     $commercial.initSearch();
 };
 

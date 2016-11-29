@@ -14,6 +14,18 @@ $creative.initSearchPage = function() {
     $creative.listColumns = $creative.listColumns.concat([
         {data: 'title'}
     ]);
+    if ($main.showAdminInfo) {
+        $creative.listColumns.push(
+            {
+                data: 'created_by',
+                sortable: false
+            },
+            {
+                data: 'updated_by',
+                sortable: false
+            }
+        );
+    }
     $creative.initSearch();
 };
 

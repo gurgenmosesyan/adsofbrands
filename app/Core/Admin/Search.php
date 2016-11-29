@@ -22,7 +22,11 @@ class Search extends DataTable
         $query = $this->constructQuery();
         $this->constructOrder($query);
         $this->constructLimit($query);
-        return $query->get();
+        $data = $query->get();
+        foreach ($data as $value) {
+            $value->super_admin = $value->isSuperAdmin() ? trans('admin.base.label.yes') : '';
+        }
+        return $data;
     }
 
     protected function constructQuery()
@@ -42,6 +46,9 @@ class Search extends DataTable
                 break;
             case 'email':
                 $orderCol = 'email';
+                break;
+            case 'role':
+                $orderCol = 'role';
                 break;
             default:
                 $orderCol = 'id';

@@ -46,9 +46,11 @@ $jsTrans->addTrans([
     $head->renderStyles();
     $head->renderScripts();
 
+    $showRemoveIcon = true;
     if (Auth::guard('admin')->check()) {
         $admin = Auth::guard('admin')->user();
         $profileLink = route('core_admin_edit', $admin->id);
+        $showRemoveIcon = $admin->isSuperAdmin() ? true : false;
     } else if (Auth::guard('brand')->check()) {
         $admin = Auth::guard('brand')->user();
         $profileLink = route('admin_brand_edit', $admin->id);
@@ -59,6 +61,7 @@ $jsTrans->addTrans([
         $admin = Auth::guard('creative')->user();
         $profileLink = route('admin_creative_edit', $admin->id);
     }
+    $showAdminInfo = Auth::guard('admin')->check() && Auth::guard('admin')->user()->isSuperAdmin();
     ?>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -66,6 +69,8 @@ $jsTrans->addTrans([
     var $locSettings = {"trans":<?php echo json_encode($jsTrans->getTrans())?>};
     $main.path = '{{url('')}}';
     $main.token = '{{csrf_token()}}';
+    $main.showRemoveIcon = {!! $showRemoveIcon ? 'true' : 'false'; !!};
+    $main.showAdminInfo = {!! $showAdminInfo ? 'true' : 'false'; !!};
 </script>
 <div class="wrapper">
 

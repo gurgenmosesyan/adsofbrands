@@ -12,7 +12,18 @@ $vacancy.initSearchPage = function() {
         $vacancy.listColumns.push({data: 'brand_agency', sortable: false});
     }
     $vacancy.listColumns.push({data: 'title'});
-
+    if ($main.showAdminInfo) {
+        $vacancy.listColumns.push(
+            {
+                data: 'created_by',
+                sortable: false
+            },
+            {
+                data: 'updated_by',
+                sortable: false
+            }
+        );
+    }
     $vacancy.initSearch();
 };
 

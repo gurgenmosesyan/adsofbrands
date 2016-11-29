@@ -54,7 +54,7 @@ class AwardSearch extends DataTable
 
         $query = Award::joinMl();
         if (Auth::guard('admin')->check()) {
-            $query->select('awards.id', 'awards.type', 'awards.year', 'ml.title', 'brand.title as brand_title', 'agency.title as agency_title', 'creative.title as creative_title');
+            $query->select('awards.id', 'awards.type', 'awards.year', 'ml.title', 'brand.title as brand_title', 'agency.title as agency_title', 'creative.title as creative_title', 'admin1.email as created_by', 'admin2.email as updated_by');
             $query->leftJoin('brands_ml as brand', function($query) use($cLngId) {
                 $query->on('brand.id', '=', 'awards.type_id')->where('brand.lng_id', '=', $cLngId);
             })
@@ -63,7 +63,13 @@ class AwardSearch extends DataTable
             })
             ->leftJoin('creatives_ml as creative', function($query) use($cLngId) {
                 $query->on('creative.id', '=', 'awards.type_id')->where('creative.lng_id', '=', $cLngId);
-            });;
+            })
+            ->leftJoin('adm_users as admin1', function($query) {
+                $query->on('admin1.id', '=', 'awards.add_admin_id');
+            })
+            ->leftJoin('adm_users as admin2', function($query) {
+                $query->on('admin2.id', '=', 'awards.update_admin_id');
+            });
         } else if (Auth::guard('brand')->check()) {
             $brand = Auth::guard('brand')->user();
             $query->select('awards.id', 'awards.year', 'ml.title')->where('type', Award::TYPE_BRAND)->where('type_id', $brand->id);

@@ -6,6 +6,18 @@ $agency.initSearchPage = function() {
         {data: 'id'},
         {data: 'title'}
     ];
+    if ($main.showAdminInfo) {
+        $agency.listColumns.push(
+            {
+                data: 'created_by',
+                sortable: false
+            },
+            {
+                data: 'updated_by',
+                sortable: false
+            }
+        );
+    }
     $agency.initSearch();
 };
 

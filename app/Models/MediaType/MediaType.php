@@ -8,6 +8,7 @@ class MediaType extends Model
 {
     const IMAGES_PATH = 'images/media_type';
 
+    public $adminInfo = true;
     protected $fillable = [];
 
     protected $table = 'media_types';

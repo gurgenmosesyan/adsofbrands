@@ -15,6 +15,8 @@ class Banner extends Model
     const TYPE_IMAGE = 'image';
     const TYPE_EMBED = 'embed';
 
+    public $adminInfo = true;
+
     protected $fillable = [
         'type',
         'embed',

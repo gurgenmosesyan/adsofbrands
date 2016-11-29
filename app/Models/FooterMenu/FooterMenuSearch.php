@@ -27,7 +27,14 @@ class FooterMenuSearch extends DataTable
 
     protected function constructQuery()
     {
-        $query = FooterMenu::joinMl();
+        $query = FooterMenu::select('footer_menu.id', 'ml.title', 'admin1.email as created_by', 'admin2.email as updated_by')
+            ->joinMl()
+            ->leftJoin('adm_users as admin1', function($query) {
+                $query->on('admin1.id', '=', 'footer_menu.add_admin_id');
+            })
+            ->leftJoin('adm_users as admin2', function($query) {
+                $query->on('admin2.id', '=', 'footer_menu.update_admin_id');
+            });
 
         if ($this->search != null) {
             $query->where('ml.title', 'LIKE', '%'.$this->search.'%')

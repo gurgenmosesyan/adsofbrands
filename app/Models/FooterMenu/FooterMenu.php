@@ -11,6 +11,8 @@ class FooterMenu extends Model
     const HIDDEN = '1';
     const NOT_HIDDEN = '0';
 
+    public $adminInfo = true;
+
     protected $fillable = [
         'alias',
         'static',

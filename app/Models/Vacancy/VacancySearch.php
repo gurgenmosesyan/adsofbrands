@@ -44,12 +44,18 @@ class VacancySearch extends DataTable
         $cLngId = cLng('id');
         $query = Vacancy::joinMl();
         if (Auth::guard('admin')->check()) {
-            $query->select('vacancies.id', 'vacancies.type', 'ml.title', 'brand.title as brand_title', 'agency.title as agency_title');
+            $query->select('vacancies.id', 'vacancies.type', 'ml.title', 'brand.title as brand_title', 'agency.title as agency_title', 'admin1.email as created_by', 'admin2.email as updated_by');
             $query->leftJoin('brands_ml as brand', function($query) use($cLngId) {
                 $query->on('brand.id', '=', 'vacancies.type_id')->where('brand.lng_id', '=', $cLngId);
             })
             ->leftJoin('agencies_ml as agency', function($query) use($cLngId) {
                 $query->on('agency.id', '=', 'vacancies.type_id')->where('agency.lng_id', '=', $cLngId);
+            })
+            ->leftJoin('adm_users as admin1', function($query) {
+                $query->on('admin1.id', '=', 'vacancies.add_admin_id');
+            })
+            ->leftJoin('adm_users as admin2', function($query) {
+                $query->on('admin2.id', '=', 'vacancies.update_admin_id');
             });
         } else if(Auth::guard('brand')->check()) {
             $brand = Auth::guard('brand')->user();

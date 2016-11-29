@@ -9,6 +9,8 @@ class Branch extends Model
     const TYPE_BRAND = 'brand';
     const TYPE_AGENCY = 'agency';
 
+    public $adminInfo = true;
+
     protected $fillable = [
         'type',
         'type_id',

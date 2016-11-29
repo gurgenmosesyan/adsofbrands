@@ -7,6 +7,18 @@ $language.initSearchPage = function() {
         {data: 'name'},
         {data: 'code'}
     ];
+    if ($main.showAdminInfo) {
+        $language.listColumns.push(
+            {
+                data: 'created_by',
+                sortable: false
+            },
+            {
+                data: 'updated_by',
+                sortable: false
+            }
+        );
+    }
     $language.initSearch();
 };
 

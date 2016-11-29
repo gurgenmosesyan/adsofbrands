@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Core\Exceptions\AccessDeniedException;
 use Exception;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -49,6 +50,8 @@ class Handler extends ExceptionHandler
     {
         if ($e instanceof ModelNotFoundException || $e instanceof MethodNotAllowedHttpException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
+        } else if ($e instanceof AccessDeniedException) {
+            return response()->view('core.errors.access_denied');
         }
         return parent::render($request, $e);
     }

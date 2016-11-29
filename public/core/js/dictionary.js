@@ -4,14 +4,13 @@ $dictionary.initSearchPage = function() {
     var actions = {
         "data": null,
         "render": function(data) {
-            return  '<div class="text-center">'+
-                        '<a href="/admpanel/core/dictionary/edit/'+data.id+'" class="action-edit">'+
-                            '<i class="fa fa-pencil"></i>'+
-                        '</a>'+
-                        '<a class="action-remove" href="#">'+
-                            '<i class="fa fa-trash"></i>'+
-                        '</a>'+
-                    '</div>';
+            var remove = $main.showRemoveIcon ? '<a class="action-remove" href="#"><i class="fa fa-trash"></i></a>' : '';
+            return '<div class="text-center">'+
+                       '<a href="/admpanel/core/dictionary/edit/'+data.id+'" class="action-edit">'+
+                           '<i class="fa fa-pencil"></i>'+
+                       '</a>'+
+                        remove+
+                   '</div>';
         },
         "orderable": false
     };

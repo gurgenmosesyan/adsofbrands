@@ -27,7 +27,14 @@ class AgencySearch extends DataTable
 
     protected function constructQuery()
     {
-        $query = Agency::select('agencies.id', 'ml.title')->leftJoinMl();
+        $query = Agency::select('agencies.id', 'ml.title', 'admin1.email as created_by', 'admin2.email as updated_by')
+            ->leftJoinMl()
+            ->leftJoin('adm_users as admin1', function($query) {
+                $query->on('admin1.id', '=', 'agencies.add_admin_id');
+            })
+            ->leftJoin('adm_users as admin2', function($query) {
+                $query->on('admin2.id', '=', 'agencies.update_admin_id');
+            });
 
         if ($this->search != null) {
             $query->where('ml.title', 'LIKE', '%'.$this->search.'%');

@@ -15,6 +15,10 @@ $pageMenu = 'language';
             <th>{{trans('admin.base.label.id')}}</th>
             <th>{{trans('admin.base.label.name')}}</th>
             <th>{{trans('admin.base.label.code')}}</th>
+            @if(Auth::guard('admin')->check() && Auth::guard('admin')->user()->isSuperAdmin())
+                <th>{{trans('admin.base.label.created_by')}}</th>
+                <th>{{trans('admin.base.label.updated_by')}}</th>
+            @endif
             <th class="th-actions"></th>
         </tr>
         </thead>

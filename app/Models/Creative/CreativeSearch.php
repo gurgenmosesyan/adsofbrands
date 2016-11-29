@@ -50,12 +50,18 @@ class CreativeSearch extends DataTable
         $cLngId = cLng('id');
         $query = Creative::leftJoinMl();
         if (Auth::guard('admin')->check()) {
-            $query->select('creatives.id', 'creatives.type', 'ml.title', 'brand.title as brand_title', 'agency.title as agency_title')
+            $query->select('creatives.id', 'creatives.type', 'ml.title', 'brand.title as brand_title', 'agency.title as agency_title', 'admin1.email as created_by', 'admin2.email as updated_by')
                 ->leftJoin('brands_ml as brand', function($query) use($cLngId) {
                     $query->on('brand.id', '=', 'creatives.type_id')->where('brand.lng_id', '=', $cLngId);
                 })
                 ->leftJoin('agencies_ml as agency', function($query) use($cLngId) {
                     $query->on('agency.id', '=', 'creatives.type_id')->where('agency.lng_id', '=', $cLngId);
+                })
+                ->leftJoin('adm_users as admin1', function($query) {
+                    $query->on('admin1.id', '=', 'creatives.add_admin_id');
+                })
+                ->leftJoin('adm_users as admin2', function($query) {
+                    $query->on('admin2.id', '=', 'creatives.update_admin_id');
                 });
         } else if (Auth::guard('brand')->check()) {
             $brand = Auth::guard('brand')->user();

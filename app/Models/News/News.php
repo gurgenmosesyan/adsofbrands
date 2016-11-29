@@ -13,6 +13,8 @@ class News extends Model
     const TOP = '1';
     const NOT_TOP = '0';
 
+    public $adminInfo = true;
+
     protected $fillable = [
         'alias',
         'top',
