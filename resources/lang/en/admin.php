@@ -182,4 +182,8 @@ return array (
   'base.label.active' => 'Active',
   'base.label.inactive' => 'Inactive',
   'base.label.preview' => 'Preview',
+  'short_link.form.title' => 'Short links',
+  'base.label.short_link' => 'Short link',
+  'short_link.form.add.sub_title' => 'Add new short link',
+  'short_link.form.edit.sub_title' => 'Short link № :id',
 );

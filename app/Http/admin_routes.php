@@ -62,6 +62,14 @@ Route::group($params, function () {
         Route::post('/footerMenu/update/{id}', ['uses' => 'FooterMenuController@update', 'as' => 'admin_footer_menu_update', 'permission' => 'footer_menu']);
         Route::post('/footerMenu/delete/{id}', ['uses' => 'FooterMenuController@delete', 'as' => 'admin_footer_menu_delete', 'permission' => 'super_admin']);
 
+        Route::get('/shortLink', ['uses' => 'ShortLinkController@table', 'as' => 'admin_short_link_table', 'permission' => 'short_link']);
+        Route::get('/shortLink/create', ['uses' => 'ShortLinkController@create', 'as' => 'admin_short_link_create', 'permission' => 'short_link']);
+        Route::get('/shortLink/edit/{id}', ['uses' => 'ShortLinkController@edit', 'as' => 'admin_short_link_edit', 'permission' => 'short_link']);
+        Route::post('/shortLink', ['uses' => 'ShortLinkController@index', 'as' => 'admin_short_link_index', 'permission' => 'short_link']);
+        Route::post('/shortLink/store', ['uses' => 'ShortLinkController@store', 'as' => 'admin_short_link_store', 'permission' => 'short_link']);
+        Route::post('/shortLink/update/{id}', ['uses' => 'ShortLinkController@update', 'as' => 'admin_short_link_update', 'permission' => 'short_link']);
+        Route::post('/shortLink/delete/{id}', ['uses' => 'ShortLinkController@delete', 'as' => 'admin_short_link_delete', 'permission' => 'super_admin']);
+
         Route::get('/banner', ['uses' => 'BannerController@table', 'as' => 'admin_banner_table', 'permission' => 'banner']);
         Route::get('/banner/edit/{id}', ['uses' => 'BannerController@edit', 'as' => 'admin_banner_edit', 'permission' => 'banner']);
         Route::post('/banner', ['uses' => 'BannerController@index', 'as' => 'admin_banner_index', 'permission' => 'banner']);

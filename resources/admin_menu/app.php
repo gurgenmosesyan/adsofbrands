@@ -78,6 +78,11 @@ return [
         'icon' => 'fa-reorder',
     ],
     [
+        'key' => 'short_link',
+        'path' => route('admin_short_link_table'),
+        'icon' => 'fa-link',
+    ],
+    [
         'key' => 'subscribe',
         'path' => route('admin_subscribe_table'),
         'icon' => 'fa-envelope',

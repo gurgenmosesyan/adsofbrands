@@ -49,6 +49,7 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'access_control' => \App\Http\Middleware\AccessControl::class,
+        'short_link' => \App\Http\Middleware\ShortLink::class,
         'language' => \App\Http\Middleware\SetAdminLanguage::class,
         'front' => \App\Http\Middleware\Front::class,
     ];

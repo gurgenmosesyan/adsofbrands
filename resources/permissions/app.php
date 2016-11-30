@@ -15,5 +15,6 @@ return [
     'team',
     'banner',
     'footer_menu',
+    'short_link',
     'subscribe',
 ];
