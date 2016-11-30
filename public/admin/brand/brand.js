@@ -4,7 +4,12 @@ $brand.listPath = '/admpanel/brand';
 $brand.initSearchPage = function() {
     $brand.listColumns = [
         {data: 'id'},
-        {data: 'title'}
+        {data: 'title'},
+        {data: 'show_status'},
+        {
+            data: 'preview',
+            sortable: false
+        }
     ];
     if ($main.showAdminInfo) {
         $brand.listColumns.push(

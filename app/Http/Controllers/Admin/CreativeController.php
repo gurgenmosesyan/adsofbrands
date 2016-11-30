@@ -35,6 +35,7 @@ class CreativeController extends BaseController
     public function create()
     {
         $creative = new Creative();
+        $creative->show_status = Creative::STATUS_ACTIVE;
         $languages = Language::all();
 
         return view('admin.creative.edit')->with([

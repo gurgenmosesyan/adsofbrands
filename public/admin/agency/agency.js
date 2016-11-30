@@ -4,7 +4,12 @@ $agency.listPath = '/admpanel/agency';
 $agency.initSearchPage = function() {
     $agency.listColumns = [
         {data: 'id'},
-        {data: 'title'}
+        {data: 'title'},
+        {data: 'show_status'},
+        {
+            data: 'preview',
+            sortable: false
+        }
     ];
     if ($main.showAdminInfo) {
         $agency.listColumns.push(

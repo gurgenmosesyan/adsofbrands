@@ -72,6 +72,21 @@ $mls = $menu->ml->keyBy('lng_id');
                 </div>
             </div>
 
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.status')}}</label>
+                <div class="col-sm-9 show-status-box">
+                    <label>
+                        <input type="radio" name="show_status" class="minimal-checkbox" value="{{FooterMenu::STATUS_ACTIVE}}"{{$menu->show_status == FooterMenu::STATUS_ACTIVE ? ' checked="checked"' : ''}}>
+                        <span>{{trans('admin.base.label.active')}}</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="show_status" class="minimal-checkbox" value="{{FooterMenu::STATUS_INACTIVE}}"{{$menu->show_status == FooterMenu::STATUS_INACTIVE ? ' checked="checked"' : ''}}>
+                        <span>{{trans('admin.base.label.inactive')}}</span>
+                    </label>
+                    <div id="form-error-show_status" class="form-error"></div>
+                </div>
+            </div>
+
             {{csrf_field()}}
         </div>
         <div class="box-footer">

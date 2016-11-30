@@ -22,6 +22,8 @@ $isAdmin = Auth::guard('admin')->check();
                 <th>{{trans('admin.base.label.brand_agency')}}</th>
             @endif
             <th>{{trans('admin.base.label.name')}}</th>
+            <th>{{trans('admin.base.label.status')}}</th>
+            <th>{{trans('admin.base.label.preview')}}</th>
             @if($isAdmin && Auth::guard('admin')->user()->isSuperAdmin())
                 <th>{{trans('admin.base.label.created_by')}}</th>
                 <th>{{trans('admin.base.label.updated_by')}}</th>

@@ -115,6 +115,21 @@ $mls = $news->ml->keyBy('lng_id');
             </div>
         </div>
 
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{trans('admin.base.label.status')}}</label>
+            <div class="col-sm-9 show-status-box">
+                <label>
+                    <input type="radio" name="show_status" class="minimal-checkbox" value="{{News::STATUS_ACTIVE}}"{{$news->show_status == News::STATUS_ACTIVE ? ' checked="checked"' : ''}}>
+                    <span>{{trans('admin.base.label.active')}}</span>
+                </label>
+                <label>
+                    <input type="radio" name="show_status" class="minimal-checkbox" value="{{News::STATUS_INACTIVE}}"{{$news->show_status == News::STATUS_INACTIVE ? ' checked="checked"' : ''}}>
+                    <span>{{trans('admin.base.label.inactive')}}</span>
+                </label>
+                <div id="form-error-show_status" class="form-error"></div>
+            </div>
+        </div>
+
         {{csrf_field()}}
     </div>
     <div class="box-footer">

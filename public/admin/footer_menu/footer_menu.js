@@ -4,7 +4,12 @@ $menu.listPath = '/admpanel/footerMenu';
 $menu.initSearchPage = function() {
     $menu.listColumns = [
         {data: 'id'},
-        {data: 'title'}
+        {data: 'title'},
+        {data: 'show_status'},
+        {
+            data: 'preview',
+            sortable: false
+        }
     ];
     if ($main.showAdminInfo) {
         $menu.listColumns.push(

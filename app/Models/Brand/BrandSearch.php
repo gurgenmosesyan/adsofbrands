@@ -22,12 +22,18 @@ class BrandSearch extends DataTable
         $query = $this->constructQuery();
         $this->constructOrder($query);
         $this->constructLimit($query);
-        return $query->get();
+        $data = $query->get();
+        $conf = config('main.show_status');
+        foreach ($data as $value) {
+            $value->show_status = $value->show_status == Brand::STATUS_ACTIVE ? '<i class="fa fa-check"></i>' : '';
+            $value->preview = '<a href="'.url_with_lng('/brands/'.$value->alias.'/'.$value->id.'?hash='.$conf['start_salt'].$value->hash.$conf['end_salt']).'" target="_blank">'.trans('admin.base.label.preview').'</a>';
+        }
+        return $data;
     }
 
     protected function constructQuery()
     {
-        $query = Brand::select('brands.id', 'ml.title', 'admin1.email as created_by', 'admin2.email as updated_by')
+        $query = Brand::select('brands.id', 'ml.title', 'brands.alias', 'brands.show_status', 'brands.hash', 'admin1.email as created_by', 'admin2.email as updated_by')
             ->leftJoinMl()
             ->leftJoin('adm_users as admin1', function($query) {
                 $query->on('admin1.id', '=', 'brands.add_admin_id');
@@ -54,6 +60,9 @@ class BrandSearch extends DataTable
         switch ($this->orderCol) {
             case 'title':
                 $orderCol = 'ml.title';
+                break;
+            case 'show_status':
+                $orderCol = 'brands.show_status';
                 break;
             default:
                 $orderCol = 'brands.id';

@@ -39,6 +39,7 @@ class BrandManager
         if (Auth::guard('admin')->guest()) {
             $data['top'] = $brand->top;
             $data['blocked'] = $brand->blocked;
+            $data['show_status'] = $brand->show_status;
         }
         SaveImage::save($data['image'], $brand);
         SaveImage::save($data['cover'], $brand, 'cover');

@@ -15,23 +15,24 @@ class AddStatusField extends Migration
     {
         Schema::table('brands', function (Blueprint $table) {
             $table->enum('show_status', [Model::STATUS_ACTIVE, Model::STATUS_INACTIVE])->after('blocked');
-            $table->string('show_token', 100)->after('show_status');
         });
         Schema::table('agencies', function (Blueprint $table) {
             $table->enum('show_status', [Model::STATUS_ACTIVE, Model::STATUS_INACTIVE])->after('blocked');
-            $table->string('show_token', 100)->after('show_status');
         });
         Schema::table('creatives', function (Blueprint $table) {
             $table->enum('show_status', [Model::STATUS_ACTIVE, Model::STATUS_INACTIVE])->after('blocked');
-            $table->string('show_token', 100)->after('show_status');
         });
         Schema::table('commercials', function (Blueprint $table) {
             $table->enum('show_status', [Model::STATUS_ACTIVE, Model::STATUS_INACTIVE])->after('qt');
-            $table->string('show_token', 100)->after('show_status');
+            $table->string('hash', 100)->after('show_status');
         });
         Schema::table('news', function (Blueprint $table) {
             $table->enum('show_status', [Model::STATUS_ACTIVE, Model::STATUS_INACTIVE])->after('date');
-            $table->string('show_token', 100)->after('show_status');
+            $table->string('hash', 100)->after('show_status');
+        });
+        Schema::table('footer_menu', function (Blueprint $table) {
+            $table->enum('show_status', [Model::STATUS_ACTIVE, Model::STATUS_INACTIVE])->after('sort_order');
+            $table->string('hash', 100)->after('show_status');
         });
     }
 
@@ -44,23 +45,24 @@ class AddStatusField extends Migration
     {
         Schema::table('brands', function (Blueprint $table) {
             $table->dropColumn('show_status');
-            $table->dropColumn('show_token');
         });
-        Schema::table('brands', function (Blueprint $table) {
+        Schema::table('agencies', function (Blueprint $table) {
             $table->dropColumn('show_status');
-            $table->dropColumn('show_token');
         });
         Schema::table('creatives', function (Blueprint $table) {
             $table->dropColumn('show_status');
-            $table->dropColumn('show_token');
         });
         Schema::table('commercials', function (Blueprint $table) {
             $table->dropColumn('show_status');
-            $table->dropColumn('show_token');
+            $table->dropColumn('hash');
         });
         Schema::table('news', function (Blueprint $table) {
             $table->dropColumn('show_status');
-            $table->dropColumn('show_token');
+            $table->dropColumn('hash');
+        });
+        Schema::table('footer_menu', function (Blueprint $table) {
+            $table->dropColumn('show_status');
+            $table->dropColumn('hash');
         });
     }
 }

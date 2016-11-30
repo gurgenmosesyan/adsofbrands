@@ -42,6 +42,7 @@ class CommercialController extends BaseController
     public function create()
     {
         $commercial = new Commercial();
+        $commercial->show_status = Commercial::STATUS_ACTIVE;
         $mediaTypes = MediaType::joinMl()->get();
         $countries = Country::joinMl()->get();
         $categories = Category::joinMl()->get();

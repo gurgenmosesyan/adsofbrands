@@ -11,9 +11,28 @@ use DB;
 
 class CreativeController extends Controller
 {
+    protected function getCreative($id, Request $request)
+    {
+        $hash = $request->input('hash');
+        $query = Creative::joinMl()->where('creatives.id', $id);
+        if (empty($hash)) {
+            return $query->where('creatives.show_status', Creative::STATUS_ACTIVE)->firstOrFail();
+        } else {
+            $creative = $query->firstOrFail();
+            if ($creative->show_status == Creative::STATUS_ACTIVE) {
+                return $creative;
+            }
+            $conf = config('main.show_status');
+            if ($hash !== $conf['start_salt'].$creative->hash.$conf['end_salt']) {
+                abort(404);
+            }
+            return $creative;
+        }
+    }
+
     public function index($lngCode, $alias, $id, Request $request)
     {
-        $creative = Creative::joinMl()->where('creatives.id', $id)->firstOrFail();
+        $creative = $this->getCreative($id, $request);
         if ($creative->alias != $alias) {
             return redirect(url_with_lng('/creative/'.$creative->alias.'/'.$creative->id));
         }
@@ -34,9 +53,9 @@ class CreativeController extends Controller
         ]);
     }
 
-    public function brands($lngCode, $alias, $id)
+    public function brands($lngCode, $alias, $id, Request $request)
     {
-        $creative = Creative::joinMl()->where('creatives.id', $id)->firstOrFail();
+        $creative = $this->getCreative($id, $request);
         if ($creative->alias != $alias) {
             return redirect(url_with_lng('/creative/'.$creative->alias.'/'.$creative->id));
         }
@@ -57,9 +76,9 @@ class CreativeController extends Controller
         ]);
     }
 
-    public function awards($lngCode, $alias, $id)
+    public function awards($lngCode, $alias, $id, Request $request)
     {
-        $creative = Creative::joinMl()->where('creatives.id', $id)->firstOrFail();
+        $creative = $this->getCreative($id, $request);
         if ($creative->alias != $alias) {
             return redirect(url_with_lng('/creative/'.$creative->alias.'/'.$creative->id));
         }
@@ -73,9 +92,9 @@ class CreativeController extends Controller
         ]);
     }
 
-    public function about($lngCode, $alias, $id)
+    public function about($lngCode, $alias, $id, Request $request)
     {
-        $creative = Creative::joinMl()->where('creatives.id', $id)->firstOrFail();
+        $creative = $this->getCreative($id, $request);
         if ($creative->alias != $alias) {
             return redirect(url_with_lng('/creative/'.$creative->alias.'/'.$creative->id));
         }

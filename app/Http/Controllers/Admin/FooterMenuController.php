@@ -32,6 +32,7 @@ class FooterMenuController extends BaseController
     public function create()
     {
         $menu = new FooterMenu();
+        $menu->show_status = FooterMenu::STATUS_ACTIVE;
         $languages = Language::all();
 
         return view('admin.footer_menu.edit')->with([

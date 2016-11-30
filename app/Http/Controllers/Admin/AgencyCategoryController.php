@@ -6,7 +6,7 @@ use App\Http\Controllers\Core\BaseController;
 use App\Models\AgencyCategory\Category;
 use App\Models\AgencyCategory\CategoryManager;
 use App\Models\AgencyCategory\CategorySearch;
-use App\Http\Requests\Admin\CategoryRequest;
+use App\Http\Requests\Admin\AgencyCategoryRequest;
 use App\Core\Language\Language;
 
 class AgencyCategoryController extends BaseController
@@ -41,7 +41,7 @@ class AgencyCategoryController extends BaseController
         ]);
     }
 
-    public function store(CategoryRequest $request)
+    public function store(AgencyCategoryRequest $request)
     {
         $this->manager->store($request->all());
         return $this->api('OK');
@@ -59,7 +59,7 @@ class AgencyCategoryController extends BaseController
         ]);
     }
 
-    public function update(CategoryRequest $request, $id)
+    public function update(AgencyCategoryRequest $request, $id)
     {
         $this->manager->update($id, $request->all());
         return $this->api('OK');

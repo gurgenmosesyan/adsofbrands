@@ -12,7 +12,12 @@ $creative.initSearchPage = function() {
         $creative.listColumns.push({data: 'brand_agency', sortable: false});
     }
     $creative.listColumns = $creative.listColumns.concat([
-        {data: 'title'}
+        {data: 'title'},
+        {data: 'show_status'},
+        {
+            data: 'preview',
+            sortable: false
+        }
     ]);
     if ($main.showAdminInfo) {
         $creative.listColumns.push(

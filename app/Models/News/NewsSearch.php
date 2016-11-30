@@ -22,12 +22,17 @@ class NewsSearch extends DataTable
         $query = $this->constructQuery();
         $this->constructOrder($query);
         $this->constructLimit($query);
-        return $query->get();
+        $data = $query->get();
+        foreach ($data as $value) {
+            $value->show_status = $value->show_status == News::STATUS_ACTIVE ? '<i class="fa fa-check"></i>' : '';
+            $value->preview = '<a href="'.url_with_lng('/news/'.$value->alias.'/'.$value->id.'?hash='.$value->hash).'" target="_blank">'.trans('admin.base.label.preview').'</a>';
+        }
+        return $data;
     }
 
     protected function constructQuery()
     {
-        $query = News::select('news.id', 'ml.title', 'ml.description', 'admin1.email as created_by', 'admin2.email as updated_by')
+        $query = News::select('news.id', 'ml.title', 'news.alias', 'news.show_status', 'news.hash', 'ml.description', 'admin1.email as created_by', 'admin2.email as updated_by')
             ->joinMl()
             ->leftJoin('adm_users as admin1', function($query) {
                 $query->on('admin1.id', '=', 'news.add_admin_id');
@@ -52,6 +57,9 @@ class NewsSearch extends DataTable
                 break;
             case 'sub_title':
                 $orderCol = 'ml.sub_title';
+                break;
+            case 'show_status':
+                $orderCol = 'news.show_status';
                 break;
             default:
                 $orderCol = 'news.id';

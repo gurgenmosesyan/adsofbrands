@@ -138,6 +138,20 @@ $mls = $agency->ml->keyBy('lng_id');
                         <div id="form-error-top" class="form-error"></div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">{{trans('admin.base.label.status')}}</label>
+                    <div class="col-sm-9 show-status-box">
+                        <label>
+                            <input type="radio" name="show_status" class="minimal-checkbox" value="{{Agency::STATUS_ACTIVE}}"{{$agency->show_status == Agency::STATUS_ACTIVE ? ' checked="checked"' : ''}}>
+                            <span>{{trans('admin.base.label.active')}}</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="show_status" class="minimal-checkbox" value="{{Agency::STATUS_INACTIVE}}"{{$agency->show_status == Agency::STATUS_INACTIVE ? ' checked="checked"' : ''}}>
+                            <span>{{trans('admin.base.label.inactive')}}</span>
+                        </label>
+                        <div id="form-error-show_status" class="form-error"></div>
+                    </div>
+                </div>
             @endif
 
             <h4 class="col-sm-offset-3 col-sm-9">{{trans('admin.base.label.social_pages')}}</h4>

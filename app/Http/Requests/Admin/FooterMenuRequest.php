@@ -26,6 +26,7 @@ class FooterMenuRequest extends Request
             'alias' => 'required|max:255|unique:footer_menu,alias'.$menuId,
             'hidden' => 'in:'.FooterMenu::HIDDEN.','.FooterMenu::NOT_HIDDEN,
             'sort_order' => 'integer',
+            'show_status' => 'required|in:'.FooterMenu::STATUS_ACTIVE.','.FooterMenu::STATUS_INACTIVE,
             'ml' => 'ml',
             'ml.*.title' => 'required|max:255',
             'ml.*.text' => $textReqRule.'max:65000'

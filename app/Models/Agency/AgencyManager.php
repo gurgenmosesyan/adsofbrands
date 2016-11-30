@@ -39,6 +39,7 @@ class AgencyManager
         if (Auth::guard('admin')->guest()) {
             $data['top'] = $agency->top;
             $data['blocked'] = $agency->blocked;
+            $data['show_status'] = $agency->show_status;
         }
         SaveImage::save($data['image'], $agency);
         SaveImage::save($data['cover'], $agency, 'cover');

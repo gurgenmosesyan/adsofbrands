@@ -33,6 +33,7 @@ class CreativeRequest extends Request
             'youtube' => 'url|max:255',
             'linkedin' => 'url|max:255',
             'vimeo' => 'url|max:255',
+            'show_status' => 'required|in:'.Creative::STATUS_ACTIVE.','.Creative::STATUS_INACTIVE,
             'ml' => 'ml',
             'ml.*.title' => 'required|max:255',
             'ml.*.about' => 'max:65000',

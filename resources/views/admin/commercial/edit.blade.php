@@ -335,6 +335,21 @@ $jsTrans->addTrans([
             </div>
         @endif
 
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{trans('admin.base.label.status')}}</label>
+            <div class="col-sm-9 show-status-box">
+                <label>
+                    <input type="radio" name="show_status" class="minimal-checkbox" value="{{Commercial::STATUS_ACTIVE}}"{{$commercial->show_status == Commercial::STATUS_ACTIVE ? ' checked="checked"' : ''}}>
+                    <span>{{trans('admin.base.label.active')}}</span>
+                </label>
+                <label>
+                    <input type="radio" name="show_status" class="minimal-checkbox" value="{{Commercial::STATUS_INACTIVE}}"{{$commercial->show_status == Commercial::STATUS_INACTIVE ? ' checked="checked"' : ''}}>
+                    <span>{{trans('admin.base.label.inactive')}}</span>
+                </label>
+                <div id="form-error-show_status" class="form-error"></div>
+            </div>
+        </div>
+
         {{csrf_field()}}
     </div>
     <div class="box-footer">

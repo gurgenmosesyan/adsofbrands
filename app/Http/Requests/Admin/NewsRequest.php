@@ -14,6 +14,7 @@ class NewsRequest extends Request
             'image' => 'required|core_image',
             'top' => 'in:'.News::NOT_TOP.','.News::TOP,
             'date' => 'date',
+            'show_status' => 'required|in:'.News::STATUS_ACTIVE.','.News::STATUS_INACTIVE,
             'ml' => 'ml',
             'ml.*.title' => 'required|max:255',
             'ml.*.description' => 'required|max:2000',

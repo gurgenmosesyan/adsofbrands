@@ -179,4 +179,7 @@ return array (
   'options.form.title' => 'Options',
   'system.form.title' => 'System',
   'profile.form.title' => 'Profile',
+  'base.label.active' => 'Active',
+  'base.label.inactive' => 'Inactive',
+  'base.label.preview' => 'Preview',
 );

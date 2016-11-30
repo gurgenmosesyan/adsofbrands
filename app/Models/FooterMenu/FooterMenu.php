@@ -17,7 +17,8 @@ class FooterMenu extends Model
         'alias',
         'static',
         'hidden',
-        'sort_order'
+        'sort_order',
+        'show_status'
     ];
 
     protected $table = 'footer_menu';

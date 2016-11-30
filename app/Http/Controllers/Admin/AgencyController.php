@@ -34,6 +34,7 @@ class AgencyController extends BaseController
     public function create()
     {
         $agency = new Agency();
+        $agency->show_status = Agency::STATUS_ACTIVE;
         $categories = Category::joinMl()->get();
         $languages = Language::all();
 

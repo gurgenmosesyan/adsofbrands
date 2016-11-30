@@ -22,12 +22,17 @@ class FooterMenuSearch extends DataTable
         $query = $this->constructQuery();
         $this->constructOrder($query);
         $this->constructLimit($query);
-        return $query->get();
+        $data = $query->get();
+        foreach ($data as $value) {
+            $value->show_status = $value->show_status == FooterMenu::STATUS_ACTIVE ? '<i class="fa fa-check"></i>' : '';
+            $value->preview = '<a href="'.url_with_lng('/page/'.$value->alias.'?hash='.$value->hash).'" target="_blank">'.trans('admin.base.label.preview').'</a>';
+        }
+        return $data;
     }
 
     protected function constructQuery()
     {
-        $query = FooterMenu::select('footer_menu.id', 'ml.title', 'admin1.email as created_by', 'admin2.email as updated_by')
+        $query = FooterMenu::select('footer_menu.id', 'ml.title', 'footer_menu.alias', 'footer_menu.show_status', 'footer_menu.hash', 'admin1.email as created_by', 'admin2.email as updated_by')
             ->joinMl()
             ->leftJoin('adm_users as admin1', function($query) {
                 $query->on('admin1.id', '=', 'footer_menu.add_admin_id');
@@ -48,6 +53,9 @@ class FooterMenuSearch extends DataTable
         switch ($this->orderCol) {
             case 'title':
                 $orderCol = 'ml.title';
+                break;
+            case 'show_status':
+                $orderCol = 'footer_menu.show_status';
                 break;
             default:
                 $orderCol = 'footer_menu.id';

@@ -18,7 +18,8 @@ class News extends Model
     protected $fillable = [
         'alias',
         'top',
-        'date'
+        'date',
+        'show_status'
     ];
 
     protected $table = 'news';

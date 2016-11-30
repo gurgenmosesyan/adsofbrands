@@ -56,6 +56,7 @@ class CreativeManager
         }
         if (Auth::guard('creative')->check()) {
             $data['blocked'] = $creative->blocked;
+            $data['show_status'] = $creative->show_status;
         }
         $data['active'] = Creative::ACTIVE;
         SaveImage::save($data['image'], $creative);

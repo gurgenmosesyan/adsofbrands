@@ -43,7 +43,8 @@ class Brand extends Model implements AuthenticatableContract
         'linkedin',
         'vimeo',
         'active',
-        'blocked'
+        'blocked',
+        'show_status'
     ];
 
     protected $table = 'brands';

@@ -21,7 +21,7 @@ class BrandController extends Controller
         $countryId = $request->input('country');
         $categoryId = $request->input('category');
 
-        $query = Brand::joinMl();
+        $query = Brand::joinMl()->where('brands.show_status', Brand::STATUS_ACTIVE);
         if (!empty($countryId)) {
             $query->where('brands.country_id', $countryId);
         }
@@ -39,9 +39,28 @@ class BrandController extends Controller
         ]);
     }
 
+    protected function getBrand($id, Request $request)
+    {
+        $hash = $request->input('hash');
+        $query = Brand::joinMl()->where('brands.id', $id);
+        if (empty($hash)) {
+            return $query->where('brands.show_status', Brand::STATUS_ACTIVE)->firstOrFail();
+        } else {
+            $brand = $query->firstOrFail();
+            if ($brand->show_status == Brand::STATUS_ACTIVE) {
+                return $brand;
+            }
+            $conf = config('main.show_status');
+            if ($hash !== $conf['start_salt'].$brand->hash.$conf['end_salt']) {
+                abort(404);
+            }
+            return $brand;
+        }
+    }
+
     public function index($lngCode, $alias, $id, Request $request)
     {
-        $brand = Brand::joinMl()->where('brands.id', $id)->firstOrFail();
+        $brand = $this->getBrand($id, $request);
         if ($brand->alias != $alias) {
             return redirect(url_with_lng('/brands/'.$brand->alias.'/'.$brand->id));
         }
@@ -57,9 +76,9 @@ class BrandController extends Controller
         ]);
     }
 
-    public function creatives($lngCode, $alias, $id)
+    public function creatives($lngCode, $alias, $id, Request $request)
     {
-        $brand = Brand::joinMl()->where('brands.id', $id)->firstOrFail();
+        $brand = $this->getBrand($id, $request);
         if ($brand->alias != $alias) {
             return redirect(url_with_lng('/brands/'.$brand->alias.'/'.$brand->id));
         }
@@ -73,9 +92,9 @@ class BrandController extends Controller
         ]);
     }
 
-    public function awards($lngCode, $alias, $id)
+    public function awards($lngCode, $alias, $id, Request $request)
     {
-        $brand = Brand::joinMl()->where('brands.id', $id)->firstOrFail();
+        $brand = $this->getBrand($id, $request);
         if ($brand->alias != $alias) {
             return redirect(url_with_lng('/brands/'.$brand->alias.'/'.$brand->id));
         }
@@ -89,9 +108,9 @@ class BrandController extends Controller
         ]);
     }
 
-    public function vacancies($lngCode, $alias, $id)
+    public function vacancies($lngCode, $alias, $id, Request $request)
     {
-        $brand = Brand::joinMl()->where('brands.id', $id)->firstOrFail();
+        $brand = $this->getBrand($id, $request);
         if ($brand->alias != $alias) {
             return redirect(url_with_lng('/brands/'.$brand->alias.'/'.$brand->id));
         }
@@ -105,9 +124,9 @@ class BrandController extends Controller
         ]);
     }
 
-    public function news($lngCode, $alias, $id)
+    public function news($lngCode, $alias, $id, Request $request)
     {
-        $brand = Brand::joinMl()->where('brands.id', $id)->firstOrFail();
+        $brand = $this->getBrand($id, $request);
         if ($brand->alias != $alias) {
             return redirect(url_with_lng('/brands/'.$brand->alias.'/'.$brand->id));
         }
@@ -121,9 +140,9 @@ class BrandController extends Controller
         ]);
     }
 
-    public function agencies($lngCode, $alias, $id)
+    public function agencies($lngCode, $alias, $id, Request $request)
     {
-        $brand = Brand::joinMl()->where('brands.id', $id)->firstOrFail();
+        $brand = $this->getBrand($id, $request);
         if ($brand->alias != $alias) {
             return redirect(url_with_lng('/brands/'.$brand->alias.'/'.$brand->id));
         }
@@ -151,9 +170,9 @@ class BrandController extends Controller
         ]);
     }
 
-    public function about($lngCode, $alias, $id)
+    public function about($lngCode, $alias, $id, Request $request)
     {
-        $brand = Brand::joinMl()->where('brands.id', $id)->firstOrFail();
+        $brand = $this->getBrand($id, $request);
         if ($brand->alias != $alias) {
             return redirect(url_with_lng('/brands/'.$brand->alias.'/'.$brand->id));
         }
@@ -165,9 +184,9 @@ class BrandController extends Controller
         ]);
     }
 
-    public function branches($lngCode, $alias, $id)
+    public function branches($lngCode, $alias, $id, Request $request)
     {
-        $brand = Brand::joinMl()->where('brands.id', $id)->firstOrFail();
+        $brand = $this->getBrand($id, $request);
         if ($brand->alias != $alias) {
             return redirect(url_with_lng('/brands/'.$brand->alias.'/'.$brand->id));
         }

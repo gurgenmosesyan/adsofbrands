@@ -25,6 +25,7 @@ class CommercialRequest extends Request
             'views_count' => 'integer',
             'rating' => 'numeric',
             'qt' => 'integer',
+            'show_status' => 'required|in:'.Commercial::STATUS_ACTIVE.','.Commercial::STATUS_INACTIVE,
             'ml' => 'ml',
             'ml.*.title' => 'required|max:255',
             'ml.*.description' => 'max:2000',

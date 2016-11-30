@@ -42,7 +42,12 @@ class CommercialSearch extends DataTable
         $query = $this->constructQuery();
         $this->constructOrder($query);
         $this->constructLimit($query);
-        return $query->get();
+        $data = $query->get();
+        foreach ($data as $value) {
+            $value->show_status = $value->show_status == Commercial::STATUS_ACTIVE ? '<i class="fa fa-check"></i>' : '';
+            $value->preview = '<a href="'.url_with_lng('/ads/'.$value->alias.'/'.$value->id.'?hash='.$value->hash).'" target="_blank">'.trans('admin.base.label.preview').'</a>';
+        }
+        return $data;
     }
 
     protected function constructQuery()
@@ -66,7 +71,7 @@ class CommercialSearch extends DataTable
             })->lists('commercial_credits.commercial_id')->toArray();
             $query->whereIn('commercials.id', $commercialIds);
         } else {
-            $query->select('commercials.id', 'commercials.published_date', 'ml.title', 'admin1.email as created_by', 'admin2.email as updated_by')
+            $query->select('commercials.id', 'commercials.published_date', 'commercials.alias', 'commercials.show_status', 'commercials.hash', 'ml.title', 'admin1.email as created_by', 'admin2.email as updated_by')
                 ->leftJoin('adm_users as admin1', function($query) {
                     $query->on('admin1.id', '=', 'commercials.add_admin_id');
                 })
@@ -98,6 +103,9 @@ class CommercialSearch extends DataTable
                 break;
             case 'published_date':
                 $orderCol = 'commercials.published_date';
+                break;
+            case 'show_status':
+                $orderCol = 'commercials.show_status';
                 break;
             default:
                 $orderCol = 'commercials.id';

@@ -39,7 +39,8 @@ class Commercial extends Model
         'published_date',
         'views_count',
         'rating',
-        'qt'
+        'qt',
+        'show_status'
     ];
 
     protected $table = 'commercials';

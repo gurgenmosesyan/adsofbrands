@@ -18,7 +18,8 @@ class AgencyController extends Controller
 
         $categoryId = $request->input('category');
 
-        $query = Agency::joinMl();
+        $query = Agency::joinMl()->where('agencies.show_status', Agency::STATUS_ACTIVE);
+
         if (!empty($categoryId)) {
             $query->where('agencies.category_id', $categoryId);
         }
@@ -31,9 +32,28 @@ class AgencyController extends Controller
         ]);
     }
 
+    protected function getAgency($id, Request $request)
+    {
+        $hash = $request->input('hash');
+        $query = Agency::joinMl()->where('agencies.id', $id);
+        if (empty($hash)) {
+            return $query->where('agencies.show_status', Agency::STATUS_ACTIVE)->firstOrFail();
+        } else {
+            $agency = $query->firstOrFail();
+            if ($agency->show_status == Agency::STATUS_ACTIVE) {
+                return $agency;
+            }
+            $conf = config('main.show_status');
+            if ($hash !== $conf['start_salt'].$agency->hash.$conf['end_salt']) {
+                abort(404);
+            }
+            return $agency;
+        }
+    }
+
     public function index($lngCode, $alias, $id, Request $request)
     {
-        $agency = Agency::joinMl()->where('agencies.id', $id)->firstOrFail();
+        $agency = $this->getAgency($id, $request);
         if ($agency->alias != $alias) {
             return redirect(url_with_lng('/agencies/'.$agency->alias.'/'.$agency->id));
         }
@@ -60,9 +80,9 @@ class AgencyController extends Controller
         ]);
     }
 
-    public function creatives($lngCode, $alias, $id)
+    public function creatives($lngCode, $alias, $id, Request $request)
     {
-        $agency = Agency::joinMl()->where('agencies.id', $id)->firstOrFail();
+        $agency = $this->getAgency($id, $request);
         if ($agency->alias != $alias) {
             return redirect(url_with_lng('/agencies/'.$agency->alias.'/'.$agency->id));
         }
@@ -76,9 +96,9 @@ class AgencyController extends Controller
         ]);
     }
 
-    public function awards($lngCode, $alias, $id)
+    public function awards($lngCode, $alias, $id, Request $request)
     {
-        $agency = Agency::joinMl()->where('agencies.id', $id)->firstOrFail();
+        $agency = $this->getAgency($id, $request);
         if ($agency->alias != $alias) {
             return redirect(url_with_lng('/agencies/'.$agency->alias.'/'.$agency->id));
         }
@@ -92,9 +112,9 @@ class AgencyController extends Controller
         ]);
     }
 
-    public function vacancies($lngCode, $alias, $id)
+    public function vacancies($lngCode, $alias, $id, Request $request)
     {
-        $agency = Agency::joinMl()->where('agencies.id', $id)->firstOrFail();
+        $agency = $this->getAgency($id, $request);
         if ($agency->alias != $alias) {
             return redirect(url_with_lng('/agencies/'.$agency->alias.'/'.$agency->id));
         }
@@ -108,9 +128,9 @@ class AgencyController extends Controller
         ]);
     }
 
-    public function news($lngCode, $alias, $id)
+    public function news($lngCode, $alias, $id, Request $request)
     {
-        $agency = Agency::joinMl()->where('agencies.id', $id)->firstOrFail();
+        $agency = $this->getAgency($id, $request);
         if ($agency->alias != $alias) {
             return redirect(url_with_lng('/agencies/'.$agency->alias.'/'.$agency->id));
         }
@@ -124,9 +144,9 @@ class AgencyController extends Controller
         ]);
     }
 
-    public function brands($lngCode, $alias, $id)
+    public function brands($lngCode, $alias, $id, Request $request)
     {
-        $agency = Agency::joinMl()->where('agencies.id', $id)->firstOrFail();
+        $agency = $this->getAgency($id, $request);
         if ($agency->alias != $alias) {
             return redirect(url_with_lng('/agencies/'.$agency->alias.'/'.$agency->id));
         }
@@ -155,9 +175,9 @@ class AgencyController extends Controller
         ]);
     }
 
-    public function about($lngCode, $alias, $id)
+    public function about($lngCode, $alias, $id, Request $request)
     {
-        $agency = Agency::joinMl()->where('agencies.id', $id)->firstOrFail();
+        $agency = $this->getAgency($id, $request);
         if ($agency->alias != $alias) {
             return redirect(url_with_lng('/agencies/'.$agency->alias.'/'.$agency->id));
         }
@@ -169,9 +189,9 @@ class AgencyController extends Controller
         ]);
     }
 
-    public function branches($lngCode, $alias, $id)
+    public function branches($lngCode, $alias, $id, Request $request)
     {
-        $agency = Agency::joinMl()->where('agencies.id', $id)->firstOrFail();
+        $agency = $this->getAgency($id, $request);
         if ($agency->alias != $alias) {
             return redirect(url_with_lng('/agencies/'.$agency->alias.'/'.$agency->id));
         }

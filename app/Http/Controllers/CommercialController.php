@@ -25,7 +25,7 @@ class CommercialController extends Controller
         $month = $request->input('month');
         $year = $request->input('year');
 
-        $query = Commercial::joinMl();
+        $query = Commercial::joinMl()->where('commercials.show_status', Commercial::STATUS_ACTIVE);
         if (!empty($mediaTypeId)) {
             $query->where('commercials.media_type_id', $mediaTypeId);
         }
@@ -54,9 +54,27 @@ class CommercialController extends Controller
         ]);
     }
 
-    public function index($lngCode, $alias, $id)
+    protected function getCommercial($id, Request $request)
     {
-        $ad = Commercial::joinMl()->where('commercials.id', $id)->firstOrFail();
+        $hash = $request->input('hash');
+        $query = Commercial::joinMl()->where('commercials.id', $id);
+        if (empty($hash)) {
+            return $query->where('commercials.show_status', Commercial::STATUS_ACTIVE)->firstOrFail();
+        } else {
+            $commercial = $query->firstOrFail();
+            if ($commercial->show_status == Commercial::STATUS_ACTIVE) {
+                return $commercial;
+            }
+            if ($hash !== $commercial->hash) {
+                abort(404);
+            }
+            return $commercial;
+        }
+    }
+
+    public function index($lngCode, $alias, $id, Request $request)
+    {
+        $ad = $this->getCommercial($id, $request);
         if ($ad->alias != $alias) {
             return redirect(url_with_lng('/ads/'.$ad->alias.'/'.$ad->id));
         }

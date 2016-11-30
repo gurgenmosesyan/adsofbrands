@@ -35,6 +35,7 @@ class BrandController extends BaseController
     public function create()
     {
         $brand = new Brand();
+        $brand->show_status = Brand::STATUS_ACTIVE;
         $countries = Country::joinMl()->get();
         $categories = Category::joinMl()->get();
         $languages = Language::all();

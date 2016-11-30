@@ -32,6 +32,7 @@ class NewsController extends BaseController
     public function create()
     {
         $news = new News();
+        $news->show_status = News::STATUS_ACTIVE;
         $languages = Language::all();
 
         return view('admin.news.edit')->with([

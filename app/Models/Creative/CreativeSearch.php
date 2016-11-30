@@ -32,6 +32,7 @@ class CreativeSearch extends DataTable
         $this->constructOrder($query);
         $this->constructLimit($query);
         $data = $query->get();
+        $conf = config('main.show_status');
         foreach ($data as $value) {
             if ($value->type == Creative::TYPE_BRAND) {
                 $value->brand_agency = $value->brand_title;
@@ -41,6 +42,8 @@ class CreativeSearch extends DataTable
                 $value->brand_agency = '';
             }
             $value->type = trans('admin.base.label.'.$value->type);
+            $value->show_status = $value->show_status == Creative::STATUS_ACTIVE ? '<i class="fa fa-check"></i>' : '';
+            $value->preview = '<a href="'.url_with_lng('/creative/'.$value->alias.'/'.$value->id.'?hash='.$conf['start_salt'].$value->hash.$conf['end_salt']).'" target="_blank">'.trans('admin.base.label.preview').'</a>';
         }
         return $data;
     }
@@ -50,7 +53,7 @@ class CreativeSearch extends DataTable
         $cLngId = cLng('id');
         $query = Creative::leftJoinMl();
         if (Auth::guard('admin')->check()) {
-            $query->select('creatives.id', 'creatives.type', 'ml.title', 'brand.title as brand_title', 'agency.title as agency_title', 'admin1.email as created_by', 'admin2.email as updated_by')
+            $query->select('creatives.id', 'creatives.type', 'creatives.alias', 'creatives.show_status', 'creatives.hash', 'ml.title', 'brand.title as brand_title', 'agency.title as agency_title', 'admin1.email as created_by', 'admin2.email as updated_by')
                 ->leftJoin('brands_ml as brand', function($query) use($cLngId) {
                     $query->on('brand.id', '=', 'creatives.type_id')->where('brand.lng_id', '=', $cLngId);
                 })
@@ -65,10 +68,10 @@ class CreativeSearch extends DataTable
                 });
         } else if (Auth::guard('brand')->check()) {
             $brand = Auth::guard('brand')->user();
-            $query->select('creatives.id', 'ml.title')->where('type', Creative::TYPE_BRAND)->where('type_id', $brand->id);
+            $query->select('creatives.id', 'ml.title', 'creatives.alias', 'creatives.show_status', 'creatives.hash')->where('type', Creative::TYPE_BRAND)->where('type_id', $brand->id);
         } else {
             $agency = Auth::guard('agency')->user();
-            $query->select('creatives.id', 'ml.title')->where('type', Creative::TYPE_AGENCY)->where('type_id', $agency->id);
+            $query->select('creatives.id', 'ml.title', 'creatives.alias', 'creatives.show_status', 'creatives.hash')->where('type', Creative::TYPE_AGENCY)->where('type_id', $agency->id);
         }
 
         if ($this->search != null) {
@@ -91,6 +94,9 @@ class CreativeSearch extends DataTable
                 break;
             case 'title':
                 $orderCol = 'ml.title';
+                break;
+            case 'show_status':
+                $orderCol = 'creatives.show_status';
                 break;
             default:
                 $orderCol = 'creatives.id';

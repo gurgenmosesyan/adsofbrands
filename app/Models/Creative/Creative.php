@@ -38,7 +38,8 @@ class Creative extends Model implements AuthenticatableContract
         'linkedin',
         'vimeo',
         'active',
-        'blocked'
+        'blocked',
+        'show_status'
     ];
 
     protected $table = 'creatives';

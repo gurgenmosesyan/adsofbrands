@@ -142,6 +142,23 @@ $jsTrans->addTrans([
             </div>
         </div>
 
+        @if(Auth::guard('creative')->guest())
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{trans('admin.base.label.status')}}</label>
+                <div class="col-sm-9 show-status-box">
+                    <label>
+                        <input type="radio" name="show_status" class="minimal-checkbox" value="{{Creative::STATUS_ACTIVE}}"{{$creative->show_status == Creative::STATUS_ACTIVE ? ' checked="checked"' : ''}}>
+                        <span>{{trans('admin.base.label.active')}}</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="show_status" class="minimal-checkbox" value="{{Creative::STATUS_INACTIVE}}"{{$creative->show_status == Creative::STATUS_INACTIVE ? ' checked="checked"' : ''}}>
+                        <span>{{trans('admin.base.label.inactive')}}</span>
+                    </label>
+                    <div id="form-error-show_status" class="form-error"></div>
+                </div>
+            </div>
+        @endif
+
         <h4 class="col-sm-offset-3 col-sm-9">{{trans('admin.base.label.social_pages')}}</h4>
 
         <div class="form-group">

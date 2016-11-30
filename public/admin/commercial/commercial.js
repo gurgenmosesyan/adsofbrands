@@ -8,7 +8,12 @@ $commercial.initSearchPage = function() {
     $commercial.listColumns = [
         {data: 'id'},
         {data: 'title'},
-        {data: 'published_date'}
+        {data: 'published_date'},
+        {data: 'show_status'},
+        {
+            data: 'preview',
+            sortable: false
+        }
     ];
     if ($main.showAdminInfo) {
         $commercial.listColumns.push(

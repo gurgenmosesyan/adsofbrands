@@ -5,7 +5,12 @@ $news.initSearchPage = function() {
     $news.listColumns = [
         {data: 'id'},
         {data: 'title'},
-        {data: 'description'}
+        {data: 'description'},
+        {data: 'show_status'},
+        {
+            data: 'preview',
+            sortable: false
+        }
     ];
     if ($main.showAdminInfo) {
         $news.listColumns.push(
