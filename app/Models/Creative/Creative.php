@@ -37,6 +37,8 @@ class Creative extends Model implements AuthenticatableContract
         'youtube',
         'linkedin',
         'vimeo',
+        'instagram',
+        'pinterest',
         'active',
         'blocked',
         'show_status'

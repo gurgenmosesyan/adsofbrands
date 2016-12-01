@@ -36,6 +36,8 @@ class BrandRequest extends Request
             'youtube' => 'url|max:255',
             'linkedin' => 'url|max:255',
             'vimeo' => 'url|max:255',
+            'instagram' => 'url|max:255',
+            'pinterest' => 'url|max:255',
             'show_status' => 'required|in:'.Brand::STATUS_ACTIVE.','.Brand::STATUS_INACTIVE,
             'ml' => 'ml',
             'ml.*.title' => 'required|max:255',

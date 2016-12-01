@@ -22,14 +22,14 @@ $footerMenu = FooterMenuManager::get();
     <?php
     use App\Core\Helpers\UserAgent;
 
-    $head->appendMainStyle('/css/main.css');
-    $head->appendMainScript('/js/main.js?v=1');
+    //$head->appendMainStyle('/css/main.css');
+    //$head->appendMainScript('/js/main.js?v=1');
 
-    /*$head->appendMainStyle('/css/_main.css');
+    $head->appendMainStyle('/css/_main.css');
     $head->appendMainStyle('/css/media.css');
     $head->appendMainScript('/js/jquery-2.1.4.min.js');
     $head->appendMainScript('/js/_main.js');
-    $head->appendMainScript('/js/account.js');*/
+    $head->appendMainScript('/js/account.js');
 
     $ua = new UserAgent();
     if ($ua->isIPhone() || $ua->isAndroidMobile() || $ua->isWinPhone()) {

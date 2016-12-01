@@ -24,7 +24,7 @@
         <p class="contact-info link"><a href="{{$model->link}}" class="underline" target="_blank">{{$model->link}}</a></p>
     @endif
 </div>
-@if(!empty($model->fb) || !empty($model->twitter) || !empty($model->google) || !empty($model->youtube) || !empty($model->linkedin) || !empty($model->vimeo))
+@if(!empty($model->fb) || !empty($model->twitter) || !empty($model->google) || !empty($model->youtube) || !empty($model->linkedin) || !empty($model->vimeo) || !empty($model->instagram) || !empty($model->pinterest))
     <div class="social-pages fl fs18">
         <p>{{trans('www.social_pages.title')}}</p>
         <ul>
@@ -45,6 +45,12 @@
             @endif
             @if(!empty($model->vimeo))
                 <li><a href="{{$model->vimeo}}" class="db vimeo" target="_blank"></a></li>
+            @endif
+            @if(!empty($model->instagram))
+                <li><a href="{{$model->instagram}}" class="db instagram" target="_blank"></a></li>
+            @endif
+            @if(!empty($model->pinterest))
+                <li><a href="{{$model->pinterest}}" class="db pinterest" target="_blank"></a></li>
             @endif
         </ul>
     </div>

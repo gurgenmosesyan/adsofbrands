@@ -203,6 +203,20 @@ $jsTrans->addTrans([
                 <div id="form-error-vimeo" class="form-error"></div>
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{trans('admin.base.label.instagram')}}</label>
+            <div class="col-sm-9">
+                <input type="text" name="instagram" class="form-control" value="{{$creative->instagram or ''}}">
+                <div id="form-error-instagram" class="form-error"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{trans('admin.base.label.pinterest')}}</label>
+            <div class="col-sm-9">
+                <input type="text" name="pinterest" class="form-control" value="{{$creative->pinterest or ''}}">
+                <div id="form-error-pinterest" class="form-error"></div>
+            </div>
+        </div>
 
         {{csrf_field()}}
     </div>

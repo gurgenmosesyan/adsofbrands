@@ -894,6 +894,12 @@ body .page {
 #main-left .social-pages ul li a.vimeo {
     background-image: url('../imgs/s-vimeo.png');
 }
+#main-left .social-pages ul li a.instagram {
+    background-image: url('../imgs/s-instagram.png');
+}
+#main-left .social-pages ul li a.pinterest {
+    background-image: url('../imgs/s-pinterest.png');
+}
 #main-left .menu {
     margin: 35px 0 45px;
 }

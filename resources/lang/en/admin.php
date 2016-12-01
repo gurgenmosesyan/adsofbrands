@@ -186,4 +186,6 @@ return array (
   'base.label.short_link' => 'Short link',
   'short_link.form.add.sub_title' => 'Add new short link',
   'short_link.form.edit.sub_title' => 'Short link № :id',
+  'base.label.instagram' => 'Instagram',
+  'base.label.pinterest' => 'Pinterest',
 );
