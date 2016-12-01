@@ -11,6 +11,7 @@ class NewsManager
     {
         $data = $this->processSave($data);
         $news = new News($data);
+        $news->hash = $this->generateRandomUniqueHash();
         SaveImage::save($data['image'], $news);
 
         DB::transaction(function() use($data, $news) {
@@ -21,6 +22,16 @@ class NewsManager
             $this->updateCreatives($data['creatives'], $news);
             $this->updateTags($data['tags'], $news);
         });
+    }
+
+    protected function generateRandomUniqueHash($count = 40)
+    {
+        $hash = str_random($count);
+        $news = News::where('hash', $hash)->first();
+        if ($news == null) {
+            return $hash;
+        }
+        return $this->generateRandomUniqueHash();
     }
 
     public function update($id, $data)

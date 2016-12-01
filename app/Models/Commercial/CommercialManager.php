@@ -12,6 +12,7 @@ class CommercialManager
     {
         $data = $this->processSave($data);
         $commercial = new Commercial($data);
+        $commercial->hash = $this->generateRandomUniqueHash();
         if (Auth::guard('admin')->guest()) {
             $commercial->featured = Commercial::NOT_FEATURED;
             $commercial->top = Commercial::NOT_TOP;
@@ -35,6 +36,16 @@ class CommercialManager
                 $this->cloneCredits($data['clone_id'], $commercial);
             }
         });
+    }
+
+    protected function generateRandomUniqueHash($count = 40)
+    {
+        $hash = str_random($count);
+        $commercial = Commercial::where('hash', $hash)->first();
+        if ($commercial == null) {
+            return $hash;
+        }
+        return $this->generateRandomUniqueHash();
     }
 
     public function update($id, $data)

@@ -12,12 +12,23 @@ class FooterMenuManager
     {
         $data = $this->processSave($data);
         $menu = new FooterMenu($data);
+        $menu->hash = $this->generateRandomUniqueHash();
 
         DB::transaction(function() use($data, $menu) {
             $menu->save();
             $this->storeMl($data['ml'], $menu);
             $this->removeCache();
         });
+    }
+
+    protected function generateRandomUniqueHash($count = 40)
+    {
+        $hash = str_random($count);
+        $menu = FooterMenu::where('hash', $hash)->first();
+        if ($menu == null) {
+            return $hash;
+        }
+        return $this->generateRandomUniqueHash();
     }
 
     public function update($id, $data)
