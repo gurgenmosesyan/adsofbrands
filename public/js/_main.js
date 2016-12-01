@@ -113,6 +113,10 @@ $main.initItemsCar = function() {
     });
 };
 
+function reCaptchaCallback() {
+    $('#subscribe-form').submit();
+}
+
 $main.initSubscribe = function() {
     $('#subscribe-form').submit(function() {
         var form = $(this),
@@ -131,8 +135,15 @@ $main.initSubscribe = function() {
                 if (result.status == 'OK') {
                     info.text(result.data).addClass('success');
                     form.find('input:text').val('');
+                    $('#re-captcha').remove();
+                } else if (result.status == 'RE_CAPTCHA') {
+                    form.append(result.data);
                 } else {
-                    info.text(result.errors.email[0]).addClass('error');
+                    if (result.errors.email) {
+                        info.text(result.errors.email[0]).addClass('error');
+                    } else {
+                        $('#form-error-re_captcha').text(result.errors.re_captcha);
+                    }
                 }
                 info.addClass('visible');
                 form.removeClass('sending');

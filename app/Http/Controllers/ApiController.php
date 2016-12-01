@@ -7,6 +7,7 @@ use App\Http\Requests\SubscribeRequest;
 use App\Models\Commercial\Commercial;
 use Illuminate\Http\Request;
 use App\Email\EmailManager;
+use GuzzleHttp\Client;
 use Mail;
 use DB;
 
@@ -31,11 +32,33 @@ class ApiController extends Controller
 
     public function subscribe(SubscribeRequest $request)
     {
+        $reCaptcha = $request->input('g-recaptcha-response');
+        if (is_null($reCaptcha)) {
+            $reCaptchaHtml = view('blocks.re_captcha')->render();
+            return $this->api('RE_CAPTCHA', $reCaptchaHtml);
+        }
+
+        $client = new Client();
+        $reCaptchaRes = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
+            'multipart' => [
+                [
+                    'name'     => 'secret',
+                    'contents' => config('main.re_captcha.secret_key')
+                ],
+                [
+                    'name'     => 'response',
+                    'contents' => $reCaptcha
+                ]
+            ]
+        ])->getBody()->getContents();
+        $reCaptchaRes = json_decode($reCaptchaRes);
+        if (!$reCaptchaRes->success) {
+            return $this->api('INVALID_DATA', null, ['re_captcha' => [trans('www.re_captcha.invalid')]]);
+        }
+
         $data = $request->all();
         $email = $data['email'];
-
         $emailData = DB::table('subscribes')->where('email', $email)->first();
-
         if ($emailData == null) {
             DB::table('subscribes')->insert(['email' => $email]);
             return $this->api('OK', trans('www.subscribe.success_text'));

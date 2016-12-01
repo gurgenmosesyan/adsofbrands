@@ -593,6 +593,9 @@ body .page {
     color: #ffffff;
     margin-bottom: 15px;
 }
+#subscribe-form {
+    position: relative;
+}
 #subscribe-form input {
     height: 50px;
     line-height: 53px;
@@ -631,6 +634,12 @@ body .page {
 #subscribe-form .info.error {
     color: #ff0000;
 }
+#re-captcha {
+    position: absolute;
+    left: 0;
+    top: 78px;
+}
+
 #footer .social.facebook {
     margin-left: 0;
 }
