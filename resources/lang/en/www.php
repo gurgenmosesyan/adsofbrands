@@ -136,4 +136,5 @@ return array (
   'rate.already_rated' => 'You have already rated',
   'desktop.version' => 'Desktop version',
   're_captcha.invalid' => 'Re captcha invalid',
+  'base.label.agree_terms' => 'Agree <a href=":url" target="_blank">Terms and conditions</a>',
 );

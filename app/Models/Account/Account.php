@@ -12,4 +12,5 @@ class Account
     const REMEMBER_ME = '1';
     const ACTIVE = '1';
     const NOT_ACTIVE = '0';
+    const TERMS = '1';
 }

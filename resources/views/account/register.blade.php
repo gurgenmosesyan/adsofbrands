@@ -40,6 +40,11 @@ $meta->ogImage(url('/imgs/og-logo.jpg'));
                 <input type="password" name="re_password" class="fs18" placeholder="{{trans('www.base.label.retype_password')}}" />
                 <div id="form-error-re_password" class="form-error"></div>
             </div>
+            <div class="form-box agree-terms">
+                <input type="checkbox" name="terms" class="fs18" value="{{Account::TERMS}}" />
+                {!! trans('www.base.label.agree_terms', ['url' => url_with_lng('/page/terms-of-use')]) !!}
+                <div id="form-error-terms" class="form-error"></div>
+            </div>
             <div class="form-box account-buttons">
                 {{csrf_field()}}
                 <div class="fl">

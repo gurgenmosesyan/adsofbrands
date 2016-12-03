@@ -670,6 +670,21 @@ body .page {
     margin: 0 auto 9px auto;
     width: 534px;
 }
+#account .agree-terms {
+    margin-top: 15px;
+}
+#account .agree-terms input {
+    appearance: checkbox;
+    -moz-appearance: checkbox;
+    -o-appearance: checkbox;
+    -webkit-appearance: checkbox;
+}
+#account .agree-terms a {
+    text-decoration: underline;
+}
+#account .agree-terms a:hover {
+    text-decoration: none;
+}
 #account .select-box {
     height: 56px;
     position: relative;
