@@ -9,7 +9,7 @@ class NewsController extends Controller
 {
     public function all()
     {
-        $news = News::joinMl()->where('news.show_status', News::STATUS_ACTIVE)->latest()->paginate(12);
+        $news = News::joinMl()->active()->latest()->paginate(12);
 
         return view('news.all')->with([
             'news' => $news
@@ -45,7 +45,7 @@ class NewsController extends Controller
             $query->on('tag2.tag', '=', 'news_tags.tag')->where('tag2.news_id', '!=', $news->id);
         })->lists('news_id')->toArray();
 
-        $relNews = News::joinMl()->whereIn('news.id', $relNewsIds)->latest()->take(3)->get();
+        $relNews = News::joinMl()->whereIn('news.id', $relNewsIds)->active()->latest()->take(3)->get();
 
         return view('news.index')->with([
             'news' => $news,

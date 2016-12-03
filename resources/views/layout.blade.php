@@ -205,7 +205,7 @@ $footerMenu = FooterMenuManager::get();
 </div>
 
 @if(isset($shareBox))
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-55390ccd2ae53cd5"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5839abb97c8d08f9"></script>
 @endif
 
 <!-- Yandex.Metrika counter -->

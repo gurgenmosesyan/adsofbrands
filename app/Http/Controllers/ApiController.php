@@ -80,7 +80,7 @@ class ApiController extends Controller
             }
         }
 
-        $ad = Commercial::where('id', $adId)->firstOrFail();
+        $ad = Commercial::where('id', $adId)->active()->firstOrFail();
         $value = ($ad->rating * $ad->qt) + $val;
         $ad->qt++;
         $ad->rating = $value / $ad->qt;

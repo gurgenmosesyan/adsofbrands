@@ -25,7 +25,7 @@ class CommercialController extends Controller
         $month = $request->input('month');
         $year = $request->input('year');
 
-        $query = Commercial::joinMl()->where('commercials.show_status', Commercial::STATUS_ACTIVE);
+        $query = Commercial::joinMl()->active();
         if (!empty($mediaTypeId)) {
             $query->where('commercials.media_type_id', $mediaTypeId);
         }
@@ -59,7 +59,7 @@ class CommercialController extends Controller
         $hash = $request->input('hash');
         $query = Commercial::joinMl()->where('commercials.id', $id);
         if (empty($hash)) {
-            return $query->where('commercials.show_status', Commercial::STATUS_ACTIVE)->firstOrFail();
+            return $query->active()->firstOrFail();
         } else {
             $commercial = $query->firstOrFail();
             if ($commercial->show_status == Commercial::STATUS_ACTIVE) {
@@ -79,8 +79,8 @@ class CommercialController extends Controller
             return redirect(url_with_lng('/ads/'.$ad->alias.'/'.$ad->id));
         }
 
-        $prevAd = Commercial::joinMl()->where('commercials.id', '>', $ad->id)->orderBy('commercials.id', 'asc')->first();
-        $nextAd = Commercial::joinMl()->where('commercials.id', '<', $ad->id)->orderBy('commercials.id', 'desc')->first();
+        $prevAd = Commercial::joinMl()->where('commercials.id', '>', $ad->id)->active()->orderBy('commercials.id', 'asc')->first();
+        $nextAd = Commercial::joinMl()->where('commercials.id', '<', $ad->id)->active()->orderBy('commercials.id', 'desc')->first();
 
         $topAds = Commercial::joinMl()->where('commercials.top', Commercial::TOP)->latest()->take(3)->get();
 
@@ -89,13 +89,13 @@ class CommercialController extends Controller
             foreach ($value->persons as $person) {
                 if ($person->type_id != 0) {
                     if ($person->type == 'brand') {
-                        $item = Brand::joinMl()->where('brands.id', $person->type_id)->first();
+                        $item = Brand::joinMl()->where('brands.id', $person->type_id)->active()->first();
                         $link = 'brands';
                     } else if ($person->type == 'agency') {
-                        $item = Agency::joinMl()->where('agencies.id', $person->type_id)->first();
+                        $item = Agency::joinMl()->where('agencies.id', $person->type_id)->active()->first();
                         $link = 'agencies';
                     } else {
-                        $item = Creative::joinMl()->where('creatives.id', $person->type_id)->first();
+                        $item = Creative::joinMl()->where('creatives.id', $person->type_id)->active()->first();
                         $link = 'creative';
                     }
                     if ($item != null) {

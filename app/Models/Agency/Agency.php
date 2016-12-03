@@ -107,7 +107,7 @@ class Agency extends Model implements AuthenticatableContract
 
     public function getFile($column)
     {
-        return $this->$column;
+        return $this->{$column};
     }
 
     public function setFile($file, $column)

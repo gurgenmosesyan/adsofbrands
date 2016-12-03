@@ -5,7 +5,7 @@ use App\Models\Banner\BannerManager;
 
 $banner = BannerManager::getBanners(Banner::KEY_RIGHT_BLOCK);
 
-$query = News::joinMl()->top();
+$query = News::joinMl()->active()->top();
 if (isset($newsSkipId)) {
     $query->where('news.id', '!=', $newsSkipId);
 }

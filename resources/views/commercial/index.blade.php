@@ -36,13 +36,13 @@ if (isset($_COOKIE['rate'])) {
 $mediaType = $ad->media_type()->joinMl()->first();
 $brand = $ad->brands()->select('brands.id','brands.alias','brands.image','ml.title')->join('brands_ml as ml', function($query) {
     $query->on('ml.id', '=', 'brands.id');
-})->first();
-$agency = $ad->agencies()->first();
+})->active()->first();
+$agency = $ad->agencies()->active()->first();
 
 if ($brand != null) {
     $brandAds = Commercial::joinMl()->join('commercial_brands as c_brands', function($query) use($brand) {
         $query->on('c_brands.commercial_id', '=', 'commercials.id')->where('c_brands.brand_id', '=', $brand->id);
-    })->where('commercials.id', '!=', $ad->id)->latest()->take(7)->get();
+    })->where('commercials.id', '!=', $ad->id)->active()->latest()->take(7)->get();
 } else {
     $brandAds = collect();
 }
@@ -117,7 +117,7 @@ $jsTrans->addTrans(['www.rate.already_rated']);
                 </div>
 
                 <div id="pod-box">
-                    <div class="addthis_native_toolbox"></div>
+                    <div class="addthis_inline_share_toolbox"></div>
                 </div>
 
                 <div id="comment-box">

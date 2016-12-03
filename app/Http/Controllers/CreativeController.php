@@ -16,7 +16,7 @@ class CreativeController extends Controller
         $hash = $request->input('hash');
         $query = Creative::joinMl()->where('creatives.id', $id);
         if (empty($hash)) {
-            return $query->where('creatives.show_status', Creative::STATUS_ACTIVE)->firstOrFail();
+            return $query->active()->firstOrFail();
         } else {
             $creative = $query->firstOrFail();
             if ($creative->show_status == Creative::STATUS_ACTIVE) {
@@ -44,7 +44,7 @@ class CreativeController extends Controller
             })
             ->where('commercial_credit_persons.type', CommercialCreditPerson::TYPE_CREATIVE)
             ->where('commercial_credit_persons.type_id', $creative->id)->lists('commercial_id')->toArray();
-        $items = Commercial::joinMl()->whereIn('commercials.id', $commercialIds)->latest()->paginate(42);
+        $items = Commercial::joinMl()->whereIn('commercials.id', $commercialIds)->active()->latest()->paginate(42);
         return view('creative.index')->with([
             'creative' => $creative,
             'alias' => $alias,
@@ -67,7 +67,7 @@ class CreativeController extends Controller
             ->where('commercial_credit_persons.type', CommercialCreditPerson::TYPE_CREATIVE)
             ->where('commercial_credit_persons.type_id', $creative->id)->lists('commercial_id')->toArray();
         $brandIds = DB::table('commercial_brands')->whereIn('commercial_id', $commercialIds)->lists('brand_id');
-        $items = Brand::joinMl()->whereIn('brands.id', $brandIds)->latest()->paginate(42);
+        $items = Brand::joinMl()->whereIn('brands.id', $brandIds)->active()->latest()->paginate(42);
         return view('creative.index')->with([
             'creative' => $creative,
             'alias' => $alias,

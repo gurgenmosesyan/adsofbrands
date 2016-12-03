@@ -21,7 +21,7 @@ class BrandController extends Controller
         $countryId = $request->input('country');
         $categoryId = $request->input('category');
 
-        $query = Brand::joinMl()->where('brands.show_status', Brand::STATUS_ACTIVE);
+        $query = Brand::joinMl()->active();
         if (!empty($countryId)) {
             $query->where('brands.country_id', $countryId);
         }
@@ -44,7 +44,7 @@ class BrandController extends Controller
         $hash = $request->input('hash');
         $query = Brand::joinMl()->where('brands.id', $id);
         if (empty($hash)) {
-            return $query->where('brands.show_status', Brand::STATUS_ACTIVE)->firstOrFail();
+            return $query->active()->firstOrFail();
         } else {
             $brand = $query->firstOrFail();
             if ($brand->show_status == Brand::STATUS_ACTIVE) {
@@ -67,7 +67,7 @@ class BrandController extends Controller
         $alias = 'ads';
         $scroll = $request->input('ads');
 
-        $items = $brand->commercials()->select('ml.title')->joinMl()->latest()->paginate(42);
+        $items = $brand->commercials()->select('ml.title')->joinMl()->active()->latest()->paginate(42);
         return view('brand.index')->with([
             'brand' => $brand,
             'alias' => $alias,
@@ -83,7 +83,7 @@ class BrandController extends Controller
             return redirect(url_with_lng('/brands/'.$brand->alias.'/'.$brand->id));
         }
         $alias = 'creatives';
-        $items = $brand->creatives()->joinMl()->latest()->paginate(42);
+        $items = $brand->creatives()->joinMl()->active()->latest()->paginate(42);
         return view('brand.index')->with([
             'brand' => $brand,
             'alias' => $alias,
@@ -131,7 +131,7 @@ class BrandController extends Controller
             return redirect(url_with_lng('/brands/'.$brand->alias.'/'.$brand->id));
         }
         $alias = 'news';
-        $news = $brand->news()->select('news.id','news.alias','news.image','ml.title','ml.description')->joinMl()->latest()->paginate(12);
+        $news = $brand->news()->select('news.id','news.alias','news.image','ml.title','ml.description')->joinMl()->active()->latest()->paginate(12);
         return view('brand.index')->with([
             'brand' => $brand,
             'alias' => $alias,
@@ -160,7 +160,7 @@ class BrandController extends Controller
 
         $agencyIds = array_merge($agencyIds, $creditAgencyIds);
 
-        $items = Agency::joinMl()->whereIn('agencies.id', $agencyIds)->latest()->paginate(42);
+        $items = Agency::joinMl()->whereIn('agencies.id', $agencyIds)->active()->latest()->paginate(42);
 
         return view('brand.index')->with([
             'brand' => $brand,
