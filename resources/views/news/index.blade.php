@@ -35,7 +35,7 @@ $pageMenu = 'news';
                 </div>
 
                 <div id="pod-box">
-                    <div class="addthis_native_toolbox"></div>
+                    <div class="addthis_inline_share_toolbox"></div>
                 </div>
 
                 <div id="comment-box">

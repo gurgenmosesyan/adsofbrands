@@ -86,7 +86,7 @@ $commercial.getVimeoData = function(url) {
     if (match){
         var videoId = match[5];
         $('#vimeo-id').val(videoId);
-        var vimeoUrl = "http://vimeo.com/api/v2/video/" + videoId + ".json?callback=$commercial.showVimeoThumb";
+        var vimeoUrl = "https://vimeo.com/api/v2/video/" + videoId + ".json?callback=$commercial.showVimeoThumb";
         var script = document.createElement('script');
         script.type = 'text/javascript';
         script.src = vimeoUrl;
