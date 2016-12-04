@@ -3,6 +3,7 @@
 namespace App\Models\Commercial;
 
 use App\Core\Image\SaveImage;
+use App\Models\Notification\Notification;
 use Auth;
 use DB;
 
@@ -36,6 +37,9 @@ class CommercialManager
                 $this->cloneCredits($data['clone_id'], $commercial);
             }
         });
+
+        $notification = new Notification();
+        $notification->send(route('admin_commercial_edit', $commercial->id), 'ad');
     }
 
     protected function generateRandomUniqueHash($count = 40)

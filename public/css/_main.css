@@ -652,6 +652,12 @@ body .page {
 #footer .footer-bottom a {
     color: #808080;
 }
+#footer .footer-bottom a {
+    text-decoration: underline;
+}
+#footer .footer-bottom a:hover {
+    text-decoration: none;
+}
 #footer .privacy {
     margin-left: 40px;
 }
@@ -1097,6 +1103,9 @@ body .page {
 }
 .html em, .html i {
     font-style: italic;
+}
+.html hr {
+    margin: 20px 0;
 }
 #contact-left {
     margin-right: 3%;

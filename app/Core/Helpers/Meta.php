@@ -49,6 +49,8 @@ class Meta
         $this->ogUrl = $value;
     }
 
+    /*********************************************************/
+
     public function getTitle($template)
     {
         return $this->template ? str_replace('{title}', $this->title, $template) : $this->title;

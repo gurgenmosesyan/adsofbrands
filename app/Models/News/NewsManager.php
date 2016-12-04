@@ -3,6 +3,7 @@
 namespace App\Models\News;
 
 use App\Core\Image\SaveImage;
+use App\Models\Notification\Notification;
 use DB;
 
 class NewsManager
@@ -22,6 +23,9 @@ class NewsManager
             $this->updateCreatives($data['creatives'], $news);
             $this->updateTags($data['tags'], $news);
         });
+
+        $notification = new Notification();
+        $notification->send(route('admin_news_edit', $news->id), 'news');
     }
 
     protected function generateRandomUniqueHash($count = 40)

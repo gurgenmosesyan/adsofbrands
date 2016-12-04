@@ -3,6 +3,7 @@
 namespace App\Models\Team;
 
 use App\Core\Image\SaveImage;
+use App\Models\Notification\Notification;
 use DB;
 
 class TeamManager
@@ -16,6 +17,9 @@ class TeamManager
             $team->save();
             $this->storeMl($data['ml'], $team);
         });
+
+        $notification = new Notification();
+        $notification->send(route('admin_team_edit', $team->id), 'team');
     }
 
     public function update($id, $data)

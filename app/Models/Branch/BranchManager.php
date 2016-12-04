@@ -2,6 +2,7 @@
 
 namespace App\Models\Branch;
 
+use App\Models\Notification\Notification;
 use Auth;
 use DB;
 
@@ -24,6 +25,9 @@ class BranchManager
             $branch->save();
             $this->storeMl($data['ml'], $branch);
         });
+
+        $notification = new Notification();
+        $notification->send(route('admin_branch_edit', $branch->id), 'branch');
     }
 
     public function update($id, $data)

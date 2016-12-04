@@ -4,6 +4,7 @@ namespace App\Models\Brand;
 
 use App\Models\Account\AccountManager;
 use App\Core\Image\SaveImage;
+use App\Models\Notification\Notification;
 use Auth;
 use DB;
 
@@ -27,6 +28,9 @@ class BrandManager
             $brand->save();
             $this->storeMl($data['ml'], $brand);
         });
+
+        $notification = new Notification();
+        $notification->send(route('admin_brand_edit', $brand->id), 'brand');
     }
 
     public function update($id, $data)

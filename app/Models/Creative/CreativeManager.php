@@ -4,6 +4,7 @@ namespace App\Models\Creative;
 
 use App\Models\Account\AccountManager;
 use App\Core\Image\SaveImage;
+use App\Models\Notification\Notification;
 use Auth;
 use DB;
 
@@ -33,6 +34,9 @@ class CreativeManager
             $creative->save();
             $this->storeMl($data['ml'], $creative);
         });
+
+        $notification = new Notification();
+        $notification->send(route('admin_creative_edit', $creative->id), 'creative');
     }
 
     public function update($id, $data)

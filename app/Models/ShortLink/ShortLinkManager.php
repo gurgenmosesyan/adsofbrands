@@ -2,6 +2,7 @@
 
 namespace App\Models\ShortLink;
 
+use App\Models\Notification\Notification;
 use Cache;
 use DB;
 
@@ -26,6 +27,9 @@ class ShortLinkManager
             $shortLink->save();
             $this->removeCache();
         });
+
+        $notification = new Notification();
+        $notification->send(route('admin_short_link_edit', $shortLink->id), 'short link');
     }
 
     public function update($id, $data)

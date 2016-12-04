@@ -188,4 +188,6 @@ return array (
   'short_link.form.edit.sub_title' => 'Short link № :id',
   'base.label.instagram' => 'Instagram',
   'base.label.pinterest' => 'Pinterest',
+  'notification.emails' => 'adsofbrands@gmail.com',
+  'notification.email.subject' => 'New content (:type_title)',
 );

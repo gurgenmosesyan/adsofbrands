@@ -2,6 +2,7 @@
 
 namespace App\Models\Category;
 
+use App\Models\Notification\Notification;
 use DB;
 
 class CategoryManager
@@ -14,6 +15,9 @@ class CategoryManager
             $category->save();
             $this->storeMl($data['ml'], $category);
         });
+
+        $notification = new Notification();
+        $notification->send(route('admin_category_edit', $category->id), 'industry type');
     }
 
     public function update($id, $data)

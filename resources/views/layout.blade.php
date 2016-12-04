@@ -16,6 +16,10 @@ $footerMenu = FooterMenuManager::get();
     <meta property="og:url" content="{{$meta->getOgUrl()}}" />
     <meta property="og:type" content="website" />
     <meta property="fb:app_id" content="730560407092189" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{$meta->getOgTitle()}}" />
+    <meta name="twitter:description" content="{{$meta->getOgDescription()}}" />
+    <meta name="twitter:image" content="{{$meta->getOgImage()}}" />
     <meta name="format-detection" content="telephone=no" />
     <title>{{$meta->getTitle(trans('www.head_title'))}}</title>
     <link rel="icon" href="{{url('/favicon.png')}}" />
@@ -197,7 +201,7 @@ $footerMenu = FooterMenuManager::get();
     </div>
     <div class="footer-bottom">
         <div class="page">
-            <p class="fl fs14">{{trans('www.copyright.text')}}</p>
+            <p class="fl fs14">{!! trans('www.copyright.text') !!}</p>
             <p class="fr fs14 privacy"><a href="{{url_with_lng('/page/privacy-policy')}}" class="underline">{{trans('www.base.label.privacy_policy')}}</a></p>
             <p class="fr fs14"><a href="{{url_with_lng('/page/terms-of-use')}}" class="underline">{{trans('www.base.label.terms_of_use')}}</a></p>
         </div>

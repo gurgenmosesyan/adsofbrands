@@ -3,6 +3,7 @@
 namespace App\Models\FooterMenu;
 
 use App\Core\Language\Language;
+use App\Models\Notification\Notification;
 use Cache;
 use DB;
 
@@ -19,6 +20,9 @@ class FooterMenuManager
             $this->storeMl($data['ml'], $menu);
             $this->removeCache();
         });
+
+        $notification = new Notification();
+        $notification->send(route('admin_footer_menu_edit', $menu->id), 'footer menu');
     }
 
     protected function generateRandomUniqueHash($count = 40)

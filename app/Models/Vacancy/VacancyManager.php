@@ -2,6 +2,7 @@
 
 namespace App\Models\Vacancy;
 
+use App\Models\Notification\Notification;
 use Auth;
 use DB;
 
@@ -24,6 +25,9 @@ class VacancyManager
             $vacancy->save();
             $this->storeMl($data['ml'], $vacancy);
         });
+
+        $notification = new Notification();
+        $notification->send(route('admin_vacancy_edit', $vacancy->id), 'vacancy');
     }
 
     public function update($id, $data)

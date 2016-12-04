@@ -4,6 +4,7 @@ namespace App\Models\Agency;
 
 use App\Models\Account\AccountManager;
 use App\Core\Image\SaveImage;
+use App\Models\Notification\Notification;
 use Auth;
 use DB;
 
@@ -27,6 +28,9 @@ class AgencyManager
             $agency->save();
             $this->storeMl($data['ml'], $agency);
         });
+
+        $notification = new Notification();
+        $notification->send(route('admin_agency_edit', $agency->id), 'agency');
     }
 
     public function update($id, $data)

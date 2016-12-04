@@ -2,6 +2,7 @@
 
 namespace App\Models\AgencyCategory;
 
+use App\Models\Notification\Notification;
 use DB;
 
 class CategoryManager
@@ -14,6 +15,9 @@ class CategoryManager
             $category->save();
             $this->storeMl($data['ml'], $category);
         });
+
+        $notification = new Notification();
+        $notification->send(route('admin_agency_category_edit', $category->id), 'agency category');
     }
 
     public function update($id, $data)

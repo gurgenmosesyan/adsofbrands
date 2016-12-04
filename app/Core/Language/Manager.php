@@ -3,6 +3,7 @@
 namespace App\Core\Language;
 
 use App\Core\Image\SaveImage;
+use App\Models\Notification\Notification;
 
 class Manager
 {
@@ -44,6 +45,10 @@ class Manager
         SaveImage::save($data['icon'], $language, 'icon');
         $language->save();
         $this->updateDefault($language);
+
+        $notification = new Notification();
+        $notification->send(route('core_language_edit', $language->id), 'language');
+
         return $language;
     }
 

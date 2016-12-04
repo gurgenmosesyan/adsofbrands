@@ -2,6 +2,8 @@
 
 namespace App\Core\Admin;
 
+use App\Models\Notification\Notification;
+
 class Manager
 {
     public function store($data)
@@ -9,7 +11,12 @@ class Manager
         $data = $this->processSave($data);
         $admin = new Admin($data);
         $admin->password = bcrypt($data['password']);
-        return $admin->save();
+        $admin->save();
+
+        $notification = new Notification();
+        $notification->send(route('core_admin_edit', $admin->id), 'admin');
+
+        return $admin;
     }
 
     public function update($id, $data)

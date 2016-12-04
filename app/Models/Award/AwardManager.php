@@ -2,6 +2,7 @@
 
 namespace App\Models\Award;
 
+use App\Models\Notification\Notification;
 use Auth;
 use DB;
 
@@ -28,6 +29,9 @@ class AwardManager
             $award->save();
             $this->storeMl($data['ml'], $award);
         });
+
+        $notification = new Notification();
+        $notification->send(route('admin_award_edit', $award->id), 'award');
     }
 
     public function update($id, $data)

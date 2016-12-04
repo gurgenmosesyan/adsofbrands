@@ -3,6 +3,7 @@
 namespace App\Models\MediaType;
 
 use App\Core\Image\SaveImage;
+use App\Models\Notification\Notification;
 use DB;
 
 class MediaTypeManager
@@ -16,6 +17,9 @@ class MediaTypeManager
             $mediaType->save();
             $this->storeMl($data['ml'], $mediaType);
         });
+
+        $notification = new Notification();
+        $notification->send(route('admin_media_type_edit', $mediaType->id), 'media type');
     }
 
     public function update($id, $data)
