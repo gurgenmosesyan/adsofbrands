@@ -190,4 +190,7 @@ return array (
   'base.label.pinterest' => 'Pinterest',
   'notification.emails' => 'adsofbrands@gmail.com',
   'notification.email.subject' => 'New content (:type_title)',
+  'base.label.album' => 'Album',
+  'base.label.album_key' => 'Album key',
+  'news.album.help' => 'insert in the text, where you need to',
 );

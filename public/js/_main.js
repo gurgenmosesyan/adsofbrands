@@ -113,6 +113,19 @@ $main.initItemsCar = function() {
     });
 };
 
+$main.initNewsSlider = function() {
+    $('#news-slider').owlCarousel({
+        singleItem: true,
+        autoPlay: true,
+        navigation: true,
+        navigationText: ['',''],
+        pagination: true,
+        paginationSpeed: 1000,
+        slideSpeed: 1000,
+        rewindSpeed: 1500
+    });
+};
+
 function reCaptchaCallback() {
     $('#subscribe-form').submit();
 }

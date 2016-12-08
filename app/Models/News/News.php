@@ -69,9 +69,14 @@ class News extends Model
         return $this->hasMany(NewsTag::class, 'news_id', 'id');
     }
 
+    public function images()
+    {
+        return $this->hasMany(NewsImage::class)->active();
+    }
+
     public function getFile($column)
     {
-        return $this->$column;
+        return $this->{$column};
     }
 
     public function setFile($file, $column)

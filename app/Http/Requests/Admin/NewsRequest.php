@@ -27,6 +27,8 @@ class NewsRequest extends Request
             'creatives.*.creative_id' => 'required|integer|exists:creatives,id',
             'tags' => 'array',
             'tags.*.tag' => 'required|max:255',
+            'images.*.id' => 'integer',
+            'images.*.image' => 'core_image',
         ];
     }
 }

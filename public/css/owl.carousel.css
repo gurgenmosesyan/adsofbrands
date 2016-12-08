@@ -84,7 +84,7 @@
 .owl-buttons .owl-next {
     background-image: url('../imgs/right.png');
 }
-.items-car .owl-buttons div {
+.owl-buttons div {
     background-position: center center;
     border: 1px solid #787878;
     height: 28px;
@@ -92,38 +92,25 @@
     width: 35px;
     z-index: 1;
 }
-.items-car .owl-buttons div:hover {
+.owl-buttons div:hover {
     background-color: #FEC414;
     border-color: #FEC414;
 }
-.items-car .owl-buttons .owl-prev {
+.owl-buttons .owl-prev {
     border-radius: 15px 0 0 15px;
     right: 36px;
 }
-.items-car .owl-buttons .owl-next {
+.owl-buttons .owl-next {
     border-radius: 0 15px 15px 0;
     right: 0;
 }
-.items-car .owl-buttons .owl-prev:hover {
+.owl-buttons .owl-prev:hover {
     z-index: 2;
 }
-
-/* pagination */
-
-/*#slider .owl-pagination {
-    position: absolute;
-    right: 0;
-    bottom: 57px;
-    text-align: center;
-    width: 400px;
+#news-slider .owl-buttons div {
+	top: 50%;
+	margin-top: -14px;
 }
-#slider .owl-page {
-    background: url('../images/dot.png') no-repeat;
-    display: inline-block;
-    height: 14px;
-    margin: 0 3px;
-    width: 14px;
+#news-slider .owl-buttons .owl-prev {
+	left: 0;
 }
-#slider .owl-page.active {
-    background: url('../images/dot-active.png') no-repeat;
-}*/

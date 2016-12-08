@@ -22,6 +22,7 @@ class NewsManager
             $this->updateAgencies($data['agencies'], $news);
             $this->updateCreatives($data['creatives'], $news);
             $this->updateTags($data['tags'], $news);
+            $this->storeImages($data['images'], $news);
         });
 
         $notification = new Notification();
@@ -51,6 +52,7 @@ class NewsManager
             $this->updateAgencies($data['agencies'], $news, true);
             $this->updateCreatives($data['creatives'], $news, true);
             $this->updateTags($data['tags'], $news, true);
+            $this->updateImages($data['images'], $news);
         });
     }
 
@@ -67,6 +69,9 @@ class NewsManager
         }
         if (!isset($data['tags'])) {
             $data['tags'] = [];
+        }
+        if (!isset($data['images'])) {
+            $data['images'] = [];
         }
         return $data;
     }
@@ -123,6 +128,37 @@ class NewsManager
         if (!empty($tags)) {
             $news->tags()->saveMany($tags);
         }
+    }
+
+    protected function storeImages($data, News $news)
+    {
+        foreach ($data as $value) {
+            if (!empty($value['image'])) {
+                $image = new NewsImage(['news_id' => $news->id, 'show_status' => News::STATUS_ACTIVE]);
+                SaveImage::save($value['image'], $image);
+                $image->save();
+            }
+        }
+    }
+
+    protected function updateImages($data, News $news)
+    {
+        NewsImage::where('news_id', $news->id)->update(['show_status' => News::STATUS_DELETED]);
+        $newImages = [];
+        foreach ($data as $value) {
+            if (empty($value['id'])) {
+                $newImages[] = $value;
+            } else {
+                $image = NewsImage::where('id', $value['id'])->firstOrFail();
+                SaveImage::save($value['image'], $image);
+                $image->show_status = empty($value['image']) ? News::STATUS_DELETED : News::STATUS_ACTIVE;
+                $image->save();
+            }
+        }
+        if (!empty($newImages)) {
+            $this->storeImages($newImages, $news);
+        }
+        NewsImage::where('show_status', News::STATUS_DELETED)->delete();
     }
 
     public function delete($id)

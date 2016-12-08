@@ -2,7 +2,7 @@
 use App\Image\Image;
 use App\Models\Banner\Banner;
 
-$head->appendStyle('/css/carousel.css');
+$head->appendStyle('/css/owl.carousel.css');
 $head->appendScript('/js/owl.carousel.min.js');
 
 $meta->title(trans('www.homepage.title'), false);

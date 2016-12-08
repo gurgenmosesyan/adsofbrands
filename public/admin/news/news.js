@@ -1,5 +1,6 @@
 var $news = $.extend(true, {}, $main);
 $news.listPath = '/admpanel/news';
+$news.imgIndex = 0;
 
 $news.initSearchPage = function() {
     $news.listColumns = [
@@ -157,6 +158,93 @@ $news.initTags = function() {
     }
 };
 
+$news.initFormUploaderForm = function(imgObj) {
+    var html =  '<div id="iframe-img-uploader-block" style="display: none">'+
+                    '<form target="iframe-uploader-'+ $news.imgIndex +'" action="/admpanel/core/image/upload" method="post" enctype="multipart/form-data">'+
+                        '<input type="file" name="image" />'+
+                        '<input type="text" name="module" value="'+ imgObj.data('module') +'" />'+
+                        '<input type="hidden" name="_token" value="'+ $main.token +'" />'+
+                    '</form>'+
+                    '<iframe src="#" id="iframe-uploader-'+ $news.imgIndex +'" name="iframe-uploader-'+ $news.imgIndex +'" style="display: none;"></iframe>'+
+                '</div>';
+    html = $(html);
+    $('input[type="file"]', html).change(function() {
+        $('form', html).submit();
+    });
+    $('form', html).submit(function() {
+        $('iframe', html).load(function() {
+            var result = $.parseJSON($(this.contentDocument).find('body').html());
+            $('.form-error', imgObj).text('');
+            imgObj.parents('.form-group').removeClass('has-error');
+            if (result.status == 'OK') {
+                $('.img-uploader-id', imgObj).val(result.data.id);
+                $('.img-uploader-image', imgObj).attr('src', result.data.img_path);
+            } else {
+                $('.form-error', imgObj).text(result.data.error).addClass('form-error-text').show();
+                imgObj.parents('.form-group').addClass('has-error');
+            }
+        });
+    });
+    $('body').append(html);
+    $('input[type="file"]', html).trigger('click');
+};
+
+$news.initImageButtons = function(html) {
+    $('.uploader-upload-btn', html).on('click', function() {
+        $('#iframe-img-uploader-block').remove();
+        $news.initFormUploaderForm($(this).parents('.img-uploader-box'));
+        return false;
+    });
+
+    $('.uploader-remove-btn', html).on('click', function() {
+        $('#iframe-img-uploader-block').remove();
+        var imgObj = $(this).parents('.img-uploader-box');
+        $('.img-uploader-id', imgObj).val('');
+        $('.img-uploader-image', imgObj).attr('src', '/core/images/img-default.png');
+        return false;
+    });
+};
+$news.addImage = function(obj) {
+    var imgVal = '',
+        imgId = '',
+        imgSrc = '/core/images/img-default.png';
+    if (obj) {
+        imgVal = 'same';
+        imgId = obj.id;
+        imgSrc = '/images/news/'+obj.image;
+    }
+    var html =  '<div data-module="news.images.images" data-image_key="images" class="img-uploader-box" style="margin-bottom:10px;">'+
+                    '<div class="img-thumbnail image-container">'+
+                        '<img src="'+ imgSrc +'" class="img-uploader-image img-agent-photo" style="max-height:120px;" />'+
+                    '</div>'+
+                    '<div class="img-uploader-tools">'+
+                        '<a href="#" class="btn btn-default btn-xs uploader-upload-btn">'+ $trans.get('core.img.uploader.upload_btn') +'</a> '+
+                        '<a href="#" class="btn btn-default btn-xs uploader-remove-btn">'+ $trans.get('core.img.uploader.remove_btn') +'</a>'+
+                    '<div class="img-uploader-help">'+ $news.imgHelpText +'</div>'+
+                    '</div>'+
+                        '<input type="hidden" name="images['+ $news.imgIndex +'][image]" class="img-uploader-id" value="'+ imgVal +'" />'+
+                        '<input type="hidden" name="images['+ $news.imgIndex +'][id]" value="'+ imgId +'" />'+
+                    '<div class="form-error form-error-text" id="form-error-images_'+ $news.imgIndex +'"></div>'+
+                '</div>';
+    html = $(html);
+    $news.initImageButtons(html);
+    $('#images-block').append(html);
+    $news.imgIndex++;
+};
+
+$news.initAlbum = function() {
+    $('#add-image').on('click', function() {
+        $news.addImage();
+        return false;
+    });
+
+    if (!$.isEmptyObject($news.images)) {
+        for (var i in $news.images) {
+            $news.addImage($news.images[i]);
+        }
+    }
+};
+
 $news.initEditPage = function() {
 
     $news.initForm();
@@ -175,6 +263,8 @@ $news.initEditPage = function() {
     $news.generateTypes($news.creatives, 'creative');
 
     $news.initTags();
+
+    $news.initAlbum();
 
     //CKEDITOR.config.height = 120;
 };

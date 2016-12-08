@@ -2,6 +2,8 @@
 use App\Models\News\News;
 use App\Core\Helpers\ImgUploader;
 
+ImgUploader::includeHeadData();
+
 $head->appendStyle('/admin/news/news.css');
 $head->appendScript('/assets/plugins/ckeditor/ckeditor.js');
 $head->appendScript('/assets/plugins/ckfinder/ckfinder.js');
@@ -17,6 +19,12 @@ if ($saveMode == 'add') {
     $url = route('admin_news_update', $news->id);
 }
 $mls = $news->ml->keyBy('lng_id');
+
+$jsTrans->addTrans([
+    'core.img.uploader.upload_btn',
+    'core.img.uploader.remove_btn'
+]);
+
 ?>
 @extends('core.layout')
 @section('content')
@@ -25,6 +33,8 @@ $mls = $news->ml->keyBy('lng_id');
     $news.agencies = <?php echo json_encode($agencies); ?>;
     $news.creatives = <?php echo json_encode($creatives); ?>;
     $news.tags = <?php echo json_encode($news->tags); ?>;
+    $news.images = <?php echo json_encode($news->images); ?>;
+    $news.imgHelpText = '{!! ImgUploader::getHelpTexts('news', 'images') !!}';
 </script>
 <form id="edit-form" class="form-horizontal" method="post" action="{{$url}}">
     <div class="box-body">
@@ -70,6 +80,23 @@ $mls = $news->ml->keyBy('lng_id');
                 </div>
             </div>
         @endforeach
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{trans('admin.base.label.album_key')}}</label>
+            <div class="col-sm-9">
+                <p class="control-label" style="text-align: left;">
+                    <strong>{album}</strong> {{trans('admin.news.album.help')}}
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{trans('admin.base.label.album')}}</label>
+            <div class="col-sm-9">
+                <div id="images-block"></div>
+                <a href="#" id="add-image" class="btn btn-default"><i class="fa fa-plus"></i></a>
+            </div>
+        </div>
 
         <div class="form-group">
             <label class="col-sm-3 control-label">{{trans('admin.base.label.top')}}</label>
