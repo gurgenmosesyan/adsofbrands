@@ -193,4 +193,5 @@ return array (
   'base.label.album' => 'Album',
   'base.label.album_key' => 'Album key',
   'news.album.help' => 'insert in the text, where you need to',
+  'base.label.date' => 'Date',
 );

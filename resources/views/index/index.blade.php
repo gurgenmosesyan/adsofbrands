@@ -123,7 +123,7 @@ $meta->ogUrl(url_with_lng('/'));
                         <div class="img">
                             <a href="{{$value->getLink()}}"><img src="{{$value->getImage()}}" width="332" /></a>
                         </div>
-                        <div class="date fs14 tu">{{strftime('%b. %d, %Y', strtotime($value->created_at))}}</div>
+                        <div class="date fs14 tu">{{strftime('%b. %d, %Y', strtotime($value->date))}}</div>
                         <h3 class="fb fs26">
                             <a href="{{$value->getLink()}}">{{$value->title}}</a>
                         </h3>

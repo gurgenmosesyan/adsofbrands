@@ -45,7 +45,7 @@ if (strpos($text, '{album}') !== false) {
                         <img src="{{$news->getImage()}}" alt="{{$news->title}}" />
                     </div>
                     <h1 class="fsb fs40">{{$news->title}}</h1>
-                    <p class="date tu">{{strftime('%b. %d, %Y', strtotime($news->created_at))}}</p>
+                    <p class="date tu">{{strftime('%b. %d, %Y', strtotime($news->date))}}</p>
                     {!! $text !!}
                     <div class="cb"></div>
                 </div>

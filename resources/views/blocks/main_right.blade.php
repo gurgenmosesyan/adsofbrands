@@ -33,7 +33,7 @@ $topNews = $query->latest()->take(2)->get();
                         <img src="{{$value->getImage()}}" alt="{{$value->title}}" width="240" />
                     </a>
                 </div>
-                <p class="date tu fs14">{{strftime('%b. %d, %Y', strtotime($value->created_at))}}</p>
+                <p class="date tu fs14">{{strftime('%b. %d, %Y', strtotime($value->date))}}</p>
                 <h4 class="fb fs20 lh23">
                     <a href="{{$value->getLink()}}">{{$value->title}}</a>
                 </h4>

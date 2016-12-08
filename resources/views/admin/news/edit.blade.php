@@ -1,6 +1,7 @@
 <?php
 use App\Models\News\News;
 use App\Core\Helpers\ImgUploader;
+use App\Core\Helpers\Calendar;
 
 ImgUploader::includeHeadData();
 
@@ -61,6 +62,14 @@ $jsTrans->addTrans([
             <div class="col-sm-9">
                 <input type="text" name="alias" class="alias form-control" value="{{$news->alias or ''}}">
                 <div id="form-error-alias" class="form-error"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{trans('admin.base.label.date')}}</label>
+            <div class="col-sm-3">
+                {!! Calendar::render('date', $news->date) !!}
+                <div id="form-error-date" class="form-error"></div>
             </div>
         </div>
 
