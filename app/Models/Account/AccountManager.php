@@ -6,6 +6,7 @@ use App\Email\EmailManager;
 use App\Models\Agency\Agency;
 use App\Models\Brand\Brand;
 use App\Models\Creative\Creative;
+use App\Models\Notification\Notification;
 use Auth;
 use DB;
 
@@ -29,10 +30,13 @@ class AccountManager
             $user = new Creative();
             $user->type = Creative::TYPE_PERSONAL;
             $user->type_id = 0;
+            $notifRoute = 'admin_creative_edit';
         } else if ($data['type'] == Account::TYPE_BRAND) {
             $user = new Brand();
+            $notifRoute = 'admin_brand_edit';
         } else {
             $user = new Agency();
+            $notifRoute = 'admin_agency_edit';
         }
         $user->email = $data['email'];
         $user->password = bcrypt($data['password']);
@@ -54,6 +58,9 @@ class AccountManager
                 'template' => 'register'
             ]);
         });
+
+        $notification = new Notification();
+        $notification->send(route($notifRoute, $user->id), $data['type']);
     }
 
     public function forgot($data, $brand, $agency, $creative)

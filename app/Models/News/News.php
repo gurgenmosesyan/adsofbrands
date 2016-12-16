@@ -26,7 +26,7 @@ class News extends Model
 
     public function setDateAttribute($date)
     {
-        if (empty($date) || $date == '000-00-00') {
+        if (empty($date) || $date == '0000-00-00') {
             $this->attributes['date'] = date('Y-m-d');
         }
     }
