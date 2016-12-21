@@ -58,6 +58,9 @@ class NewsManager
 
     protected function processSave($data)
     {
+        if (empty($data['date']) || $data['date'] == '0000-00-00') {
+            $data['date'] = date('Y-m-d');
+        }
         if (!isset($data['brands'])) {
             $data['brands'] = [];
         }
