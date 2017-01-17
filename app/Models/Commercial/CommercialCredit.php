@@ -18,7 +18,7 @@ class CommercialCredit extends Model
 
     public function scopeOrdered($query)
     {
-        return $query->orderBy('commercial_credits.sort_order', 'asc');
+        return $query->orderBy('commercial_credits.sort_order', 'asc')->orderBy('commercial_credits.id', 'asc');
     }
 
     public function persons()
