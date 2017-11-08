@@ -16,6 +16,7 @@ class CreativeRequest extends Request
         if (isset($params['id'])) {
             $creativeId = ','.$params['id'];
         }
+        $statusReq = Auth::guard('admin')->check() ? 'required' : '';
 
         $rules = [
             'alias' => 'required|max:255',
@@ -35,7 +36,7 @@ class CreativeRequest extends Request
             'vimeo' => 'url|max:255',
             'instagram' => 'url|max:255',
             'pinterest' => 'url|max:255',
-            'show_status' => 'required|in:'.Creative::STATUS_ACTIVE.','.Creative::STATUS_INACTIVE,
+            'show_status' => $statusReq.'|in:'.Creative::STATUS_ACTIVE.','.Creative::STATUS_INACTIVE,
             'ml' => 'ml',
             'ml.*.title' => 'required|max:255',
             'ml.*.about' => 'max:65000',

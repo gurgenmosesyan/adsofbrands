@@ -17,6 +17,7 @@ class AgencyRequest extends Request
         if (isset($params['id'])) {
             $agencyId = ','.$params['id'];
         }
+        $statusReq = Auth::guard('admin')->check() ? 'required' : '';
 
         return [
             'alias' => 'required|max:255',
@@ -38,7 +39,7 @@ class AgencyRequest extends Request
             'vimeo' => 'url|max:255',
             'instagram' => 'url|max:255',
             'pinterest' => 'url|max:255',
-            'show_status' => 'required|in:'.Agency::STATUS_ACTIVE.','.Agency::STATUS_INACTIVE,
+            'show_status' => $statusReq.'|in:'.Agency::STATUS_ACTIVE.','.Agency::STATUS_INACTIVE,
             'ml' => 'ml',
             'ml.*.title' => 'required|max:255',
             'ml.*.sub_title' => 'max:255',

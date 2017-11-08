@@ -16,6 +16,7 @@ class BrandRequest extends Request
         if (isset($params['id'])) {
             $brandId = ','.$params['id'];
         }
+        $statusReq = Auth::guard('admin')->check() ? 'required' : '';
 
         return [
             'country_id' => 'integer|exists:countries,id',
@@ -38,7 +39,7 @@ class BrandRequest extends Request
             'vimeo' => 'url|max:255',
             'instagram' => 'url|max:255',
             'pinterest' => 'url|max:255',
-            'show_status' => 'required|in:'.Brand::STATUS_ACTIVE.','.Brand::STATUS_INACTIVE,
+            'show_status' => $statusReq.'|in:'.Brand::STATUS_ACTIVE.','.Brand::STATUS_INACTIVE,
             'ml' => 'ml',
             'ml.*.title' => 'required|max:255',
             'ml.*.sub_title' => 'max:255',
